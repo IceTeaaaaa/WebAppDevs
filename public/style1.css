@@ -1,5 +1,5 @@
 *{margin:0;padding:0;}
-#herder{
+#header{
     margin:0;
     padding:0;
     height:50px;
@@ -16,6 +16,12 @@
     height:900px;
     background:white;
     float:left;
+}
+.side-bar{
+    width:30%;
+    height:900px;
+    background:red;
+    float:right;
 }
 .heat_news{
     display: block;
