@@ -1,10 +1,14 @@
 *{margin:0;padding:0;}
-#header{
-    margin:0;
-    padding:0;
-    height:50px;
-    background: azure;
+#header,#footer{
+    font-size: 24px;
+    background-color: deepskyblue;
+    color: white;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
+
 .main-left{
     width:30%;
     height:900px;
