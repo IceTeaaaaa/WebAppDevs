@@ -1,0 +1,27 @@
+*{margin:0;padding:0;}
+#herder{
+    margin:0;
+    padding:0;
+    height:50px;
+    background: azure;
+}
+.main-left{
+    width:30%;
+    height:900px;
+    background:white;
+    float:left;
+}
+.main-right{
+    width:30%;
+    height:900px;
+    background:white;
+    float:left;
+}
+.heat_news{
+    display: block;
+    height: 300px;
+    border: 2px solid grey;
+}
+h1{
+    font-size: 24px;
+}
