@@ -1,31 +1,12 @@
+let web_card_number_displayed = 6;
+let web_card_index_order_displayed = [0,1,2,3,4,5];
+
 const web_card_NL_1 = document.querySelector('.lsidebar').childNodes;
 const web_card_NL_2 = document.querySelector('.lsidebar1').childNodes;
-var web_card_array = [web_card_NL_1[1],web_card_NL_2[1],web_card_NL_1[3],web_card_NL_2[3],web_card_NL_1[5],web_card_NL_2[5]];
-var web_card_ranked_array = ['https://en.wikipedia.org', 'https://www.youtube.com', 'https://arxiv.org', 'https://www.nytimes.com', 'https://www.reddit.com', 'https://www.infoq.com', 'https://www.washingtonpost.com', 'https://www.wired.com', 'https://spectrum.ieee.org', 'https://martinfowler.com', 'https://vimeo.com', 'https://medium.com', 'https://www.forbes.com', 'https://www.zdnet.com', 'https://techcrunch.com', 'https://www.slate.com', 'https://www.businessinsider.com', 'https://www.salon.com', 'https://www.slideshare.net', 'https://www.latimes.com', 'https://www.apple.com', 'https://www.quora.com', 'https://80000hours.org', 'https://www.npr.org', 'https://arstechnica.com', 'https://blog.codinghorror.com', 'https://www.oreilly.com', 'https://www.infoworld.com', 'https://www.drdobbs.com', 'https://openai.com', 'https://www.theguardian.com', 'https://lemire.me', 'https://blogs.msdn.microsoft.com', 'https://blogs.scientificamerican.com', 'https://aws.amazon.com', 'https://www.huffingtonpost.com', 'https://www.joelonsoftware.com', 'https://www.reuters.com', 'https://queue.acm.org', 'https://www.nature.com', 'https://www.johndcook.com', 'https://www.technologyreview.com', 'https://www.usatoday.com', 'https://www.theatlantic.com', 'https://www.bloomberg.com', 'https://matt.might.net', 'https://www.fast.ai', 'https://www.analyticsvidhya.com', 'https://www.vox.com', 'https://c2.com', 'https://www.computerhistory.org', 'https://gist.github.com', 'https://www.linuxvoice.com', 'https://daringfireball.net', 'https://www.rollingstone.com', 'https://battellemedia.com', 'https://triplebyte.com', 'https://www.cnbc.com', 'https://aphyr.com', 'https://www.theverge.com', 'https://digg.com', 'https://www.cl.cam.ac.uk', 'https://mashable.com', 'https://www.cbsnews.com', 'https://paulgraham.com', 'https://nymag.com', 'https://www.telegraph.co.uk', 'https://www.bbc.com', 'https://www.economist.com', 'https://www.newyorker.com', 'https://www.thedailybeast.com', 'https://www.sfgate.com'];
+//var web_card_array = [web_card_NL_1[1],web_card_NL_2[1],web_card_NL_1[3],web_card_NL_2[3],web_card_NL_1[5],web_card_NL_2[5]];
 
 let text = load("weblist.txt");
-var arr = text.split(",");
-console.log(arr);
-
-refresh();
-
-async function onDelete(event) {
-    event.preventDefault();
-
-
-
-
-    return null;
-}
-
-async function refresh(){
-    const web_cards = document.querySelectorAll('.web_card');
-    let index = 0;
-    for(web_card of web_cards){
-        web_card.childNodes[5].childNodes[1].textContent = arr[index];
-        web_card.childNodes[5].childNodes[3].textContent = arr[index];
-    }
-}
+var web_card_url_array = text.split(",");
 
 function load(name) {
     let xhr = new XMLHttpRequest(),
@@ -35,6 +16,45 @@ function load(name) {
     xhr.send(null);
     return xhr.status === okStatus ? xhr.responseText : null;
 }
+refresh_webpage();
+
+
+async function onDelete(event) {
+    event.preventDefault();
+
+    const deleteNews = event.currentTarget;
+
+    const web_id = deleteNews.childNodes[5].childNodes[1].textContent;
+
+    var filtered = web_card_url_array.filter(function(value){
+        return value != web_id;
+    });
+    web_card_url_array = filtered;
+
+    --web_card_number_displayed;
+    var filtered_index_left = web_card_index_order_displayed.filter(function(value){
+        return value != web_card_number_displayed;
+    });
+    web_card_index_order_displayed = filtered_index_left;
+
+    refresh_webpage();
+
+
+
+    return null;
+}
+
+async function refresh_webpage(){
+    const web_cards = document.querySelectorAll('.web_card');
+    var i = 0;
+    for(web_card of web_cards){
+        web_card.childNodes[5].childNodes[1].textContent = web_card_url_array[web_card_index_order_displayed[i]];
+        web_card.childNodes[5].childNodes[3].textContent = web_card_url_array[web_card_index_order_displayed[i++]];
+
+    }
+}
+
+
 
 const delete_news = document.querySelectorAll('.web_card');
 for(let delete_new of delete_news){
