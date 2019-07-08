@@ -239,7 +239,7 @@ body{
 	display: block;
 	float:left;
 	margin: 1% 1.6% 1% 1.6%;
-	background: #F0F0F0;
+	background: rgb(146, 117, 117);
 } 	
 .span_2_of_3 {
 	width:48.8%;

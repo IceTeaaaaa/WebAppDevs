@@ -1,3 +1,23 @@
+function convertListToArray(nodes) {
+    var array = null;
+    try{
+        array = Array.prototype.slice.call(nodes,0);
+    }catch(ex){
+        array = new Array();
+        for(var i = 0,len = nodes.length;i < len;i++) {
+            array.push(nodes[i]);
+        }
+    }
+    return array;
+}
+
+const web_card_array_1 = convertListToArray(document.querySelector('.lsidebar').childNodes[1]);
+
+
+console.log(web_card_array_1);
+
+
+
 async function onDelete(event) {
     event.preventDefault();
     const deleteNews = event.currentTarget;
@@ -31,8 +51,9 @@ async function onDelete(event) {
         document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_6').childNodes[1].textContent;
         document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_6').childNodes[3].textContent;
     }
+}
 
-
+function dec_indent (web_id, des_id){
 
 }
 
