@@ -1,14 +1,21 @@
 async function onDelete(event) {
     event.preventDefault();
-    document.getElementById('web_shortcut_1').src="images/pic2.jpg";
+    const deleteNews = event.currentTarget;
+    const news_id = deleteNews.parentNode.childNodes;
+    document.getElementById('web_shortcut_1').src="images/pic4.jpg";
     
 }
 
-document.querySelector('.delete_icon').addEventListener('click', onDelete);
+const delete_news = document.querySelectorAll('.web_card');
+
+for(let delete_new of delete_news){
+    delete_new.addEventListener('click', onDelete);
+}
 
 
 
 
+//onclick="document.getElementById('web_shortcut_1').src=document.getElementById('web_shortcut_2').src, document.getElementById('desc_1').childNodes[1].textContent=document.getElementById('desc_2').childNodes[1].textContent, document.getElementById('desc_1').childNodes[3].textContent=document.getElementById('desc_2').childNodes[3].textContent"
 
 
 
