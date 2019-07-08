@@ -1,61 +1,62 @@
-function convertListToArray(nodes) {
-    var array = null;
-    try{
-        array = Array.prototype.slice.call(nodes,0);
-    }catch(ex){
-        array = new Array();
-        for(var i = 0,len = nodes.length;i < len;i++) {
-            array.push(nodes[i]);
-        }
-    }
-    return array;
-}
-
-const web_card_array_1 = convertListToArray(document.querySelector('.lsidebar').childNodes[1]);
-
-
-console.log(web_card_array_1);
+const web_card_NL_1 = document.querySelector('.lsidebar').childNodes;
+const web_card_NL_2 = document.querySelector('.lsidebar1').childNodes;
+var web_card_array = [web_card_NL_1[1],web_card_NL_2[1],web_card_NL_1[3],web_card_NL_2[3],web_card_NL_1[5],web_card_NL_2[5]];
+var web_card_ranked_array = [];
+console.log(web_card_array);
 
 
 
 async function onDelete(event) {
     event.preventDefault();
     const deleteNews = event.currentTarget;
-    console.log(deleteNews.childNodes);
+    const index = deletenews.index
+    web_card_array[]
 
+    refresh();
     const web_id = deleteNews.childNodes[3].id;
     const des_id = deleteNews.childNodes[5].id;
+    web_card_array
 
-    if(web_id == 'web_shortcut_1'){
-        document.getElementById(web_id).src=document.getElementById('web_shortcut_2').src;
-        document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_2').childNodes[1].textContent;
-        document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_2').childNodes[3].textContent;
-    }else if(web_id == 'web_shortcut_2'){
-        document.getElementById(web_id).src=document.getElementById('web_shortcut_3').src;
-        document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_3').childNodes[1].textContent;
-        document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_3').childNodes[3].textContent;
-    }else if(web_id == 'web_shortcut_3'){
-        document.getElementById(web_id).src=document.getElementById('web_shortcut_4').src;
-        document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_4').childNodes[1].textContent;
-        document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_4').childNodes[3].textContent;
-    }else if(web_id == 'web_shortcut_4'){
-        document.getElementById(web_id).src=document.getElementById('web_shortcut_5').src;
-        document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_5').childNodes[1].textContent;
-        document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_5').childNodes[3].textContent;
-    }else if(web_id == 'web_shortcut_5'){
-        document.getElementById(web_id).src=document.getElementById('web_shortcut_6').src;
-        document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_6').childNodes[1].textContent;
-        document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_6').childNodes[3].textContent;
-    }else if(web_id == 'web_shortcut_6'){
-        document.getElementById(web_id).src=document.getElementById('web_shortcut_6').src;
-        document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_6').childNodes[1].textContent;
-        document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_6').childNodes[3].textContent;
-    }
+    refresh();
 }
 
-function dec_indent (web_id, des_id){
 
-}
+
+// async function onDelete(event) {
+//     event.preventDefault();
+//     const deleteNews = event.currentTarget;
+//     console.log(deleteNews.childNodes);
+//
+//     const web_id = deleteNews.childNodes[3].id;
+//     const des_id = deleteNews.childNodes[5].id;
+//
+//     if(web_id == 'web_shortcut_1'){
+//         document.getElementById(web_id).src=document.getElementById('web_shortcut_2').src;
+//         document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_2').childNodes[1].textContent;
+//         document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_2').childNodes[3].textContent;
+//     }else if(web_id == 'web_shortcut_2'){
+//         document.getElementById(web_id).src=document.getElementById('web_shortcut_3').src;
+//         document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_3').childNodes[1].textContent;
+//         document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_3').childNodes[3].textContent;
+//     }else if(web_id == 'web_shortcut_3'){
+//         document.getElementById(web_id).src=document.getElementById('web_shortcut_4').src;
+//         document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_4').childNodes[1].textContent;
+//         document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_4').childNodes[3].textContent;
+//     }else if(web_id == 'web_shortcut_4'){
+//         document.getElementById(web_id).src=document.getElementById('web_shortcut_5').src;
+//         document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_5').childNodes[1].textContent;
+//         document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_5').childNodes[3].textContent;
+//     }else if(web_id == 'web_shortcut_5'){
+//         document.getElementById(web_id).src=document.getElementById('web_shortcut_6').src;
+//         document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_6').childNodes[1].textContent;
+//         document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_6').childNodes[3].textContent;
+//     }else if(web_id == 'web_shortcut_6'){
+//         document.getElementById(web_id).src=document.getElementById('web_shortcut_6').src;
+//         document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_6').childNodes[1].textContent;
+//         document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_6').childNodes[3].textContent;
+//     }
+// }
+
 
 const delete_news = document.querySelectorAll('.web_card');
 
