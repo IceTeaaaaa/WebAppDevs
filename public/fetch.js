@@ -1,12 +1,13 @@
 let web_card_number_displayed = 6;
 let web_card_index_order_displayed = [0,1,2,3,4,5];
+let right_bar_index_order_displayed = [0,1,2,3,4,5];
 
-const web_card_NL_1 = document.querySelector('.lsidebar').childNodes;
-const web_card_NL_2 = document.querySelector('.lsidebar1').childNodes;
-//var web_card_array = [web_card_NL_1[1],web_card_NL_2[1],web_card_NL_1[3],web_card_NL_2[3],web_card_NL_1[5],web_card_NL_2[5]];
 
 let text = load("weblist.txt");
-var web_card_url_array = text.split(",");
+var web_array = text.split(",");
+var groupedArray = group(web_array, 6);
+var web_card_url_array = groupedArray[0];
+var right_side_bar_array = groupedArray[1];
 
 function load(name) {
     let xhr = new XMLHttpRequest(),
@@ -53,7 +54,24 @@ async function refresh_webpage(){
         web_card.childNodes[5].childNodes[3].childNodes[0].textContent = web_card_url_array[web_card_index_order_displayed[i]];
         web_card.childNodes[5].childNodes[3].childNodes[0].href = web_card_url_array[web_card_index_order_displayed[i++]];
     }
+    const right_side_bars = document.querySelectorAll('.right-box-grid-title');
+    var j = 0;
+    for(right_side_bar of right_side_bars){
+        right_side_bar.childNodes[1].childNodes[0].textContent = right_side_bar_array[right_bar_index_order_displayed[j]];
+        right_side_bar.childNodes[1].childNodes[0].href = right_side_bar_array[right_bar_index_order_displayed[j++]];
+    }
 }
+
+function group(array, subGroupLength) {
+    let index = 0;
+    let newArray = [];
+    while(index < array.length) {
+        newArray.push(array.slice(index, index += subGroupLength));
+    }
+    return newArray;
+}
+
+
 
 const delete_news = document.querySelectorAll('.delete_icon');
 for(let delete_new of delete_news){
