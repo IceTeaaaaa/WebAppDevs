@@ -320,7 +320,7 @@ body{
 	}
 }
 .desc{
-	background:#ee2245;
+	background:azure;
 	font-family: 'Archivo Black', sans-serif;
 	text-transform:uppercase;
 	padding: 10px;
@@ -338,7 +338,7 @@ body{
 	font-size:1.6em;
 }
 .desc h4, .desc1 h4, .middle-desc h4, .last-desc h4, .last-desc1 h4{
-	color:#fff;
+	color:black;
 	font-size:0.8em;
 }
 .banner-text{
