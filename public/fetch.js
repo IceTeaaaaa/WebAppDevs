@@ -5,9 +5,8 @@ let right_bar_index_order_displayed = [0,1,2,3,4,5];
 
 let text = load("weblist.txt");
 var web_array = text.split(",");
-var groupedArray = group(web_array, 6);
-var web_card_url_array = groupedArray[0];
-var right_side_bar_array = groupedArray[1];
+var web_card_url_array = web_array.slice(0,6);
+var right_side_bar_array = web_array.slice(6);
 
 function load(name) {
     let xhr = new XMLHttpRequest(),
@@ -21,29 +20,28 @@ refresh_webpage();
 
 
 async function onDelete(event) {
-    event.preventDefault();
+    if (web_card_number_displayed > 0) {
+        event.preventDefault();
 
-    const deleteNews = event.currentTarget;
+        const deleteNews = event.currentTarget;
 
-    const web_id = deleteNews.parentNode.childNodes[5].childNodes[1].childNodes[0].textContent;
+        const web_id = deleteNews.parentNode.childNodes[5].childNodes[1].childNodes[0].textContent;
 
-    var filtered = web_card_url_array.filter(function(value){
-        return value != web_id;
-    });
-    web_card_url_array = filtered;
+        var filtered = web_card_url_array.filter(function (value) {
+            return value != web_id;
+        });
+        web_card_url_array = filtered;
 
-    --web_card_number_displayed;
-    var filtered_index_left = web_card_index_order_displayed.filter(function(value){
-        return value != web_card_number_displayed;
-    });
-    web_card_index_order_displayed = filtered_index_left;
-
+        --web_card_number_displayed;
+        var filtered_index_left = web_card_index_order_displayed.filter(function (value) {
+            return value != web_card_number_displayed;
+        });
+        web_card_index_order_displayed = filtered_index_left;
+    }
     refresh_webpage();
 
     return null;
 }
-
-console.log(document.querySelector('.web_card').childNodes[5].childNodes[1].href)
 
 async function refresh_webpage(){
     const web_cards = document.querySelectorAll('.web_card');
@@ -57,28 +55,36 @@ async function refresh_webpage(){
     const right_side_bars = document.querySelectorAll('.right-box-grid-title');
     var j = 0;
     for(right_side_bar of right_side_bars){
-        right_side_bar.childNodes[1].childNodes[0].textContent = right_side_bar_array[right_bar_index_order_displayed[j]];
-        right_side_bar.childNodes[1].childNodes[0].href = right_side_bar_array[right_bar_index_order_displayed[j++]];
+        right_side_bar.childNodes[1].childNodes[0].textContent = right_side_bar_array[right_bar_index_order_displayed[right_bar_index_order_displayed[j]]];
+        right_side_bar.childNodes[1].childNodes[0].href = right_side_bar_array[right_bar_index_order_displayed[right_bar_index_order_displayed[j++]]];
     }
 }
 
-function group(array, subGroupLength) {
-    let index = 0;
-    let newArray = [];
-    while(index < array.length) {
-        newArray.push(array.slice(index, index += subGroupLength));
+async function addTopNews(event) {
+    if (web_card_number_displayed < 6){
+        event.preventDefault();
+        const currentNews = event.currentTarget;
+        const web_id = currentNews.parentElement.querySelector(".right-box-grid-title").childNodes[1].childNodes[0].textContent;
+        web_card_url_array.push(web_id);
+        web_card_index_order_displayed.push(web_card_number_displayed);
+        ++web_card_number_displayed;
+        var filtered = right_side_bar_array.filter(function(value){
+            return value != web_id;
+        });
+        right_side_bar_array = filtered;
     }
-    return newArray;
+    refresh_webpage();
+    return null;
 }
-
-
 
 const delete_news = document.querySelectorAll('.delete_icon');
 for(let delete_new of delete_news){
     delete_new.addEventListener('click', onDelete);
 }
-
-
+const add_news_buttons = document.querySelectorAll(".add-to-top-news")
+for(let add_news_button of add_news_buttons){
+    add_news_button.addEventListener('click', addTopNews);
+}
 
 
 
