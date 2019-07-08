@@ -42,13 +42,16 @@ async function onDelete(event) {
     return null;
 }
 
+console.log(document.querySelector('.web_card').childNodes[5].childNodes[1].href)
+
 async function refresh_webpage(){
     const web_cards = document.querySelectorAll('.web_card');
     var i = 0;
     for(web_card of web_cards){
-        web_card.childNodes[5].childNodes[1].textContent = web_card_url_array[web_card_index_order_displayed[i]];
-        web_card.childNodes[5].childNodes[3].textContent = web_card_url_array[web_card_index_order_displayed[i++]];
-
+        web_card.childNodes[5].childNodes[1].childNodes[0].textContent = web_card_url_array[web_card_index_order_displayed[i]];
+        web_card.childNodes[5].childNodes[1].childNodes[0].href = web_card_url_array[web_card_index_order_displayed[i]];
+        web_card.childNodes[5].childNodes[3].childNodes[0].textContent = web_card_url_array[web_card_index_order_displayed[i]];
+        web_card.childNodes[5].childNodes[3].childNodes[0].href = web_card_url_array[web_card_index_order_displayed[i++]];
     }
 }
 
