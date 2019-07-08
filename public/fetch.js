@@ -24,7 +24,7 @@ async function onDelete(event) {
 
     const deleteNews = event.currentTarget;
 
-    const web_id = deleteNews.childNodes[5].childNodes[1].textContent;
+    const web_id = deleteNews.parentNode.childNodes[5].childNodes[1].textContent;
 
     var filtered = web_card_url_array.filter(function(value){
         return value != web_id;
@@ -39,8 +39,6 @@ async function onDelete(event) {
 
     refresh_webpage();
 
-
-
     return null;
 }
 
@@ -54,9 +52,7 @@ async function refresh_webpage(){
     }
 }
 
-
-
-const delete_news = document.querySelectorAll('.web_card');
+const delete_news = document.querySelectorAll('.delete_icon');
 for(let delete_new of delete_news){
     delete_new.addEventListener('click', onDelete);
 }
