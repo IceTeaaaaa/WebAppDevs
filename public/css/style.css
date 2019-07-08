@@ -270,6 +270,11 @@ body{
 	color: #333;
 	line-height: 1.5em;
 }
+
+.delete_icon img {
+	border-radius: 50%;
+}
+
 /***** Media Quries *****/
 @media only screen and (max-width: 1024px) {
 	.wrap{
@@ -387,6 +392,7 @@ body{
 	font-weight : normal;
 	margin-top: 0px;
 	letter-spacing: -1px;
+	white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
 .span_2_of_c p,
 .span_1_of_c  p  {
