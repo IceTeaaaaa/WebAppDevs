@@ -1,9 +1,39 @@
 async function onDelete(event) {
     event.preventDefault();
     const deleteNews = event.currentTarget;
-    const news_id = deleteNews.parentNode.childNodes;
-    document.getElementById('web_shortcut_1').src="images/pic4.jpg";
-    
+    console.log(deleteNews.childNodes);
+
+    const web_id = deleteNews.childNodes[3].id;
+    const des_id = deleteNews.childNodes[5].id;
+
+    if(web_id == 'web_shortcut_1'){
+        document.getElementById(web_id).src=document.getElementById('web_shortcut_2').src;
+        document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_2').childNodes[1].textContent;
+        document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_2').childNodes[3].textContent;
+    }else if(web_id == 'web_shortcut_2'){
+        document.getElementById(web_id).src=document.getElementById('web_shortcut_3').src;
+        document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_3').childNodes[1].textContent;
+        document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_3').childNodes[3].textContent;
+    }else if(web_id == 'web_shortcut_3'){
+        document.getElementById(web_id).src=document.getElementById('web_shortcut_4').src;
+        document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_4').childNodes[1].textContent;
+        document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_4').childNodes[3].textContent;
+    }else if(web_id == 'web_shortcut_4'){
+        document.getElementById(web_id).src=document.getElementById('web_shortcut_5').src;
+        document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_5').childNodes[1].textContent;
+        document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_5').childNodes[3].textContent;
+    }else if(web_id == 'web_shortcut_5'){
+        document.getElementById(web_id).src=document.getElementById('web_shortcut_6').src;
+        document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_6').childNodes[1].textContent;
+        document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_6').childNodes[3].textContent;
+    }else if(web_id == 'web_shortcut_6'){
+        document.getElementById(web_id).src=document.getElementById('web_shortcut_6').src;
+        document.getElementById(des_id).childNodes[1].textContent=document.getElementById('desc_6').childNodes[1].textContent;
+        document.getElementById(des_id).childNodes[3].textContent=document.getElementById('desc_6').childNodes[3].textContent;
+    }
+
+
+
 }
 
 const delete_news = document.querySelectorAll('.web_card');
