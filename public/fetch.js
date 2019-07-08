@@ -27,13 +27,16 @@ async function onDelete(event) {
 
         const web_id = deleteNews.parentNode.childNodes[5].childNodes[1].childNodes[0].textContent;
 
-        var filtered = web_card_url_array.filter(function (value) {
-            return value != web_id;
-        });
-        web_card_url_array = filtered;
+        if(web_id != ""){
+            var filtered = web_card_url_array.filter(function (value) {
+                return value != web_id;
+            });
+            web_card_url_array = filtered;
 
-        --web_card_number_displayed;
-        web_card_index_order_displayed.pop();
+            --web_card_number_displayed;
+            web_card_index_order_displayed.pop();
+        }
+
     }
     refresh_webpage();
 
