@@ -33,10 +33,7 @@ async function onDelete(event) {
         web_card_url_array = filtered;
 
         --web_card_number_displayed;
-        var filtered_index_left = web_card_index_order_displayed.filter(function (value) {
-            return value != web_card_number_displayed;
-        });
-        web_card_index_order_displayed = filtered_index_left;
+        web_card_index_order_displayed.pop();
     }
     refresh_webpage();
 
