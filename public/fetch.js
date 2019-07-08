@@ -9,7 +9,7 @@ console.log(web_card_array);
 async function onDelete(event) {
     event.preventDefault();
     const deleteNews = event.currentTarget;
-    const index = deletenews.index
+    const index = deletenews.index;
     web_card_array[]
 
     refresh();
