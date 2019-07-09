@@ -17,8 +17,6 @@ let db = null;
 let collection = null;
 
 
-
-
 async function startServer() {
   // Set the db and collection variables before starting the server.
   db = await MongoClient.connect(MONGO_URL);
@@ -29,33 +27,26 @@ async function startServer() {
 }
 startServer();
 
-async function onLookupWordUrl(req, res) {
-  const routeParams = req.params;
-  const index = routeParams.index;
 
-  const query = { index: index };
+async function onLookupTopNewsUrl(req, res) {
+  const routeParams = req.params;
+  const type = routeParams.type;
+
+  const query = { type: type };
   const result = {
-    index: index,
-    url: 'www.baidu.com'
+    type: type,
+    array: web_card_url_array
   };
 
   // const result = await collection.findOne(index);
 
   const response = {
-    index: index,
-    url: 'http://www.baidu.com'
+    type: type,
+    array: web_card_url_array
   };
   res.json(response);
 }
-app.get('/:index', onLookupWordUrl);
-
-
-
-
-
-
-
-
+app.get('/:type', onLookupTopNewsUrl);
 
 // const express = require('express');
 // const bodyParser = require('body-parser');

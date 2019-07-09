@@ -87,20 +87,18 @@ for(let add_news_button of add_news_buttons){
 }
 
 ///////////////////////
-async function onSearchUrl(event){
+async function getTopNewsArray(event){
     event.preventDefault();
-    let index = 1;
-    let result = await fetch('/' + index);
+    let type = 'topNews';
+    let result = await fetch('/' + type);
     const json = await result.json();
     // const json = await result.json();
-    let url = json.url;
-
-    //xiajiba
-    console.log(document.querySelector('.web_card').childNodes[5].childNodes[1].childNodes[0]);
+    let topnewsarray = json.array;
+    console.log(topnewsarray);
 
 }
 const searchForm = document.querySelector('#web_shortcut_1');
-searchForm.addEventListener('click', onSearchUrl);
+searchForm.addEventListener('click', getTopNewsArray);
 
 // async function onDelete(event) {
 //     event.preventDefault();
