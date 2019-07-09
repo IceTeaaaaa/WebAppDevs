@@ -88,19 +88,15 @@ for(let add_news_button of add_news_buttons){
 
 ///////////////////////
 async function onSearchUrl(event){
-    console.log("1");
-
     event.preventDefault();
-
     let index = 1;
     let result = await fetch('/' + index);
-    console.log("2");
-
     const json = await result.json();
     // const json = await result.json();
-    console.log("3");
-
     let url = json.url;
+
+    //xiajiba
+    console.log(document.querySelector('.web_card').childNodes[5].childNodes[1].childNodes[0]);
 
 }
 const searchForm = document.querySelector('#web_shortcut_1');

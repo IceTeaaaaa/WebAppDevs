@@ -13,6 +13,9 @@ const MONGO_URL = `mongodb://localhost:27017/${DATABASE_NAME}`;
 let db = null;
 let collection = null;
 
+
+
+
 async function startServer() {
   // Set the db and collection variables before starting the server.
   db = await MongoClient.connect(MONGO_URL);
@@ -36,12 +39,12 @@ async function onLookupWordUrl(req, res) {
   // const result = await collection.findOne(index);
 
   const response = {
-    index: 1,
-    url: 'www.baidu.com'
+    index: index,
+    url: 'http://www.baidu.com'
   };
   res.json(response);
 }
-app.get('/1', onLookupWordUrl);
+app.get('/:index', onLookupWordUrl);
 
 
 
