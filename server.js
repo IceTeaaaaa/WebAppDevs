@@ -7,7 +7,7 @@ const jsonParser = bodyParser.json();
 
 app.use(express.static('public'));
 
-const DATABASE_NAME = 'WebAppDev';
+const DATABASE_NAME = 'eng-dict2';
 const MONGO_URL = `mongodb://localhost:27017/${DATABASE_NAME}`;
 
 let db = null;
@@ -23,6 +23,25 @@ async function startServer() {
 }
 startServer();
 
+async function onLookupWordUrl(req, res) {
+  const routeParams = req.params;
+  const index = routeParams.index;
+
+  const query = { index: index };
+  const result = {
+    index: index,
+    url: 'www.baidu.com'
+  };
+
+  // const result = await collection.findOne(index);
+
+  const response = {
+    index: 1,
+    url: 'www.baidu.com'
+  };
+  res.json(response);
+}
+app.get('/1', onLookupWordUrl);
 
 
 
