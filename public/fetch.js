@@ -4,9 +4,9 @@ let right_bar_index_order_displayed = [0,1,2,3,4,5];
 
 
 let text = load("weblist.txt");
-var web_array = text.split(",");
-var web_card_url_array = web_array.slice(0,6);
-var right_side_bar_array = web_array.slice(6);
+const web_array = text.split(",");
+let web_card_url_array = web_array.slice(0,6);
+let right_side_bar_array = web_array.slice(6);
 
 function load(name) {
     let xhr = new XMLHttpRequest(),
@@ -68,7 +68,7 @@ async function addTopNews(event) {
         web_card_url_array.push(web_id);
         web_card_index_order_displayed.push(web_card_number_displayed);
         ++web_card_number_displayed;
-        var filtered = right_side_bar_array.filter(function(value){
+        let filtered = right_side_bar_array.filter(function(value){
             return value != web_id;
         });
         right_side_bar_array = filtered;
