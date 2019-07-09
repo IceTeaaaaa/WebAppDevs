@@ -7,7 +7,7 @@ const jsonParser = bodyParser.json();
 
 app.use(express.static('public'));
 
-const DATABASE_NAME = 'eng-dict2';
+const DATABASE_NAME = 'WebAppDev';
 const MONGO_URL = `mongodb://localhost:27017/${DATABASE_NAME}`;
 
 let db = null;
@@ -22,13 +22,6 @@ async function startServer() {
   console.log('Listening on port 3000');
 }
 startServer();
-
-
-
-
-
-
-
 
 
 
