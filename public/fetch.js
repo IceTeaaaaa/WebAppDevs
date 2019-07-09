@@ -16,8 +16,8 @@ function load(name) {
     xhr.send(null);
     return xhr.status === okStatus ? xhr.responseText : null;
 }
-refresh_webpage();
 
+refresh_webpage();
 
 async function onDelete(event) {
     if (web_card_number_displayed > 0) {
