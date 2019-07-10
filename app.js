@@ -18,11 +18,11 @@ client.SMEMBERS("updated_hrefs_https://www.wired.com/",function (err, reply) {
     client.quit();
 });
 
-function searchUpdated(Arr,str){
-    var newArr = [];
-    for(var k in Arr){
-        if(Arr[k].indexOf(str) != -1){
-            newArr.push(Arr[k]);
+function searchUpdated(arr,str){
+    let newArr = [];
+    for(let element in arr){
+        if(arr[element].indexOf(str) !== -1){
+            newArr.push(arr[element]);
         }
     }
     return newArr;
