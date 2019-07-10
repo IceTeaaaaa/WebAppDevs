@@ -1,23 +1,23 @@
 let web_card_number_displayed = 6;
 let web_card_index_order_displayed = [0,1,2,3,4,5];
 let right_bar_index_order_displayed = [0,1,2,3,4,5];
+let web_card_url_array = new Array();
+let right_side_bar_array = new Array();
 
-
-let text = load("weblist.txt");
-const web_array = text.split(",");
-let web_card_url_array = web_array.slice(0,6);
-let right_side_bar_array = web_array.slice(6);
-
-function load(name) {
-    let xhr = new XMLHttpRequest(),
-        okStatus = document.location.protocol === "file:" ? 0 : 200;
-    xhr.open('GET', name, false);
-    xhr.overrideMimeType("text/html;charset=utf-8");//默认为utf-8
-    xhr.send(null);
-    return xhr.status === okStatus ? xhr.responseText : null;
-}
-
+getTopNewsArray();
+console.log(web_card_url_array);
+getRightSideArray();
+console.log(right_side_bar_array);
 refresh_webpage();
+
+const delete_news = document.querySelectorAll('.delete_icon');
+for(let delete_new of delete_news){
+    delete_new.addEventListener('click', onDelete);
+}
+const add_news_buttons = document.querySelectorAll(".add-to-top-news")
+for(let add_news_button of add_news_buttons){
+    add_news_button.addEventListener('click', addTopNews);
+}
 
 async function onDelete(event) {
     if (web_card_number_displayed > 0) {
@@ -39,7 +39,6 @@ async function onDelete(event) {
 
     }
     refresh_webpage();
-
     return null;
 }
 
@@ -77,28 +76,24 @@ async function addTopNews(event) {
     return null;
 }
 
-const delete_news = document.querySelectorAll('.delete_icon');
-for(let delete_new of delete_news){
-    delete_new.addEventListener('click', onDelete);
-}
-const add_news_buttons = document.querySelectorAll(".add-to-top-news")
-for(let add_news_button of add_news_buttons){
-    add_news_button.addEventListener('click', addTopNews);
-}
-
 ///////////////////////
-async function getTopNewsArray(event){
-    event.preventDefault();
+async function getTopNewsArray(){
     let type = 'topNews';
     let result = await fetch('/' + type);
     const json = await result.json();
     // const json = await result.json();
-    let topnewsarray = json.array;
-    console.log(topnewsarray);
-
+    for (let i = 0; i < 6; i++){
+        web_card_url_array.push(i);
+    }
 }
-const searchForm = document.querySelector('#web_shortcut_1');
-searchForm.addEventListener('click', getTopNewsArray);
+
+async function getRightSideArray() {
+    let type = 'rightSideNews';
+    let result = await fetch('/' + type);
+    const json = await result.json();
+    // const json = await result.json();
+    right_side_bar_array = json.array;
+}
 
 // async function onDelete(event) {
 //     event.preventDefault();

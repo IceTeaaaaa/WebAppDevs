@@ -28,7 +28,7 @@ async function startServer() {
 startServer();
 
 
-async function onLookupTopNewsUrl(req, res) {
+async function onLookupNewsUrl(req, res) {
   const routeParams = req.params;
   const type = routeParams.type;
 
@@ -39,14 +39,14 @@ async function onLookupTopNewsUrl(req, res) {
   };
 
   // const result = await collection.findOne(index);
-
+ //(type === 'topNews') ? web_card_url_array : right_side_bar_array
   const response = {
     type: type,
     array: web_card_url_array
   };
   res.json(response);
 }
-app.get('/:type', onLookupTopNewsUrl);
+app.get('/:type', onLookupNewsUrl);
 
 // const express = require('express');
 // const bodyParser = require('body-parser');
