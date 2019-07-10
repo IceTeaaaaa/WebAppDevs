@@ -6,7 +6,8 @@
     "body-parser": "^1.17.2",
     "express": "^4.15.3",
     "fs-extra": "^3.0.1",
-    "mongodb": "^2.2.27"
+    "mongodb": "^2.2.27",
+    "redis": "^2.8.0"
   },
   "devDependencies": {},
   "scripts": {
