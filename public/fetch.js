@@ -5,9 +5,7 @@ let web_card_url_array = new Array();
 let right_side_bar_array = new Array();
 
 getTopNewsArray();
-console.log(web_card_url_array);
 getRightSideArray();
-console.log(right_side_bar_array);
 refresh_webpage();
 
 const delete_news = document.querySelectorAll('.delete_icon');
@@ -81,10 +79,8 @@ async function getTopNewsArray(){
     let type = 'topNews';
     let result = await fetch('/' + type);
     const json = await result.json();
-    // const json = await result.json();
-    for (let i = 0; i < 6; i++){
-        web_card_url_array.push(i);
-    }
+    web_card_url_array = json.array;
+    console.log(web_card_url_array);
 }
 
 async function getRightSideArray() {

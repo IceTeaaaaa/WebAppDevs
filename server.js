@@ -42,7 +42,7 @@ async function onLookupNewsUrl(req, res) {
  //(type === 'topNews') ? web_card_url_array : right_side_bar_array
   const response = {
     type: type,
-    array: web_card_url_array
+    array: (type === 'topNews') ? web_card_url_array : right_side_bar_array
   };
   res.json(response);
 }
