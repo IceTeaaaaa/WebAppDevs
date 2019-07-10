@@ -6,6 +6,7 @@ let right_side_bar_array = new Array();
 
 getTopNewsArray().then(function (result) {
     web_card_url_array = result;
+    refresh_webpage();
 });
 getRightSideArray().then(function (result) {
     right_side_bar_array = result;
@@ -78,7 +79,6 @@ async function addTopNews(event) {
     return null;
 }
 
-///////////////////////
 async function getTopNewsArray(){
     let type = 'topNews';
     let result = await fetch('/' + type);
