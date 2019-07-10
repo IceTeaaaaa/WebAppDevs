@@ -4,9 +4,13 @@ let right_bar_index_order_displayed = [0,1,2,3,4,5];
 let web_card_url_array = new Array();
 let right_side_bar_array = new Array();
 
-getTopNewsArray();
-getRightSideArray();
-refresh_webpage();
+getTopNewsArray().then(function (result) {
+    web_card_url_array = result;
+});
+getRightSideArray().then(function (result) {
+    right_side_bar_array = result;
+    refresh_webpage();
+});
 
 const delete_news = document.querySelectorAll('.delete_icon');
 for(let delete_new of delete_news){
@@ -79,8 +83,7 @@ async function getTopNewsArray(){
     let type = 'topNews';
     let result = await fetch('/' + type);
     const json = await result.json();
-    web_card_url_array = json.array;
-    console.log(web_card_url_array);
+    return json.array;
 }
 
 async function getRightSideArray() {
@@ -88,7 +91,7 @@ async function getRightSideArray() {
     let result = await fetch('/' + type);
     const json = await result.json();
     // const json = await result.json();
-    right_side_bar_array = json.array;
+    return json.array;
 }
 
 // async function onDelete(event) {
