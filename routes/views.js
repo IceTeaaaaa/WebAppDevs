@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 function onViewIndex(req, res) {
-    res.render('type.js');
+    res.render('index');
 }
 
 router.get('/', onViewIndex);
