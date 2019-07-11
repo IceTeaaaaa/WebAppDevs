@@ -1,5 +1,3 @@
-
-
 const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const exphbs  = require('express-handlebars');
