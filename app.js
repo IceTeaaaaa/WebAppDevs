@@ -1,4 +1,4 @@
-var redis = require("redis"),
+wvar redis = require("redis"),
     client = redis.createClient();
 let news_array = new Array();
 
