@@ -2,8 +2,9 @@ const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const exphbs  = require('express-handlebars');
 var path = require('path');
-const index = require('./routes/index.js');
+const type = require('./routes/type.js');
 const views = require('./routes/views.js');
+const api = require('./routes/api.js');
 
 const app = express();
 const hbs = exphbs.create({
@@ -27,7 +28,6 @@ const MONGO_URL = `mongodb://localhost:27017/${DATABASE_NAME}`;
 let db = null;
 let collection = null;
 
-
 async function startServer() {
 
   // Set the db and collection variables before starting the server.
@@ -40,11 +40,15 @@ async function startServer() {
     next();
   }
   app.use(setCollection);
-  app.use(index);
+  app.use(api);
+  app.use(type);
   app.use(views);
 
   // Now every route can safely use the db and collection objects.
   await app.listen(3000);
   console.log('Listening on port 3000');
+
+
+
 }
 startServer();

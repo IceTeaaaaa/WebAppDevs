@@ -5,6 +5,7 @@ let web_card_url_array = web_array.slice(0,6);
 let right_side_bar_array = web_array.slice(6);
 
 
+
 async function onLookupNewsUrl(req, res) {
     const routeParams = req.params;
     const type = routeParams.type;
