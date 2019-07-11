@@ -1,4 +1,4 @@
-wvar redis = require("redis"),
+let redis = require("redis"),
     client = redis.createClient();
 let news_array = new Array();
 
@@ -8,7 +8,7 @@ client.on("error", function (err) {
 });
 
 client.multi().keys('*', function (err, replies) {
-        var updatedUrlArr = searchUpdated(replies,"updated_hrefs_");
+        let updatedUrlArr = searchUpdated(replies,"updated_hrefs_");
         console.log(updatedUrlArr);
     }).exec(function (err, replies) {});
 

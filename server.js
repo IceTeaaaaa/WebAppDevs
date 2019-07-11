@@ -3,6 +3,7 @@ const MongoClient = require('mongodb').MongoClient;
 const exphbs  = require('express-handlebars');
 
 const api = require('./routes/api.js');
+const views = require('./routes/views.js');
 
 const app = express();
 const hbs = exphbs.create();
@@ -35,7 +36,7 @@ async function startServer() {
   }
   app.use(setCollection);
   app.use(api);
-
+  app.use(views);
 
   // Now every route can safely use the db and collection objects.
   await app.listen(3000);
