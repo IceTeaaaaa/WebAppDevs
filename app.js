@@ -21,9 +21,15 @@ client.SMEMBERS("updated_hrefs_https://www.wired.com/",function (err, reply) {
 function searchUpdated(arr,str){
     let newArr = [];
     for(let element in arr){
-        if(arr[element].indexOf(str) !== -1){
+        if(countSubstr(arr[element],str) > 0){
             newArr.push(arr[element]);
         }
     }
     return newArr;
 }
+
+function countSubstr(str, substr) {
+    let reg = new RegExp(substr, "g");
+    return str.match(reg) ? str.match(reg).length : 0;
+}
+
