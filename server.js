@@ -2,17 +2,19 @@ const express = require('express');
 const MongoClient = require('mongodb').MongoClient;
 const exphbs  = require('express-handlebars');
 
-const api = require('./routes/api.js');
+const index = require('./routes/index.js');
 const views = require('./routes/views.js');
 
 const app = express();
-const hbs = exphbs.create();
+const hbs = exphbs.create({ defaultLayout: '../index' });
 app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
+app.set('view options', { layout: 'other' });
+
+
+// app.set('views', path.join(__dirname, 'views'));
 
 app.use(express.static('public'));
-
-
 
 // app.use(express.static('public'));
 
@@ -35,7 +37,7 @@ async function startServer() {
     next();
   }
   app.use(setCollection);
-  app.use(api);
+  app.use(index);
   app.use(views);
 
   // Now every route can safely use the db and collection objects.
