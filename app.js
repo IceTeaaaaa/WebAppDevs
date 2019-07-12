@@ -8,8 +8,6 @@ client.on("error", function (err) {
     console.log("Error " + err);
 });
 
-
-
 client.multi().keys('*', function (err, replies) {
     let updatedUrlArr = searchUpdated(replies,"updated_hrefs_https:");
     let url_title = new Array();

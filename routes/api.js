@@ -13,11 +13,11 @@ async function onViewUrls(req, res) {
     //     console.log("onViewWord find it");
     // }
 
-    const placeholders = {
-        title: "123",
-        news: "456"
-    };
-    res.render('index', placeholders);
+    // const placeholders = {
+    //     title: "123",
+    //     news: "456"
+    // };
+    // res.render('index', placeholders);
 
 }
 router.get('/', onViewUrls);
