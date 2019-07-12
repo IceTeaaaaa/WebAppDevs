@@ -2,8 +2,6 @@ var redis = require("redis"),
     client = redis.createClient();
 //let updated_url_dic = new Array();
 
-var async = require('async');
-
 client.on("error", function (err) {
     console.log("Error " + err);
 });
