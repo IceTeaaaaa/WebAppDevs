@@ -38,7 +38,7 @@ async function onDelete(event) {
 
         const deleteNews = event.currentTarget;
 
-        const web_id = deleteNews.parentNode.childNodes[5].childNodes[1].childNodes[0].textContent;
+        const web_id = deleteNews.parentNode.childNodes[3].childNodes[1].childNodes[0].textContent;
 
         if(web_id != ""){
             var filtered = web_card_url_array.filter(function (value) {
