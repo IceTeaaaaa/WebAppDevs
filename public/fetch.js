@@ -38,6 +38,7 @@ async function onApi(event) {
     const message = {
         url: web_card_url_array
 
+
     };
     const fetchOptions = {
         method: 'POST',
@@ -78,10 +79,10 @@ async function refresh_webpage(){
     const web_cards = document.querySelectorAll('.web_card');
     var i = 0;
     for(web_card of web_cards){
-        web_card.childNodes[3].childNodes[1].childNodes[0].textContent = web_card_url_array[web_card_index_order_displayed[i]];
-        web_card.childNodes[3].childNodes[1].childNodes[0].href = web_card_url_array[web_card_index_order_displayed[i]];
-        web_card.childNodes[3].childNodes[3].childNodes[0].textContent = web_card_url_array[web_card_index_order_displayed[i]];
-        web_card.childNodes[3].childNodes[3].childNodes[0].href = web_card_url_array[web_card_index_order_displayed[i++]];
+        // web_card.childNodes[3].childNodes[1].childNodes[0].textContent = web_card_url_array[web_card_index_order_displayed[i]];
+        // web_card.childNodes[3].childNodes[1].childNodes[0].href = web_card_url_array[web_card_index_order_displayed[i]];
+        // web_card.childNodes[3].childNodes[3].childNodes[0].textContent = web_card_url_array[web_card_index_order_displayed[i]];
+        // web_card.childNodes[3].childNodes[3].childNodes[0].href = web_card_url_array[web_card_index_order_displayed[i++]];
     }
     const right_side_bars = document.querySelectorAll('.right-box-grid-title');
     var j = 0;

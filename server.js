@@ -60,11 +60,12 @@ async function startServer() {
     req.collection = collection;
     next();
   }
+
+
   app.use(setCollection);
   app.use(api);
   app.use(type);
   app.use(index);
-
 
   // Now every route can safely use the db and collection objects.
   await app.listen(3000);
@@ -74,21 +75,40 @@ async function startServer() {
 startServer();
 
 async function onApiUrl(req, res) {
+  collection.remove({});
   const urls = req.body.url;
-  for(let i = 0; i < urls.length; i++){
-      client.SMEMBERS('updated_hrefs_'+urls[i],function (err, reply) {
+    for(let i = 0; i < urls.length; i++){
+      client.SMEMBERS('updated_hrefs_'+urls[i],async function (err, reply) {
         if(reply){
+          console.log("reply: " + reply);
           for(let j = 0; j < reply.length; j++){
-            client.GET('updated_hrefs_title_' + reply[j],function (err, title) {
-              req.collection.insert({"url": news});
-              client.quit();
+            client.GET('updated_hrefs_title_' + reply[j], async function (err, title) {
+              // req.collection.insert({"url": news});
+
+                client.quit();
+
+                if(title == null){
+                  collection.insert({"url": urls[i], "sub_url": reply[j], "title": reply[j]});
+                }else{
+                  collection.insert({"url": urls[i], "sub_url": reply[j], "title": title});
+                }
+
+
             })
           }
         }
 
-    })
+      })
+    }
   }
 
+// async function loop(reply){
+//   await client.GET('updated_hrefs_title_' + reply[0],async function (err, title) {
+//     console.log(reply[0]);
+//     await console.log(title);
+//
+//   })
+// }
 
   // const query = { word: word };
   // const newEntry = { word: word, definition: definition };
@@ -97,7 +117,7 @@ async function onApiUrl(req, res) {
   //     await collection.update(query, newEntry, params);
   //
   // res.json({ success: true });
-}
+
 app.post('/api', jsonParser, onApiUrl);
 
 
