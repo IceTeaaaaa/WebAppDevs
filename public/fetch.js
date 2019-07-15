@@ -37,8 +37,6 @@ async function onApi(event) {
 
     const message = {
         url: web_card_url_array
-
-
     };
     const fetchOptions = {
         method: 'POST',
@@ -52,7 +50,6 @@ async function onApi(event) {
 }
 const setForm = document.querySelector('.refresh_button');
 setForm.addEventListener('click', onApi);
-
 
 async function onDelete(event) {
     if (web_card_number_displayed > 0) {

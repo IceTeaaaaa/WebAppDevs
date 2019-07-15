@@ -62,7 +62,8 @@ async function startServer() {
   }
 
 
-  app.use(setCollection);
+
+    app.use(setCollection);
   app.use(api);
   app.use(type);
   app.use(index);
@@ -76,48 +77,36 @@ startServer();
 
 async function onApiUrl(req, res) {
   collection.remove({});
+
   const urls = req.body.url;
+  collection.insert({"type": "title","url_array": urls});
+
     for(let i = 0; i < urls.length; i++){
       client.SMEMBERS('updated_hrefs_'+urls[i],async function (err, reply) {
         if(reply){
-          console.log("reply: " + reply);
           for(let j = 0; j < reply.length; j++){
             client.GET('updated_hrefs_title_' + reply[j], async function (err, title) {
               // req.collection.insert({"url": news});
 
-                client.quit();
-
                 if(title == null){
-                  collection.insert({"url": urls[i], "sub_url": reply[j], "title": reply[j]});
+                // db.webapp.findOne({"type":"title"}).url_array[0]
+
+                    collection.insert({"index": i, "url": urls[i], "sub_url": reply[j], "title": reply[j]});
+
                 }else{
-                  collection.insert({"url": urls[i], "sub_url": reply[j], "title": title});
+                  collection.insert({"index": i, "url": urls[i], "sub_url": reply[j], "title": title});
                 }
 
-
+                client.quit();
             })
           }
         }
 
       })
     }
-  }
-
-// async function loop(reply){
-//   await client.GET('updated_hrefs_title_' + reply[0],async function (err, title) {
-//     console.log(reply[0]);
-//     await console.log(title);
-//
-//   })
-// }
-
-  // const query = { word: word };
-  // const newEntry = { word: word, definition: definition };
-  // const params = { upsert: true };
-  // const response =
-  //     await collection.update(query, newEntry, params);
-  //
-  // res.json({ success: true });
-
+    let a = collection.findOne({type:'title'}).url_array;
+    await console.log("123" + a);
+}
 app.post('/api', jsonParser, onApiUrl);
 
 
