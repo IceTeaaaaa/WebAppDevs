@@ -1,4 +1,6 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const jsonParser = bodyParser.json();
 const MongoClient = require('mongodb').MongoClient;
 const exphbs  = require('express-handlebars');
 var path = require('path');
@@ -45,11 +47,8 @@ async function startServer() {
 
 
   db = await MongoClient.connect(MONGO_URL);
-  console.log(1);
 
   collection = db.collection('webapp');
-
-  collection.insert({"url": "http://www.qinghua.com"});
 
   function setCollection(req, res, next) {
     req.collection = collection;
@@ -65,7 +64,22 @@ async function startServer() {
   await app.listen(3000);
   console.log('Listening on port 3000');
 
-
-
 }
 startServer();
+
+async function onApiUrl(req, res) {
+  const urls = req.body.url;
+  console.log(urls[1]);
+  console.log(123);
+
+
+  // const query = { word: word };
+  // const newEntry = { word: word, definition: definition };
+  // const params = { upsert: true };
+  // const response =
+  //     await collection.update(query, newEntry, params);
+  //
+  // res.json({ success: true });
+}
+app.post('/api', jsonParser, onApiUrl);
+

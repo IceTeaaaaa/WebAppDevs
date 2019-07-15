@@ -32,6 +32,27 @@ for(let add_news_button of add_news_buttons){
     add_news_button.addEventListener('click', addTopNews);
 }
 
+async function onApi(event) {
+    event.preventDefault();
+
+    const message = {
+        url: web_card_url_array
+
+    };
+    const fetchOptions = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(message)
+    };
+    await fetch('/api', fetchOptions);
+}
+const setForm = document.querySelector('.refresh_button');
+setForm.addEventListener('click', onApi);
+
+
 async function onDelete(event) {
     if (web_card_number_displayed > 0) {
         event.preventDefault();
@@ -45,11 +66,9 @@ async function onDelete(event) {
                 return value != web_id;
             });
             web_card_url_array = filtered;
-
             --web_card_number_displayed;
             web_card_index_order_displayed.pop();
         }
-
     }
     refresh_webpage();
     return null;
@@ -103,17 +122,13 @@ async function getRightSideArray() {
     // const json = await result.json();
     return json.array;
 }
-
-async function onSet(event) {
-  event.preventDefault();
-  await fetch('/web_mongod');
-  console.log(123);
-
-}
-
-const setForm = document.querySelector('.refresh_button');
-setForm.addEventListener('click', onSet);
-
+//
+// async function onSet(event) {
+//   event.preventDefault();
+//   await fetch('/web_mongod', );
+//   console.log(123);
+//
+// }
 
 
 // async function onSearch(event) {
