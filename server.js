@@ -77,14 +77,15 @@ async function onApiUrl(req, res) {
   const urls = req.body.url;
   for(let i = 0; i < urls.length; i++){
       client.SMEMBERS('updated_hrefs_'+urls[i],function (err, reply) {
-        console.log(reply);
-      for(let j = 0; j < reply.length; j++){
+        if(reply){
+          for(let j = 0; j < reply.length; j++){
+            client.GET('updated_hrefs_title_' + reply[j],function (err, title) {
+              req.collection.insert({"url": news});
+              client.quit();
+            })
+          }
+        }
 
-        client.GET('updated_hrefs_title_' + reply[j],function (err, title) {
-            console.log(title);
-            client.quit();
-        })
-      }
     })
   }
 
@@ -98,8 +99,6 @@ async function onApiUrl(req, res) {
   // res.json({ success: true });
 }
 app.post('/api', jsonParser, onApiUrl);
-
-
 
 
 function searchUpdated(arr,str){
