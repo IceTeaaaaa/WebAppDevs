@@ -75,15 +75,14 @@ startServer();
 
 async function onApiUrl(req, res) {
   const urls = req.body.url;
-  console.log(urls[1]);
-  console.log(123);
   for(let i = 0; i < urls.length; i++){
-    await client.SMEMBERS('updated_hrefs_'+urls[i],function (err, reply) {
+      client.SMEMBERS('updated_hrefs_'+urls[i],function (err, reply) {
+        console.log(reply);
       for(let j = 0; j < reply.length; j++){
-          client.GET('updated_hrefs_title_' + reply[j],function (err, title) {
-          url_title[reply[j]] = title;
-          console.log(url_title);
-          client.quit();
+
+        client.GET('updated_hrefs_title_' + reply[j],function (err, title) {
+            console.log(title);
+            client.quit();
         })
       }
     })
