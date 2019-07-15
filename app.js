@@ -43,17 +43,3 @@ client.multi().keys('*', function (err, replies) {
 
 
 
-function searchUpdated(arr,str){
-    let newArr = [];
-    for(let element in arr){
-        if(countSubstr(arr[element],str) > 0){
-            newArr.push(arr[element]);
-        }
-    }
-    return newArr;
-}
-
-function countSubstr(str, substr) {
-    let reg = new RegExp(substr, "g");
-    return str.match(reg) ? str.match(reg).length : 0;
-}

@@ -7,6 +7,12 @@ var path = require('path');
 const type = require('./routes/type.js');
 const index = require('./routes/index.js');
 const api = require('./routes/api.js');
+var redis = require("redis"),
+    client = redis.createClient();
+
+client.on("error", function (err) {
+  console.log("Error " + err);
+});
 
 const app = express();
 const hbs = exphbs.create({
@@ -71,6 +77,17 @@ async function onApiUrl(req, res) {
   const urls = req.body.url;
   console.log(urls[1]);
   console.log(123);
+  for(let i = 0; i < urls.length; i++){
+    await client.SMEMBERS('updated_hrefs_'+urls[i],function (err, reply) {
+      for(let j = 0; j < reply.length; j++){
+          client.GET('updated_hrefs_title_' + reply[j],function (err, title) {
+          url_title[reply[j]] = title;
+          console.log(url_title);
+          client.quit();
+        })
+      }
+    })
+  }
 
 
   // const query = { word: word };
@@ -83,3 +100,20 @@ async function onApiUrl(req, res) {
 }
 app.post('/api', jsonParser, onApiUrl);
 
+
+
+
+function searchUpdated(arr,str){
+  let newArr = [];
+  for(let element in arr){
+    if(countSubstr(arr[element],str) > 0){
+      newArr.push(arr[element]);
+    }
+  }
+  return newArr;
+}
+
+function countSubstr(str, substr) {
+  let reg = new RegExp(substr, "g");
+  return str.match(reg) ? str.match(reg).length : 0;
+}
