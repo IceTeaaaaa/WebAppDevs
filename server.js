@@ -7,12 +7,7 @@ var path = require('path');
 const type = require('./routes/type.js');
 const index = require('./routes/index.js');
 const api = require('./routes/api.js');
-var redis = require("redis"),
-    client = redis.createClient();
 
-client.on("error", function (err) {
-  console.log("Error " + err);
-});
 
 const app = express();
 const hbs = exphbs.create({
@@ -63,7 +58,7 @@ async function startServer() {
 
 
 
-    app.use(setCollection);
+  app.use(setCollection);
   app.use(api);
   app.use(type);
   app.use(index);
@@ -76,51 +71,12 @@ async function startServer() {
 startServer();
 
 async function onApiUrl(req, res) {
-  collection.remove({});
 
-  const urls = req.body.url;
-  collection.insert({"type": "title","url_array": urls});
+    collection.remove({});
+    const urls = req.body.url;
+    collection.insert({"type": "title","url_array": urls});
 
-    for(let i = 0; i < urls.length; i++){
-      client.SMEMBERS('updated_hrefs_'+urls[i],async function (err, reply) {
-        if(reply){
-          for(let j = 0; j < reply.length; j++){
-            client.GET('updated_hrefs_title_' + reply[j], async function (err, title) {
-              // req.collection.insert({"url": news});
-
-                if(title == null){
-                // db.webapp.findOne({"type":"title"}).url_array[0]
-
-                    collection.insert({"index": i, "url": urls[i], "sub_url": reply[j], "title": reply[j]});
-
-                }else{
-                  collection.insert({"index": i, "url": urls[i], "sub_url": reply[j], "title": title});
-                }
-
-                client.quit();
-            })
-          }
-        }
-
-      })
-    }
-    let a = collection.findOne({type:'title'}).url_array;
-    await console.log("123" + a);
 }
 app.post('/api', jsonParser, onApiUrl);
 
 
-function searchUpdated(arr,str){
-  let newArr = [];
-  for(let element in arr){
-    if(countSubstr(arr[element],str) > 0){
-      newArr.push(arr[element]);
-    }
-  }
-  return newArr;
-}
-
-function countSubstr(str, substr) {
-  let reg = new RegExp(substr, "g");
-  return str.match(reg) ? str.match(reg).length : 0;
-}

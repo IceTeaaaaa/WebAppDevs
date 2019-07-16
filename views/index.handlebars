@@ -69,11 +69,17 @@
                             </div>
                             <div class="desc" id="desc_1">
                                 <h3><a>{{title_0}}</a></h3>
-                                <h4><a>{{news_0_0}}</a></h4>
-                                <h4><a>{{news_0_1}}</a></h4>
-                                <h4><a>{{news_0_2}}</a></h4>
-                                <h4><a>{{news_0_3}}</a></h4>
-                                <h4><a>{{news_0_4}}</a></h4>
+                                <ul>
+                                    {{#each title as |item|}}
+                                        <div>
+
+                                        <a>
+                                            {{item}}
+                                        </a>
+                                        </div>
+
+                                    {{/each}}
+                                </ul>
                             </div>
                         </div>
                     </div>
@@ -83,7 +89,7 @@
                                 <img src="images/delete_icon.png" type="click" width = "20px" height="20px" style="position:absolute; right:0px;top:0px">
                             </div>
                             <div class="desc" id="desc_2">
-                                <h3><a>{{title_1}}</a></h3>
+                                <h3><a>{{arr.[0]}}</a></h3>
                                 <h4><a>{{news_1_0}}</a></h4>
                                 <h4><a>{{news_1_1}}</a></h4>
                                 <h4><a>{{news_1_2}}</a></h4>

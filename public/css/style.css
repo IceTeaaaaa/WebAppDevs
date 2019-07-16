@@ -396,6 +396,12 @@ body{
 	letter-spacing: -1px;
 	white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
 }
+.span_2_of_c ul {
+	white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+
+}
+
+
 .span_2_of_c p,
 .span_1_of_c  p  {
 	font-size:0.8125em;
