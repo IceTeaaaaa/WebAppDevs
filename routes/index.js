@@ -111,7 +111,8 @@ async function onViewIndex(req, res) {
         // url_4: urls_array[4],
         title_4: dic_url_suburl[urls_array[4]],
         // url_5: urls_array[5],
-        title_5: dic_url_suburl[urls_array[5]]
+        title_5: dic_url_suburl[urls_array[5]],
+        numberOfCards: [0,1,2,3]
 
         // title_0: urls_array[0],
         // news_0_0: url_array[urls_array[0]][0],
