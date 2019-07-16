@@ -67,6 +67,7 @@ async function onViewIndex(req, res) {
 
                            if(title == null){
                                console.log("title: title shi kong de" + title);
+                               dic_suburl_title[sub_url_array[j]] = sub_url_array[j];
                            }else{
                                console.log("title: " + title);
                                dic_suburl_title[sub_url_array[j]] = title;
@@ -92,16 +93,26 @@ async function onViewIndex(req, res) {
             })
         }
         console.log("urls_array[0]: " + urls_array[0]);
-        console.log("url_array[urls_array[0]]: " + dic_url_suburl[urls_array[0]]);
+        console.log("dic_url_suburl[urls_array[0]]: " + dic_url_suburl[urls_array[0]]);
         console.log("urls_array[1]: " + urls_array[1]);
-        console.log("url_array[urls_array[1]]: " + dic_url_suburl[urls_array[1]]);
+        console.log("dic_url_suburl[urls_array[1]]: " + dic_url_suburl[urls_array[1]]);
         console.log("urls_array[2]: " + urls_array[2]);
-        console.log("url_array[urls_array[2]]: " + dic_url_suburl[urls_array[2]]);
+        console.log("dic_url_suburl[urls_array[2]]: " + dic_url_suburl[urls_array[2]]);
     }
 
     const placeholders = {
-        title_0: urls_array[0],
-        title: dic_url_suburl[urls_array[0]]
+        title_0: dic_url_suburl[urls_array[0]],
+        // url_1: urls_array[1],
+        title_1: dic_url_suburl[urls_array[1]],
+        // url_2: urls_array[2],
+        title_2: dic_url_suburl[urls_array[2]],
+        // url_3: urls_array[3],
+        title_3: dic_url_suburl[urls_array[3]],
+        // url_4: urls_array[4],
+        title_4: dic_url_suburl[urls_array[4]],
+        // url_5: urls_array[5],
+        title_5: dic_url_suburl[urls_array[5]]
+
         // title_0: urls_array[0],
         // news_0_0: url_array[urls_array[0]][0],
         // news_0_1: url_array[urls_array[0]][1]
