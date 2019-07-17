@@ -78,7 +78,6 @@ async function onApiUrl(req, res) {
 
     // collection.remove({});
     const urls = req.body.url;
-    console.log("111123456765432123456urls: " + urls);
     // collection.insert({"type": "title","url_array": urls});
     const query = { type: "title" };
     const newEntry = { type: "title", url_array: urls };
