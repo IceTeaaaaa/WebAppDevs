@@ -66,31 +66,34 @@ async function onViewIndex(req, res) {
     var webpages = [];
     if(urls_array !== undefined && urls_array !== null && urls_array.length !== 0) {
         webpages = [];
-        for await(url of urls_array) {
-            // console.log(url);
-            let mainSite = url;
-            let siteName = url;  // TODO: SPLIT STRING!
-            let subSites = [];
-            let counter = 0;
-            for await (subsiteUrl of dic_url_suburl[url]) {
-                // console.log(subsiteUrl);
-                let one = {
-                    "title": dic_suburl_title[subsiteUrl],
-                    "url": subsiteUrl
-                };
-                subSites.push(one);
-                counter++;
-                if(counter >= 10) {
-                    break;
+        try{
+            for await(url of urls_array) {
+                // console.log(url);
+                let mainSite = url;
+                let siteName = url;  // TODO: SPLIT STRING!
+                let subSites = [];
+                let counter = 0;
+                for await (subsiteUrl of dic_url_suburl[url]) {
+                    // console.log(subsiteUrl);
+                    let one = {
+                        "title": dic_suburl_title[subsiteUrl],
+                        "url": subsiteUrl
+                    };
+                    subSites.push(one);
+                    counter++;
+                    if(counter >= 10) {
+                        break;
+                    }
                 }
+                let entry = {
+                    "mainSite": mainSite,
+                    "siteName": siteName,
+                    "subSites": subSites
+                };
+                webpages.push(entry);
             }
-
-            let entry = {
-                "mainSite": mainSite,
-                "siteName": siteName,
-                "subSites": subSites
-            };
-            webpages.push(entry);
+        }catch (e){
+            console.error("delay");
         }
     }
 
