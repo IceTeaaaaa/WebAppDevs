@@ -21,7 +21,7 @@ client.on("error", function (err) {
 async function onViewIndex(req, res) {
 
     const a = await req.collection.find().toArray();
-    for(let b of a){
+    for await(let b of a){
         urls = `${b.url_array}`;
     }
     urls_array = urls.split(",");
@@ -64,26 +64,29 @@ async function onViewIndex(req, res) {
     }
 
     var webpages = [];
-    for await(url of urls_array) {
-        // console.log(url);
-        let mainSite = url;
-        let siteName = url;  // TODO: SPLIT STRING!
-        let subSites = [];
-        for await (subsiteUrl of dic_url_suburl[url]) {
-            // console.log(subsiteUrl);
-            let one = {
-                "title": dic_suburl_title[subsiteUrl],
-                "url": subsiteUrl
-            };
-            subSites.push(one);
-        }
+    if(urls_array !== undefined && urls_array !== null && urls_array.length !== 0) {
+        webpages = [];
+        for await(url of urls_array) {
+            // console.log(url);
+            let mainSite = url;
+            let siteName = url;  // TODO: SPLIT STRING!
+            let subSites = [];
+            for await (subsiteUrl of dic_url_suburl[url]) {
+                // console.log(subsiteUrl);
+                let one = {
+                    "title": dic_suburl_title[subsiteUrl],
+                    "url": subsiteUrl
+                };
+                subSites.push(one);
+            }
 
-        let entry = {
-            "mainSite": mainSite,
-            "siteName": siteName,
-            "subSites": subSites
-        };
-        webpages.push(entry);
+            let entry = {
+                "mainSite": mainSite,
+                "siteName": siteName,
+                "subSites": subSites
+            };
+            webpages.push(entry);
+        }
     }
 
 
