@@ -8,6 +8,7 @@ let web_array_mongod = new Array();
 readDB().then(function (result) {
     if(result[0] !== ""){
         web_card_url_array = result;
+        web_card_number_displayed = result.length;
         refresh_webpage();
     } else {
         getTopNewsArray().then(function (result2) {
@@ -15,7 +16,6 @@ readDB().then(function (result) {
             refresh_webpage();
         });
     }
-    console.log(web_card_url_array);
 })
 
 getRightSideArray().then(function (result) {
@@ -31,6 +31,7 @@ for(let delete_new of delete_news){
 const add_news_buttons = document.querySelectorAll(".add-to-top-news")
 for(let add_news_button of add_news_buttons){
     add_news_button.addEventListener('click', addTopNews);
+    add_news_button.addEventListener('click', onApi);
 }
 
 async function onApi(event) {

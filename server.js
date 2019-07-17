@@ -47,16 +47,16 @@ async function startServer() {
   app.use(api);
   app.use(type);
   app.use(index);
-    const a = await collection.find().toArray();
-    for(let b of a){
-        urls = `${b.url_array}`;
-    }
-    urls_array = urls.split(",");
-    if(urls_array){
-        collection.remove({});
-        console.log(123);
-    }
-
+    // const a = await collection.find().toArray();
+    // for(let b of a){
+    //     urls = `${b.url_array}`;
+    // }
+    // urls_array = urls.split(",");
+    // if(urls_array){
+    //     collection.remove({});
+    //     console.log(123);
+    // }
+    collection.remove({});
   await app.listen(3000);
   console.log('Listening on port 3000');
 
