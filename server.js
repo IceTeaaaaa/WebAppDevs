@@ -51,10 +51,6 @@ async function startServer() {
 
   collection = db.collection('webapp');
 
-  collection.remove({});
-  collection.insert({"type": "title","url_array": []});
-
-
   function setCollection(req, res, next) {
     req.collection = collection;
     next();
@@ -76,16 +72,11 @@ startServer();
 
 async function onApiUrl(req, res) {
 
-  // collection.remove({});
-  const urls = req.body.url;
-  console.log("111123456765432123456urls: " + urls);
-  // collection.insert({"type": "title","url_array": urls});
-  const query = { type: "title" };
-  const newEntry = { type: "title", url_array: urls };
-  const params = { upsert: true };
-  const response =
-      await collection.update(query, newEntry, params);
-  res.json({ success: true });
+    collection.remove({});
+    const urls = req.body.url;
+    collection.insert({"type": "title","url_array": urls});
 
 }
 app.post('/api', jsonParser, onApiUrl);
+
+
