@@ -28,7 +28,7 @@ async function onViewIndex(req, res) {
     if(urls_array){
         for(let i = 0; i < urls_array.length; i++){
             let sub_url_array = new Array();
-            client.SMEMBERS('updated_hrefs_' + urls_array[i],async function (err, reply) {
+            await client.SMEMBERS('updated_hrefs_' + urls_array[i],async function (err, reply) {
                if(reply){
 
 
@@ -65,11 +65,12 @@ async function onViewIndex(req, res) {
 
     var webpages = [];
     for await(url of urls_array) {
-        console.log(url);
+        // console.log(url);
         let mainSite = url;
         let siteName = url;  // TODO: SPLIT STRING!
         let subSites = [];
-        for(subsiteUrl in dic_url_suburl[url]) {
+        for await (subsiteUrl of dic_url_suburl[url]) {
+            // console.log(subsiteUrl);
             let one = {
                 "title": dic_suburl_title[subsiteUrl],
                 "url": subsiteUrl
@@ -87,7 +88,7 @@ async function onViewIndex(req, res) {
 
 
     const placeholders = {
-        cards: webpages
+        cards: webpages,
     };
     res.render('index', placeholders);
 
