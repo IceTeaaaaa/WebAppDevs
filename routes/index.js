@@ -16,38 +16,15 @@ client.on("error", function (err) {
     console.log("Error " + err);
 });
 
-function find_title(results){
-    let result_arr = new Array();
-    let flag = 0; //if new title
-    let old_title = "", current_title = "";
 
-    for(result of results){
-        current_title = `${result.url}`;
-        if(current_title === "" || current_title !== old_title){
-            flag = 1;
-        }
-        if(flag === 1){
-            // let sub_array = new Array(){
-            //
-            // }
-        }
-    }
-}
 
 async function onViewIndex(req, res) {
-    // let urls = req.collection.find({}, {_id: 0, url:1, sub_url: 1});
-    // let urls = req.collection.
-
-    // const query = {url_array: 'url_array'};
-    // const u_arr = await req.collection.findOne(query);
-    // console.log("11111111"+u_arr);
 
     const a = await req.collection.find().toArray();
     for(let b of a){
         urls = `${b.url_array}`;
     }
     urls_array = urls.split(",");
-    let abc = "";
     if(urls_array){
         for(let i = 0; i < urls_array.length; i++){
             let sub_url_array = new Array();
@@ -85,6 +62,7 @@ async function onViewIndex(req, res) {
         }
 
     }
+
 
     const placeholders = {
         url_0: urls_array[0],

@@ -1,35 +1,30 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-
-let result = new Array();
-const app = express();
 const router = express.Router();
-const jsonParser = bodyParser.json();
+let urls = "";
+let urls_array = new Array();
 
-// async function onViewUrls(req, res) {
-//
-//
-//     await req.collection.insert({"url": news});
-//
-// }
-// router.get('/web_mongod', onViewUrls);
-//
-// module.exports = router;
-//
+async function onLookupDB(req, res) {
+    const routeParams = req.params;
+    const data = routeParams.data;
 
-// async function onApiUrl(req, res) {
-//     const urls = req.body.url;
-//     console.log(urls);
-//     console.log(123);
-//
-//
-//     // const query = { word: word };
-//     // const newEntry = { word: word, definition: definition };
-//     // const params = { upsert: true };
-//     // const response =
-//     //     await collection.update(query, newEntry, params);
-//     //
-//     // res.json({ success: true });
-// }
-// app.post('/api', jsonParser, onApiUrl);
+    const a = await req.collection.find().toArray();
+    for(let b of a){
+        urls = `${b.url_array}`;
+    }
+    urls_array = urls.split(",");
+
+    const query = { data: data };
+    const result = {
+        data: data,
+        array: urls_array
+    };
+
+    const response = {
+        data: data,
+        array: urls_array
+    };
+    res.json(response);
+}
+router.get('/dataset/:data', onLookupDB);
+
 module.exports = router;
