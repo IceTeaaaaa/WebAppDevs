@@ -101,6 +101,7 @@ async function onViewIndex(req, res) {
         // console.log("urls_array[2]: " + urls_array[2]);
         // console.log("dic_url_suburl[urls_array[2]]: " + dic_url_suburl[urls_array[2]]);
 
+        webpages = [];
         for await(url of urls_array) {
             console.log(url);
             let mainSite = url;
@@ -119,7 +120,7 @@ async function onViewIndex(req, res) {
                 "siteName": siteName,
                 "subSites": subSites
             };
-            await webpages.push(entry);
+            webpages.push(entry);
         }
 
     }
