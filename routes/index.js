@@ -71,6 +71,7 @@ async function onViewIndex(req, res) {
             let mainSite = url;
             let siteName = url;  // TODO: SPLIT STRING!
             let subSites = [];
+            let counter = 0;
             for await (subsiteUrl of dic_url_suburl[url]) {
                 // console.log(subsiteUrl);
                 let one = {
@@ -78,6 +79,10 @@ async function onViewIndex(req, res) {
                     "url": subsiteUrl
                 };
                 subSites.push(one);
+                counter++;
+                if(counter >= 10) {
+                    break;
+                }
             }
 
             let entry = {
