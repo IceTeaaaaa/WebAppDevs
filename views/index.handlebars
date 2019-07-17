@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
     <title>Home</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -8,6 +8,9 @@
     <script src="fetch.js" defer></script>
 </head>
 <body>
+{{#each numberOfCards}}
+    <h1>{{this}}</h1>
+{{/each}}
 <div class="header">
     <div class="top-header">
         <div class="wrap">
@@ -19,8 +22,8 @@
                 </ul>
             </div>
             <div class="top-header-right">
-<!--                <p><img src="images/c-icon.png" title="contact-info">CALL NOW!</p>-->
-<!--                <p><span>(614) 4772-425</span></p>-->
+                <!--                <p><img src="images/c-icon.png" title="contact-info">CALL NOW!</p>-->
+                <!--                <p><span>(614) 4772-425</span></p>-->
             </div>
             <div class="clear"></div>
         </div>
@@ -50,7 +53,7 @@
         <div class="banner-content-text">
             <div class="banner-left">
                 <h1>Top Websites</h1>
-                <button class="refresh_button" type="button" onclick="location.reload()">refresh</button>
+                <button class="refresh_button" type="button">refresh</button>
                 <p>Top six Websites from the Websites Worldwide</p>
             </div>
             <div class="banner-right">
@@ -62,124 +65,34 @@
 
             <div class="section group">
                 <div class="cont span_2_of_c">
-                    <div class="lsidebar">
-                        <div class="web_card">
-                            <div class="delete_icon" style="position:relative" onclick="location.reload()">
-                                <img src="images/delete_icon.png"  type="click" width = "20px" height="20px" style="position:absolute; right:0px;top:0px">
-                            </div>
-                            <div class="desc" id="desc_1">
-                                <h3><a>{{url_0}}</a></h3>
-                                <ul>
-                                    {{#each title_0 as |item|}}
-                                        <div>
-                                        <a>
-                                            {{item}}
-                                        </a>
-                                        </div>
-                                    {{/each}}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lsidebar1">
-                        <div class="web_card">
-                            <div class="delete_icon" style="position:relative" onclick="location.reload()">
-                                <img src="images/delete_icon.png" type="click" width = "20px" height="20px" style="position:absolute; right:0px;top:0px">
-                            </div>
-                            <div class="desc" id="desc_2">
-                                <h3><a>{{url_1}}</a></h3>
-                                <ul>
-                                    {{#each title_1 as |item|}}
-                                        <div>
-                                            <a>
-                                                {{item}}
-                                            </a>
-                                        </div>
-                                    {{/each}}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clear"></div>
-                    <div class="lsidebar">
-                        <div class="web_card">
-                            <div class="delete_icon" style="position:relative" onclick="location.reload()">
-                                <img src="images/delete_icon.png"  type="click"  width = "20px" height="20px" style="position:absolute; right:0px;top:0px">
-                            </div>
 
-                            <div class="desc" id="desc_3">
-                                <h3><a>{{url_2}}</a></h3>
-                                <ul>
-                                    {{#each title_2 as |item|}}
-                                        <div>
-                                            <a>
-                                                {{item}}
-                                            </a>
-                                        </div>
-                                    {{/each}}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="lsidebar1">
-                        <div class="web_card">
-                            <div class="delete_icon" style="position:relative" onclick="location.reload()">
-                                <img src="images/delete_icon.png" width = "20px" height="20px" style="position:absolute; right:0px;top:0px">
-                            </div>
-                            <div class="desc" id="desc_4">
-                                <h3><a>{{url_3}}</a></h3>
-                                <ul>
-                                    {{#each title_3 as |item|}}
-                                        <div>
-                                            <a>
-                                                {{item}}
-                                            </a>
-                                        </div>
-                                    {{/each}}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="clear"></div>
-                    <div class="lsidebar">
-                        <div class="web_card">
-                            <div class="delete_icon" style="position:relative" onclick="location.reload()">
-                                <img src="images/delete_icon.png"  type="click"  width = "20px" height="20px" style="position:absolute; right:0px;top:0px">
-                            </div>
+                    {{#each cards}}
+                        <div class="lsidebar">
+                            <div class="web_card">
+                                <div class="delete_icon" style="position:relative">
 
-                            <div class="desc" id="desc_5">
-                                <h3><a>{{url_4}}</a></h3>
-                                <ul>
-                                    {{#each title_4 as |item|}}
-                                        <div>
-                                            <a>
-                                                {{item}}
-                                            </a>
-                                        </div>
-                                    {{/each}}
-                                </ul>
+                                    <img src="images/delete_icon.png"  type="click" width = "20px" height="20px" style="position:absolute; right:0px;top:0px">
+                                </div>
+                                <div class="desc" id="desc_1">
+                                    <h3><a href="{{mainSite}}">{{siteName}}</a></h3>
+                                    <ul>
+                                        {{#each subSites}}
+                                            <div>
+                                                <a href="{{url}}">
+                                                    {{title}}
+                                                </a>
+                                            </div>
+                                        {{/each}}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="lsidebar1">
-                        <div class="web_card">
-                            <div class="delete_icon" style="position:relative" onclick="location.reload()">
-                                <img src="images/delete_icon.png" type="click" width = "20px" height="20px" style="position:absolute; right:0px;top:0px">
-                            </div>
-                            <div class="desc" id="desc_6">
-                                <h3><a>{{url_5}}</a></h3>
-                                <ul>
-                                    {{#each title_5 as |item|}}
-                                        <div>
-                                            <a>
-                                                {{item}}
-                                            </a>
-                                        </div>
-                                    {{/each}}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
+                    {{/each}}
+
+                    <div class="clear"></div>
+
+                    <div class="clear"></div>
+
                     <div class="clear"></div>
                 </div>
                 <div class="rsidebar span_1_of_c">
@@ -196,7 +109,7 @@
                                 <p>News Title dolor sit amet</p>
                             </div>
                             <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button" onclick="location.reload()">Add to Top News</button>
+                            <button class="add-to-top-news" type="button">Add to Top News</button>
                         </div>
                         <div class="right-box-grid">
                             <div class="right-box-grid-img">
@@ -207,7 +120,7 @@
                                 <p>News Title dolor sit amet</p>
                             </div>
                             <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button" onclick="location.reload()">Add to Top News</button>
+                            <button class="add-to-top-news" type="button">Add to Top News</button>
                         </div>
                         <div class="right-box-grid">
                             <div class="right-box-grid-img">
@@ -218,7 +131,7 @@
                                 <p>News Title dolor sit amet</p>
                             </div>
                             <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button" onclick="location.reload()">Add to Top News</button>
+                            <button class="add-to-top-news" type="button">Add to Top News</button>
                         </div>
                         <div class="right-box-grid">
                             <div class="right-box-grid-img">
@@ -229,7 +142,7 @@
                                 <p>News Title dolor sit amet</p>
                             </div>
                             <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button" onclick="location.reload()">Add to Top News</button>
+                            <button class="add-to-top-news" type="button">Add to Top News</button>
                         </div>
                         <div class="right-box-grid">
                             <div class="right-box-grid-img">
@@ -240,7 +153,7 @@
                                 <p>News Title dolor sit amet</p>
                             </div>
                             <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button" onclick="location.reload()">Add to Top News</button>
+                            <button class="add-to-top-news" type="button">Add to Top News</button>
                         </div>
                         <div class="right-box-grid">
                             <div class="right-box-grid-img">
@@ -251,7 +164,7 @@
                                 <p>News Title dolor sit amet</p>
                             </div>
                             <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button" onclick="location.reload()">Add to Top News</button>
+                            <button class="add-to-top-news" type="button">Add to Top News</button>
                         </div>
                     </div>
                 </div>

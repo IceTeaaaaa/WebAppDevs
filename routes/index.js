@@ -63,25 +63,31 @@ async function onViewIndex(req, res) {
 
     }
 
+    var webpages = [];
+    for await(url of urls_array) {
+        console.log(url);
+        let mainSite = url;
+        let siteName = url;  // TODO: SPLIT STRING!
+        let subSites = [];
+        for(subsiteUrl in dic_url_suburl[url]) {
+            let one = {
+                "title": dic_suburl_title[subsiteUrl],
+                "url": subsiteUrl
+            };
+            subSites.push(one);
+        }
+
+        let entry = {
+            "mainSite": mainSite,
+            "siteName": siteName,
+            "subSites": subSites
+        };
+        webpages.push(entry);
+    }
+
 
     const placeholders = {
-        url_0: urls_array[0],
-        url_1: urls_array[1],
-        url_2: urls_array[2],
-        url_3: urls_array[3],
-        url_4: urls_array[4],
-        url_5: urls_array[5],
-
-        title_0: dic_url_suburl[urls_array[0]],
-        title_1: dic_url_suburl[urls_array[1]],
-        title_2: dic_url_suburl[urls_array[2]],
-        title_3: dic_url_suburl[urls_array[3]],
-        title_4: dic_url_suburl[urls_array[4]],
-        title_5: dic_url_suburl[urls_array[5]]
-
-        // title_0: urls_array[0],
-        // news_0_0: url_array[urls_array[0]][0],
-        // news_0_1: url_array[urls_array[0]][1]
+        cards: webpages
     };
     res.render('index', placeholders);
 
