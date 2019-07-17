@@ -51,8 +51,8 @@ async function startServer() {
 
   collection = db.collection('webapp');
 
-  collection.remove({});
-  collection.insert({"type": "title","url_array": []});
+  // collection.remove({});
+  // collection.insert({"type": "title","url_array": []});
 
 
   function setCollection(req, res, next) {
