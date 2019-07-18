@@ -29,8 +29,6 @@ async function onViewIndex(req, res) {
             let sub_url_array = new Array();
             await client.SMEMBERS('updated_hrefs_' + urls_array[i],async function (err, reply) {
                if(reply){
-
-
                    for(let j = 0; j < reply.length; j++){
                        sub_url_array[j] = reply[j];
                        await client.GET('updated_hrefs_title_' + reply[j], async function (err, title) {
@@ -41,16 +39,6 @@ async function onViewIndex(req, res) {
                                dic_suburl_title[sub_url_array[j]] = title;
                            }
 
-                           // // req.collection.insert({"url": news});
-                           // // console.log(123);
-                           //  if(title == null){
-                           //  // db.webapp.findOne({"type":"title"}).url_array[0]
-                           //      req.collection.insert({"index": i, "url": urls[i], "sub_url": reply[j], "title": reply[j]});
-                           //
-                           //  }else{
-                           //      req.collection.insert({"index": i, "url": urls[i], "sub_url": reply[j], "title": title});
-                           //  }
-                            client.quit();
                        })
 
                    }
@@ -67,21 +55,22 @@ async function onViewIndex(req, res) {
         webpages = [];
         try{
             for await(url of urls_array) {
-                // console.log(url);
                 let mainSite = url;
                 let siteName = url;  // TODO: SPLIT STRING!
                 let subSites = [];
                 let counter = 0;
-                for await (subsiteUrl of dic_url_suburl[url]) {
-                    // console.log(subsiteUrl);
-                    let one = {
-                        "title": dic_suburl_title[subsiteUrl],
-                        "url": subsiteUrl
-                    };
-                    subSites.push(one);
-                    counter++;
-                    if(counter >= 10) {
-                        break;
+                if(dic_url_suburl[url]){
+                    for await (subsiteUrl of dic_url_suburl[url]) {
+                        // console.log(subsiteUrl);
+                        let one = {
+                            "title": dic_suburl_title[subsiteUrl],
+                            "url": subsiteUrl
+                        };
+                        subSites.push(one);
+                        counter++;
+                        if(counter >= 10) {
+                            break;
+                        }
                     }
                 }
                 let entry = {
@@ -90,6 +79,7 @@ async function onViewIndex(req, res) {
                     "subSites": subSites,
                     "urlOfMainSite": mainSite,
                 };
+                //console.log(entry);
                 webpages.push(entry);
             }
         }catch (e){
@@ -97,20 +87,14 @@ async function onViewIndex(req, res) {
         }
     }
 
-
     const placeholders = {
         cards: webpages,
     };
     res.render('index', placeholders);
 
 }
-
 router.get('/', onViewIndex);
-// setInterval(function() {
-//     // console.log("  /  refresh.");
-//     // console.log("urls_array: " + urls_array);
-//     // router.get('/', onViewIndex);
-// }, 5000)
+
 
 function searchUpdated(arr,str){
     let newArr = [];

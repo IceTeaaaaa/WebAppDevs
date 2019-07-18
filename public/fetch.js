@@ -3,25 +3,14 @@ let web_card_index_order_displayed = [0,1,2,3,4,5];
 let right_bar_index_order_displayed = [0,1,2,3,4,5];
 let web_card_url_array = new Array();
 let right_side_bar_array = new Array();
-let web_array_mongod = new Array();
 
 readDB().then(function (result) {
-    if(result[0] !== ""){
-        web_card_url_array = result;
-        web_card_number_displayed = result.length;
-        refresh_webpage();
-    } else {
-        getTopNewsArray().then(function (result2) {
-            web_card_url_array = result2;
-            refresh_webpage();
-        });
-    }
-})
+    web_card_url_array = result.array;
+    web_card_number_displayed = result.array.length;
+    right_side_bar_array = result.rightArr;
+    refreshWebPage();
+    })
 
-getRightSideArray().then(function (result) {
-    right_side_bar_array = result;
-    refresh_webpage();
-});
 
 const delete_news = document.querySelectorAll('.delete_icon');
 for(let delete_new of delete_news){
@@ -38,7 +27,8 @@ async function onApi(event) {
     event.preventDefault();
 
     const message = {
-        url: web_card_url_array
+        url: web_card_url_array,
+        url2: right_side_bar_array
     };
     const fetchOptions = {
         method: 'POST',
@@ -97,7 +87,6 @@ async function refresh_webpage(){
 }
 
 async function addTopNews(event) {
-    console.log(1111);
     if (web_card_number_displayed < 6){
         event.preventDefault();
         const currentNews = event.currentTarget;
@@ -111,126 +100,15 @@ async function addTopNews(event) {
         });
         right_side_bar_array = filtered;
     }
-    refresh_webpage();
+    refreshWebPage();
     return null;
 }
 
-async function getTopNewsArray(){
-    let type = 'topNews';
-    let result = await fetch('/' + type);
-    const json = await result.json();
-    return json.array;
-}
-
-async function getRightSideArray() {
-    let type = 'rightSideNews';
-    let result = await fetch('/' + type);
-    const json = await result.json();
-    // const json = await result.json();
-    return json.array;
-}
 
 async function readDB() {
     let data = 'mongodb';
-    let result = await fetch('/dataset/' + data);
+    let result = await fetch('/readDB/' + data);
     const json = await result.json();
-    return json.array;
+    return json;
 }
 
-
-// async function refreshIndex() {
-//     await fetch('/');
-// }
-//
-// setInterval(function() {
-//     refreshIndex();
-// }, 500)
-//
-//
-
-//
-// async function onSet(event) {
-//   event.preventDefault();
-//   await fetch('/web_mongod', );
-//   console.log(123);
-//
-// }
-
-
-// async function onSearch(event) {
-//   event.preventDefault();
-//   const input = document.querySelector('#word-input');
-//   const word = input.value.trim();
-//   const results = document.querySelector('#results');
-//   results.classList.add('hidden');
-//   const result = await fetch('/lookup/' + word);
-//   const json = await result.json();
-//   // Prep results.
-//   const wordDisplay = results.querySelector('#word');
-//   const defDisplay = results.querySelector('#definition');
-//   wordDisplay.textContent = json.word;
-//   defDisplay.textContent = json.definition;
-//   // Prep set definition form.
-//   const setWordInput = results.querySelector('#set-word-input');
-//   const setDefInput = results.querySelector('#set-def-input');
-//   setWordInput.value = json.word;
-//   setDefInput.value = json.definition;
-//   // Display.
-//   results.classList.remove('hidden');
-// }
-
-// async function onSet(event) {
-//   event.preventDefault();
-//   const setWordInput = results.querySelector('#set-word-input');
-//   const setDefInput = results.querySelector('#set-def-input');
-//   const word = setWordInput.value;
-//   const def = setDefInput.value;
-//   const message = {
-//     definition: def
-//   };
-//   const fetchOptions = {
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(message)
-//   };
-//   const status = results.querySelector('#status');
-//   status.textContent = '';
-//   await fetch('/set/' + word, fetchOptions);
-//   status.textContent = 'Saved.';
-//   const defDisplay = results.querySelector('#definition');
-//   defDisplay.textContent = def;
-// }
-
-// async function onSetNew(event) {
-//   event.preventDefault();
-//   const setNew = document.querySelector('#setNew');
-//   const setNewWordInput = setNew.querySelector('#word-set');
-//   const setNewDefInput = setNew.querySelector('#def-set');
-//   const newWord = setNewWordInput.value;
-//   const newDef = setNewDefInput.value;
-//   const newMessage = {
-//     definition: newDef
-//   };
-//   const newFetchOptions = {
-//     method: 'POST',
-//     headers: {
-//       'Accept': 'application/json',
-//       'Content-Type': 'application/json'
-//     },
-//     body: JSON.stringify(newMessage)
-//   };
-//   await fetch('/set/' + newWord, newFetchOptions);
-//   console.log(newWord);
-// }
-
-// const searchForm = document.querySelector('#search');
-// searchForm.addEventListener('submit', onSearch);
-
-// const setForm = document.querySelector('#set');
-// setForm.addEventListener('submit', onSet);
-
-// const newSetForm = document.querySelector('#setNew');
-// newSetForm.addEventListener('submit', onSetNew);
