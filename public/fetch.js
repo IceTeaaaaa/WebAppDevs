@@ -53,33 +53,30 @@ async function onApi(event) {
 const setForm = document.querySelector('.refresh_button');
 setForm.addEventListener('click', onApi);
 
-async function onDelete(event) {
-    // if (web_card_number_displayed > 0) {
-    //     event.preventDefault();
-    //
-    //     const deleteNews = event.currentTarget;
-    //
-    //     const web_id = deleteNews.parentNode.childNodes[3].childNodes[1].childNodes[0].textContent;
-    //
-    //     if(web_id != ""){
-    //         var filtered = web_card_url_array.filter(function (value) {
-    //             return value != web_id;
-    //         });
-    //         web_card_url_array = filtered;
-    //         --web_card_number_displayed;
-    //         web_card_index_order_displayed.pop();
-    //     }
-    // }
 
+
+async function onDelete(event) {
     // Get id of this specific card. (Note: id is the url of the main site).
-    fetch('/removeCard/aa');
     console.log(event.currentTarget.parentNode.parentNode.attributes[1].value);
-    removeId = event.currentTarget.parentNode.parentNode.attributes[1].value
+    let removeUrl = event.currentTarget.parentNode.parentNode.attributes[1].value;
+    let noSymbol = removeUrl.replace(/[^a-zA-Z ]/g, "");
     event.currentTarget.parentNode.parentElement.remove();
 
-    // refresh_webpage();
-    // return null;
+    const message = {
+        url: removeUrl
+    };
+    const postmsg = {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(message)
+    };
+    await fetch('/removeCard/a', postmsg);
 }
+
+
 
 async function refresh_webpage(){
     // const web_cards = document.querySelectorAll('.web_card');

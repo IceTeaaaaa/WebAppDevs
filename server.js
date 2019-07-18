@@ -56,7 +56,7 @@ async function startServer() {
     //     collection.remove({});
     //     console.log(123);
     // }
-    collection.remove({});
+    collection.remove({}, {});
   await app.listen(3000);
   console.log('Listening on port 3000');
 
@@ -82,4 +82,22 @@ app.post('/api', jsonParser, onApiUrl);
 
 
 
+async function removeCard(req, res) {
+    const removeUrl = req.body.url;
 
+    cardsList =  await collection.find().toArray();
+    urls_array = cardsList[0].url_array;
+
+    let filtered = urls_array.filter((value) => {
+        return value !== removeUrl;
+    });
+
+    console.log(removeUrl);
+
+    const query = { type: "title" };
+    const newEntry = { type: "title", url_array: filtered };
+    const params = { upsert: true };
+    const response = await collection.update(query, newEntry, params);
+    res.json({ success: true });
+}
+app.post('/removeCard/a', jsonParser, removeCard);

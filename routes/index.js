@@ -128,11 +128,4 @@ function countSubstr(str, substr) {
 }
 
 
-
-async function removeCard(req, res) {
-    console.log(123);
-}
-router.get('/removeCard/aa', removeCard);
-
-
 module.exports = router;
