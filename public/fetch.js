@@ -60,6 +60,7 @@ async function onDelete(event) {
     console.log(event.currentTarget.parentNode.parentNode.attributes[1].value);
     let removeUrl = event.currentTarget.parentNode.parentNode.attributes[1].value;
     let noSymbol = removeUrl.replace(/[^a-zA-Z ]/g, "");
+    event.currentTarget.parentNode.parentElement.remove();
 
     const message = {
         url: removeUrl
@@ -73,8 +74,6 @@ async function onDelete(event) {
         body: JSON.stringify(message)
     };
     await fetch('/removeCard/a', postmsg);
-
-    event.currentTarget.parentNode.parentElement.remove();
 }
 
 

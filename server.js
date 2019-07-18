@@ -92,6 +92,8 @@ async function removeCard(req, res) {
         return value !== removeUrl;
     });
 
+    console.log(removeUrl);
+
     const query = { type: "title" };
     const newEntry = { type: "title", url_array: filtered };
     const params = { upsert: true };
