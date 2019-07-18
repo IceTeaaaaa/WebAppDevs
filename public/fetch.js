@@ -8,14 +8,14 @@ readDB().then(function (result) {
     web_card_url_array = result.array;
     web_card_number_displayed = result.array.length;
     right_side_bar_array = result.rightArr;
-    refreshWebPage();
+    refreshWebpage();
     })
 
 
 const delete_news = document.querySelectorAll('.delete_icon');
 for(let delete_new of delete_news){
     delete_new.addEventListener('click', onDelete);
-    delete_new.addEventListener('click', onApi);
+    //delete_new.addEventListener('click', onApi);
 }
 const add_news_buttons = document.querySelectorAll(".add-to-top-news")
 for(let add_news_button of add_news_buttons){
@@ -49,7 +49,7 @@ async function onDelete(event) {
     // Get id of this specific card. (Note: id is the url of the main site).
     console.log(event.currentTarget.parentNode.parentNode.attributes[1].value);
     let removeUrl = event.currentTarget.parentNode.parentNode.attributes[1].value;
-    let noSymbol = removeUrl.replace(/[^a-zA-Z ]/g, "");
+    // let noSymbol = removeUrl.replace(/[^a-zA-Z ]/g, "");
     event.currentTarget.parentNode.parentElement.remove();
 
     const message = {
@@ -67,8 +67,7 @@ async function onDelete(event) {
 }
 
 
-
-async function refresh_webpage(){
+async function refreshWebpage(){
     // const web_cards = document.querySelectorAll('.web_card');
     // var i = 0;
     // for(web_card of web_cards){
@@ -100,7 +99,7 @@ async function addTopNews(event) {
         });
         right_side_bar_array = filtered;
     }
-    refreshWebPage();
+    refreshWebpage();
     return null;
 }
 
