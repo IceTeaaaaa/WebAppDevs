@@ -6,7 +6,8 @@ const exphbs  = require('express-handlebars');
 var path = require('path');
 const type = require('./routes/type.js');
 const index = require('./routes/index.js');
-const api = require('./routes/api.js');
+const topnewsDB = require('./routes/topnewsDB.js');
+const rightbarDB = require('./routes/rightbarDB.js');
 let urls = "";
 let urls_array = new Array();
 
@@ -44,7 +45,8 @@ async function startServer() {
   }
 
   app.use(setCollection);
-  app.use(api);
+  app.use(topnewsDB);
+  app.use(rightbarDB);
   app.use(type);
   app.use(index);
     // const a = await collection.find().toArray();
@@ -68,9 +70,10 @@ async function onApiUrl(req, res) {
 
     // collection.remove({});
     const urls = req.body.url;
+    const urls2 = req.body.url2;
     // collection.insert({"type": "title","url_array": urls});
     const query = { type: "title" };
-    const newEntry = { type: "title", url_array: urls };
+    const newEntry = { type: "title", url_array: urls, right_side_url: urls2};
     const params = { upsert: true };
     const response =
         await collection.update(query, newEntry, params);
