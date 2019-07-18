@@ -54,25 +54,31 @@ const setForm = document.querySelector('.refresh_button');
 setForm.addEventListener('click', onApi);
 
 async function onDelete(event) {
-    if (web_card_number_displayed > 0) {
-        event.preventDefault();
+    // if (web_card_number_displayed > 0) {
+    //     event.preventDefault();
+    //
+    //     const deleteNews = event.currentTarget;
+    //
+    //     const web_id = deleteNews.parentNode.childNodes[3].childNodes[1].childNodes[0].textContent;
+    //
+    //     if(web_id != ""){
+    //         var filtered = web_card_url_array.filter(function (value) {
+    //             return value != web_id;
+    //         });
+    //         web_card_url_array = filtered;
+    //         --web_card_number_displayed;
+    //         web_card_index_order_displayed.pop();
+    //     }
+    // }
 
-        const deleteNews = event.currentTarget;
+    // Get id of this specific card. (Note: id is the url of the main site).
+    fetch('/removeCard/aa');
+    console.log(event.currentTarget.parentNode.parentNode.attributes[1].value);
+    removeId = event.currentTarget.parentNode.parentNode.attributes[1].value
+    event.currentTarget.parentNode.parentElement.remove();
 
-        const web_id = deleteNews.parentNode.childNodes[3].childNodes[1].childNodes[0].textContent;
-
-        if(web_id != ""){
-            var filtered = web_card_url_array.filter(function (value) {
-                return value != web_id;
-            });
-            web_card_url_array = filtered;
-            --web_card_number_displayed;
-            web_card_index_order_displayed.pop();
-        }
-    }
-
-    refresh_webpage();
-    return null;
+    // refresh_webpage();
+    // return null;
 }
 
 async function refresh_webpage(){

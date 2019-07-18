@@ -19,7 +19,6 @@ client.on("error", function (err) {
 
 
 async function onViewIndex(req, res) {
-
     const a = await req.collection.find().toArray();
     for await(let b of a){
         urls = `${b.url_array}`;
@@ -88,7 +87,8 @@ async function onViewIndex(req, res) {
                 let entry = {
                     "mainSite": mainSite,
                     "siteName": siteName,
-                    "subSites": subSites
+                    "subSites": subSites,
+                    "urlOfMainSite": mainSite,
                 };
                 webpages.push(entry);
             }
@@ -126,6 +126,13 @@ function countSubstr(str, substr) {
     let reg = new RegExp(substr, "g");
     return str.match(reg) ? str.match(reg).length : 0;
 }
+
+
+
+async function removeCard(req, res) {
+    console.log(123);
+}
+router.get('/removeCard/aa', removeCard);
 
 
 module.exports = router;
