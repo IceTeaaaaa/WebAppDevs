@@ -3,43 +3,14 @@ let web_card_index_order_displayed = [0,1,2,3,4,5];
 let right_bar_index_order_displayed = [0,1,2,3,4,5];
 let web_card_url_array = new Array();
 let right_side_bar_array = new Array();
-let web_array_mongod = new Array();
 
-readTopNewsDB().then(function (result) {
-    if(result[0] !== ""){
-        web_card_url_array = result;
-        console.log(web_card_url_array);
-        web_card_number_displayed = result.length;
-        refreshWebPage();
-    } else {
-        getTopNewsArray().then(function (result2) {
-            web_card_url_array = result2;
-            refreshWebPage();
-        });
-    }
-    readRightBarDB().then(function (result3) {
-        console.log(1);
-        if(result[0] !== ""){
-            right_side_bar_array = result3;
-            console.log(right_side_bar_array);
-            refreshWebPage();
-        } else {
-            console.log(3);
-            getRightSideArray().then(function (result4) {
-                right_side_bar_array = result4;
-                refreshWebPage();
-            });
-        }
+readDB().then(function (result) {
+    web_card_url_array = result.array;
+    web_card_number_displayed = result.array.length;
+    right_side_bar_array = result.rightArr;
+    refreshWebPage();
     })
 
-})
-
-
-
-// getRightSideArray().then(function (result2) {
-//     right_side_bar_array = result2;
-//     refreshWebPage();
-// });
 
 const delete_news = document.querySelectorAll('.delete_icon');
 for(let delete_new of delete_news){
@@ -95,15 +66,7 @@ async function onDelete(event) {
 }
 
 async function refreshWebPage(){
-    // const web_cards = document.querySelectorAll('.web_card');
-    // var i = 0;
-    // for(web_card of web_cards){
-    //     // web_card.childNodes[3].childNodes[1].childNodes[0].textContent = web_card_url_array[web_card_index_order_displayed[i]];
-    //     // web_card.childNodes[3].childNodes[1].childNodes[0].href = web_card_url_array[web_card_index_order_displayed[i]];
-    //     // web_card.childNodes[3].childNodes[3].childNodes[0].textContent = web_card_url_array[web_card_index_order_displayed[i]];
-    //     // web_card.childNodes[3].childNodes[3].childNodes[0].href = web_card_url_array[web_card_index_order_displayed[i++]];
-    //     i++;
-    // }
+
     const right_side_bars = document.querySelectorAll('.right-box-grid-title');
     var j = 0;
     for(right_side_bar of right_side_bars){
@@ -130,31 +93,11 @@ async function addTopNews(event) {
     return null;
 }
 
-async function getTopNewsArray(){
-    let type = 'topNews';
-    let result = await fetch('/' + type);
-    const json = await result.json();
-    return json.array;
-}
 
-async function getRightSideArray() {
-    let type = 'rightSideNews';
-    let result = await fetch('/' + type);
-    const json = await result.json();
-    // const json = await result.json();
-    return json.array;
-}
-
-async function readTopNewsDB() {
+async function readDB() {
     let data = 'mongodb';
-    let result = await fetch('/topNewsDB/' + data);
+    let result = await fetch('/readDB/' + data);
     const json = await result.json();
-    return json.array;
+    return json;
 }
 
-async function readRightBarDB() {
-    let rightData = 'right_mongodb';
-    let result = await fetch('/rightBarDB/' + rightData);
-    const json = await result.json();
-    return json.rightArr;
-}

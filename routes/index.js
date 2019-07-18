@@ -40,16 +40,6 @@ async function onViewIndex(req, res) {
                                dic_suburl_title[sub_url_array[j]] = title;
                            }
 
-                           // // req.collection.insert({"url": news});
-                           // // console.log(123);
-                           //  if(title == null){
-                           //  // db.webapp.findOne({"type":"title"}).url_array[0]
-                           //      req.collection.insert({"index": i, "url": urls[i], "sub_url": reply[j], "title": reply[j]});
-                           //
-                           //  }else{
-                           //      req.collection.insert({"index": i, "url": urls[i], "sub_url": reply[j], "title": title});
-                           //  }
-                           //client.quit();
                        })
 
                    }
@@ -66,14 +56,10 @@ async function onViewIndex(req, res) {
         webpages = [];
         try{
             for await(url of urls_array) {
-                //console.log(url);
-                // console.log(url);
                 let mainSite = url;
                 let siteName = url;  // TODO: SPLIT STRING!
                 let subSites = [];
                 let counter = 0;
-                //console.log("0000");
-                //console.log(dic_url_suburl[url]);
                 if(dic_url_suburl[url]){
                     for await (subsiteUrl of dic_url_suburl[url]) {
                         // console.log(subsiteUrl);
@@ -88,19 +74,6 @@ async function onViewIndex(req, res) {
                         }
                     }
                 }
-                // for await (subsiteUrl of dic_url_suburl[url]) {
-                //     // console.log(subsiteUrl);
-                //     let one = {
-                //         "title": dic_suburl_title[subsiteUrl],
-                //         "url": subsiteUrl
-                //     };
-                //     subSites.push(one);
-                //     counter++;
-                //     if(counter >= 10) {
-                //         break;
-                //     }
-                // }
-                //console.log(1111);
                 let entry = {
                     "mainSite": mainSite,
                     "siteName": siteName,
