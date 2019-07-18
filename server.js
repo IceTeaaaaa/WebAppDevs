@@ -7,7 +7,8 @@ var path = require('path');
 const type = require('./routes/type.js');
 const index = require('./routes/index.js');
 const api = require('./routes/api.js');
-
+let urls = "";
+let urls_array = new Array();
 
 const app = express();
 const hbs = exphbs.create({
@@ -33,59 +34,68 @@ let collection = null;
 
 async function startServer() {
 
-
-  // function(err,db){
-  //   if(err) throw err;
-  //   console.log("dbs created");
-  //   var dbase = db.db("web-app");
-  //   dbase.createCollection('site', function (err, res){
-  //     if(err) throw err;
-  //     console.log("collection created");
-  //   })
-  //   db.close();
-  // }
-  // Set the db and collection variables before starting the server.
-
-
   db = await MongoClient.connect(MONGO_URL);
 
   collection = db.collection('webapp');
-
-  collection.remove({});
-  collection.insert({"type": "title","url_array": []});
-
 
   function setCollection(req, res, next) {
     req.collection = collection;
     next();
   }
 
-
-
   app.use(setCollection);
   app.use(api);
   app.use(type);
   app.use(index);
-
-  // Now every route can safely use the db and collection objects.
+    // const a = await collection.find().toArray();
+    // for(let b of a){
+    //     urls = `${b.url_array}`;
+    // }
+    // urls_array = urls.split(",");
+    // if(urls_array){
+    //     collection.remove({});
+    //     console.log(123);
+    // }
+    collection.remove({}, {});
   await app.listen(3000);
   console.log('Listening on port 3000');
 
 }
 startServer();
 
+
 async function onApiUrl(req, res) {
 
-  // collection.remove({});
-  const urls = req.body.url;
-  console.log("111123456765432123456urls: " + urls);
-  // collection.insert({"type": "title","url_array": urls});
-  const query = { type: "title" };
-  const newEntry = { type: "title", url_array: urls };
-  const params = { upsert: true };
-  const response =
-      await collection.update(query, newEntry, params);
-  res.json({ success: true });
+    // collection.remove({});
+    const urls = req.body.url;
+    // collection.insert({"type": "title","url_array": urls});
+    const query = { type: "title" };
+    const newEntry = { type: "title", url_array: urls };
+    const params = { upsert: true };
+    const response =
+        await collection.update(query, newEntry, params);
+    res.json({ success: true });
 
 }
 app.post('/api', jsonParser, onApiUrl);
+
+
+
+
+async function removeCard(req, res) {
+    const removeUrl = req.body.url;
+
+    cardsList =  await collection.find().toArray();
+    urls_array = cardsList[0].url_array;
+
+    let filtered = urls_array.filter((value) => {
+        return value !== removeUrl;
+    });
+
+    const query = { type: "title" };
+    const newEntry = { type: "title", url_array: filtered };
+    const params = { upsert: true };
+    const response = await collection.update(query, newEntry, params);
+    res.json({ success: true });
+}
+app.post('/removeCard/a', jsonParser, removeCard);

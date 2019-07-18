@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html>
+<html lang="en">
 <head>
     <title>Home</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -22,8 +22,8 @@
                 </ul>
             </div>
             <div class="top-header-right">
-<!--                <p><img src="images/c-icon.png" title="contact-info">CALL NOW!</p>-->
-<!--                <p><span>(614) 4772-425</span></p>-->
+                <!--                <p><img src="images/c-icon.png" title="contact-info">CALL NOW!</p>-->
+                <!--                <p><span>(614) 4772-425</span></p>-->
             </div>
             <div class="clear"></div>
         </div>
@@ -53,7 +53,7 @@
         <div class="banner-content-text">
             <div class="banner-left">
                 <h1>Top Websites</h1>
-                <button class="refresh_button" type="button">refresh</button>
+                <button class="refresh_button" type="button" onclick="setTimeout(location.reload.bind(location), 50)">refresh</button>
                 <p>Top six Websites from the Websites Worldwide</p>
             </div>
             <div class="banner-right">
@@ -66,26 +66,27 @@
             <div class="section group">
                 <div class="cont span_2_of_c">
 
-                    {{#each newTest}}
-                    <div class="lsidebar">
-                        <div class="web_card">
-                            <div class="delete_icon" style="position:relative">
-                                <img src="images/delete_icon.png"  type="click" width = "20px" height="20px" style="position:absolute; right:0px;top:0px">
-                            </div>
-                            <div class="desc" id="desc_1">
-                                <h3><a href="{{mainSite}}">{{siteName}}</a></h3>
-                                <ul>
-                                    {{#each subSites}}
-                                        <div>
-                                        <a href="{{url}}">
-                                            {{title}}
-                                        </a>
-                                        </div>
-                                    {{/each}}
-                                </ul>
+                    {{#each cards}}
+                        <div class="lsidebar" id="{{urlOfMainSite}}">
+                            <div class="web_card">
+                                <div class="delete_icon" style="position:relative" >
+
+                                    <img src="images/delete_icon.png"  type="click" width = "20px" height="20px" style="position:absolute; right:0px;top:0px">
+                                </div>
+                                <div class="desc" id="desc_1">
+                                    <h3><a href="{{mainSite}}">{{siteName}}</a></h3>
+                                    <ul>
+                                        {{#each subSites}}
+                                            <div>
+                                                <a href="{{url}}">
+                                                    {{title}}
+                                                </a>
+                                            </div>
+                                        {{/each}}
+                                    </ul>
+                                </div>
                             </div>
                         </div>
-                    </div>
                     {{/each}}
 
                     <div class="clear"></div>
@@ -108,7 +109,7 @@
                                 <p>News Title dolor sit amet</p>
                             </div>
                             <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button">Add to Top News</button>
+                            <button class="add-to-top-news" type="button" onclick="location.reload()">Add to Top News</button>
                         </div>
                         <div class="right-box-grid">
                             <div class="right-box-grid-img">
@@ -119,7 +120,7 @@
                                 <p>News Title dolor sit amet</p>
                             </div>
                             <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button">Add to Top News</button>
+                            <button class="add-to-top-news" type="button" onclick="location.reload()">Add to Top News</button>
                         </div>
                         <div class="right-box-grid">
                             <div class="right-box-grid-img">
@@ -130,7 +131,7 @@
                                 <p>News Title dolor sit amet</p>
                             </div>
                             <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button">Add to Top News</button>
+                            <button class="add-to-top-news" type="button" onclick="location.reload()">Add to Top News</button>
                         </div>
                         <div class="right-box-grid">
                             <div class="right-box-grid-img">
@@ -141,7 +142,7 @@
                                 <p>News Title dolor sit amet</p>
                             </div>
                             <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button">Add to Top News</button>
+                            <button class="add-to-top-news" type="button" onclick="location.reload()">Add to Top News</button>
                         </div>
                         <div class="right-box-grid">
                             <div class="right-box-grid-img">
@@ -152,7 +153,7 @@
                                 <p>News Title dolor sit amet</p>
                             </div>
                             <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button">Add to Top News</button>
+                            <button class="add-to-top-news" type="button" onclick="location.reload()">Add to Top News</button>
                         </div>
                         <div class="right-box-grid">
                             <div class="right-box-grid-img">
@@ -163,7 +164,7 @@
                                 <p>News Title dolor sit amet</p>
                             </div>
                             <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button">Add to Top News</button>
+                            <button class="add-to-top-news" type="button" onclick="location.reload()">Add to Top News</button>
                         </div>
                     </div>
                 </div>
