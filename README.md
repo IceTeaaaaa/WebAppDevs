@@ -1,4 +1,4 @@
--WebAppDevelopment:
+WebAppDevelopment:
 
 1. Setup Redis server:
   - Go to path: (MacOS) /usr/local/redis-5.05
@@ -15,3 +15,6 @@
   - In project directory, `npm start`  ** keep the terminal open **
 5. See the webapp:
   - In browser, open link `http://localhost:3000`.
+
+
+Before running the webapp, run the python file to populate redis database of news articles.
