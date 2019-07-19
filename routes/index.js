@@ -134,7 +134,6 @@ function webName(siteName){
     }else if(result.substring(0,4) === "blog"){
         result = result.substring(5, result.length);
     }
-    //console.log(result);
     return result;
 }
 

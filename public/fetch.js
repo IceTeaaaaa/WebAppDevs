@@ -87,7 +87,7 @@ async function addTopNews(event) {
         web_card_index_order_displayed.push(web_card_number_displayed);
         ++web_card_number_displayed;
         let filtered = right_side_bar_array.filter(function(value){
-            return value != web_id;
+            return value !== web_id;
         });
         right_side_bar_array = filtered;
     }
