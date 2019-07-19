@@ -331,7 +331,8 @@ body{
 	font-family: 'Archivo Black', sans-serif;
 	text-transform:uppercase;
 	padding: 10px;
-	width:93.2%;
+	width:95.2%;
+	border-radius: 10px;
 }
 .desc1{
 	background:#2d53c2;
@@ -489,8 +490,8 @@ body{
 	line-height: 1.5em;
 }
 .web_card{
-	width: 300px;
-	height: 250px;
+	width: 380px;
+	height: 300px;
 }
 
 /* CSS3 STYLE GENERIC */

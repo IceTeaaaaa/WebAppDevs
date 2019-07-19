@@ -48,8 +48,10 @@ async function onDelete(event) {
         event.preventDefault();
 
         const deleteNews = event.currentTarget;
+        // const web_id = deleteNews.parentNode.childNodes[3].childNodes[1].childNodes[0].textContent;
 
-        const web_id = deleteNews.parentNode.childNodes[3].childNodes[1].childNodes[0].textContent;
+        const web_id = deleteNews.parentNode.childNodes[3].childNodes[1].childNodes[0].href;
+
 
         if(web_id !== ""){
             var filtered = web_card_url_array.filter(function (value) {
@@ -79,7 +81,7 @@ async function addTopNews(event) {
     if (web_card_number_displayed < 6){
         event.preventDefault();
         const currentNews = event.currentTarget;
-        const web_id = currentNews.parentElement.querySelector(".right-box-grid-title").childNodes[1].childNodes[0].textContent;
+        const web_id = currentNews.parentElement.querySelector(".right-box-grid-title").childNodes[1].childNodes[0].href;
 
         web_card_url_array.push(web_id);
         web_card_index_order_displayed.push(web_card_number_displayed);
