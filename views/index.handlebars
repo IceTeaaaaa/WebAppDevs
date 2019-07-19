@@ -64,10 +64,10 @@
         <div class="banner">
 
             <div class="section group">
-                <div class="cont span_2_of_c">
+                <div class="cont span_2_of_c" id="leftPanel">
 
                     {{#each cards}}
-                        <div class="lsidebar" id="{{urlOfMainSite}}">
+                        <div class="lsidebar" id="{{mainSite}}">
                             <div class="web_card">
                                 <div class="delete_icon" style="position:relative" >
 
@@ -100,72 +100,19 @@
                         <h2>News & Events</h2>
                     </div>
                     <div class="right-box">
-                        <div class="right-box-grid">
-                            <div class="right-box-grid-img">
-                                <a href="#"><img src="images/pic8.jpg" title="img"></a>
+                        {{#each lists}}
+                            <div class="right-box-grid">
+                                <div class="right-box-grid-img">
+                                    <a href="#"><img src="images/pic8.jpg" title="img"></a>
+                                </div>
+                                <div class="right-box-grid-title">
+                                    <h5><a href="{{mainSite}}">{{mainSite}}</a></h5>
+                                    <p>Lorem ipsum dolor sit amet</p>
+                                </div>
+                                <div class="clear"> </div>
+                                <button class="add-to-top-news" type="button">Add to Top News</button>
                             </div>
-                            <div class="right-box-grid-title">
-                                <h5><a>news7</a></h5>
-                                <p>News Title dolor sit amet</p>
-                            </div>
-                            <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button" onclick="setTimeout(location.reload.bind(location), 50)">Add to Top News</button>
-                        </div>
-                        <div class="right-box-grid">
-                            <div class="right-box-grid-img">
-                                <a href="#"><img src="images/pic8.jpg" title="img"></a>
-                            </div>
-                            <div class="right-box-grid-title">
-                                <h5><a>news8</a></h5>
-                                <p>News Title dolor sit amet</p>
-                            </div>
-                            <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button" onclick="setTimeout(location.reload.bind(location), 50)">Add to Top News</button>
-                        </div>
-                        <div class="right-box-grid">
-                            <div class="right-box-grid-img">
-                                <a href="#"><img src="images/pic8.jpg" title="img"></a>
-                            </div>
-                            <div class="right-box-grid-title">
-                                <h5><a>news9</a></h5>
-                                <p>News Title dolor sit amet</p>
-                            </div>
-                            <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button" onclick="setTimeout(location.reload.bind(location), 50)">Add to Top News</button>
-                        </div>
-                        <div class="right-box-grid">
-                            <div class="right-box-grid-img">
-                                <a href="#"><img src="images/pic8.jpg" title="img"></a>
-                            </div>
-                            <div class="right-box-grid-title">
-                                <h5><a>news10</a></h5>
-                                <p>News Title dolor sit amet</p>
-                            </div>
-                            <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button" onclick="setTimeout(location.reload.bind(location), 50)">Add to Top News</button>
-                        </div>
-                        <div class="right-box-grid">
-                            <div class="right-box-grid-img">
-                                <a href="#"><img src="images/pic8.jpg" title="img"></a>
-                            </div>
-                            <div class="right-box-grid-title">
-                                <h5><a>news11</a></h5>
-                                <p>News Title dolor sit amet</p>
-                            </div>
-                            <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button" onclick="setTimeout(location.reload.bind(location), 50)">Add to Top News</button>
-                        </div>
-                        <div class="right-box-grid">
-                            <div class="right-box-grid-img">
-                                <a href="#"><img src="images/pic8.jpg" title="img"></a>
-                            </div>
-                            <div class="right-box-grid-title">
-                                <h5><a>news12</a></h5>
-                                <p>News Title dolor sit amet</p>
-                            </div>
-                            <div class="clear"> </div>
-                            <button class="add-to-top-news" type="button" onclick="setTimeout(location.reload.bind(location), 50)">Add to Top News</button>
-                        </div>
+                        {{/each}}
                     </div>
                 </div>
                 <div class="clear"></div>

@@ -45,54 +45,70 @@ async function startServer() {
     req.collection = collection;
     next();
   }
-
   app.use(setCollection);
   app.use(readDB);
   app.use(index);
 
   collection.remove({});
-  collection.insert({"type": "title","url_array": web_card_url_array, right_side_url: right_side_bar_array});
+  collection.insert({type: "title", url_array: web_card_url_array, right_side_url: right_side_bar_array});
   await app.listen(3000);
   console.log('Listening on port 3000');
 }
 startServer();
 
 
+
+
 // Database related CRUD operations. (create, read, update, delete)//
 /////////////////////////////////////////////////////////////////////
-async function onApiUrl(req, res) {
+async function removeElemDB(req, res) {
+    const removeFrom = req.body.which;
+    const value = req.body.val;
 
-    // collection.remove({});
-    const urls = req.body.url;
-    const urls2 = req.body.url2;
-    // collection.insert({"type": "title","url_array": urls});
-    const query = { type: "title" };
-    const newEntry = { type: "title", url_array: urls, right_side_url: urls2};
-    const params = { upsert: true };
-    const response =
-        await collection.update(query, newEntry, params);
-    res.json({ success: true });
+    let db = await collection.find().toArray();
+    db = db[0];
+    let removeArray = db[removeFrom];
+    let id = db._id;
 
+    let filtered = removeArray.filter((elem) => {
+        return elem !== value;
+    })
+
+    await collection.update({_id: id}, {$set: {[removeFrom]: filtered}});
+    res.json({ success: true });  // must have this line, otherwise, this function won't return anything to caller
+                                                                            // await waits forever.
 }
-app.post('/api', jsonParser, onApiUrl);
+app.post('/db/array/remove', jsonParser, removeElemDB);
 
+async function addElemDB(req, res) {
+    const addTo = req.body.which;
+    const value = req.body.val;
 
+    let db = await collection.find().toArray();
+    db = db[0];
+    let addToArray = db[addTo];
+    addToArray.push(value);
+    let id = db._id;
 
-
-async function removeCard(req, res) {
-    const removeUrl = req.body.url;
-
-    cardsList =  await collection.find().toArray();
-    urls_array = cardsList[0].url_array;
-
-    let filtered = urls_array.filter((value) => {
-        return value !== removeUrl;
-    });
-    
-    const query = { type: "title" };
-    const newEntry = { type: "title", url_array: filtered };
-    const params = { upsert: true };
-    const response = await collection.update(query, newEntry, params);
-    res.json({ success: true });
+    await collection.update({_id: id}, {$set: {[addTo]: addToArray}});
+    res.json({ success: true });  // must have this line, otherwise, this function won't return anything to caller
+                                                                        // await waits forever.
 }
-app.post('/removeCard/a', jsonParser, removeCard);
+app.post('/db/array/add', jsonParser, addElemDB);
+
+
+// async function onApiUrl(req, res) {
+//
+//     // collection.remove({});
+//     const urls = req.body.url;
+//     const urls2 = req.body.url2;
+//     // collection.insert({"type": "title","url_array": urls});
+//     const query = { type: "title" };
+//     const newEntry = { type: "title", url_array: urls, right_side_url: urls2};
+//     const params = { upsert: true };
+//     const response =
+//         await collection.update(query, newEntry, params);
+//     res.json({ success: true });
+//
+// }
+// app.post('/api', jsonParser, onApiUrl);
