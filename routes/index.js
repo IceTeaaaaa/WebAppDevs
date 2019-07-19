@@ -40,7 +40,15 @@ async function onViewIndex(req, res) {
     }else{
         urls_array = [];
     }
+    if(urls !== ""){
+        righturls_array = righturls.split(",");
+    }else{
+        urls_array = [];
+    }
 
+    // Get suburls (articles, mainly sub-urls, titles, and so on) for urls (card view) to be displayed
+    // from redis database this time. (client is redis db)
+    // put them in corresponding dictionary.
     if(urls_array){
         for(let i = 0; i < urls_array.length; i++){
             let sub_url_array = new Array();
@@ -145,6 +153,7 @@ async function onViewIndex(req, res) {
         }
     }
 
+    console.log(sideWebpages);
     const placeholders = {
         cards: webpages,
         lists: sideWebpages,
