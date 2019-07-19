@@ -93,7 +93,7 @@ async function onViewIndex(req, res) {
                         };
                         subSites.push(one);
                         counter++;
-                        if(counter >= 10) {
+                        if(counter >= 12) {
                             break;
                         }
                     }
