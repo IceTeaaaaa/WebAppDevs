@@ -35,14 +35,12 @@ async function onViewIndex(req, res) {
         urls = `${b.url_array}`;
         righturls =`${b.right_side_url}`
     }
-    // console.log(urls.length);
-    urls_array = urls.split(",");
-    righturls_array = righturls.split(",");
+    if(urls !== ""){
+        urls_array = urls.split(",");
+    }else{
+        urls_array = [];
+    }
 
-
-    // Get suburls (articles, mainly sub-urls, titles, and so on) for urls (card view) to be displayed
-    // from redis database this time. (client is redis db)
-    // put them in corresponding dictionary.
     if(urls_array){
         for(let i = 0; i < urls_array.length; i++){
             let sub_url_array = new Array();
@@ -83,18 +81,18 @@ async function onViewIndex(req, res) {
 
             })
         }
+
     }
 
     // populate webpages json array, where each element is a JSON containing info to be passed to handlebar template
-    let webpages = [];
-    // console.log(urls_array.length);
-    // console.log("------------");
-    if(urls_array !== undefined && urls_array !== null && urls_array.length !== 0 && urls.length!==0) {
+    var webpages = [];
+    if(urls_array !== undefined && urls_array !== null && urls_array.length !== 0) {
         webpages = [];
         try{
             for await(url of urls_array) {
                 let mainSite = url;
-                let siteName = url.split('.')[1];  // TODO: SPLIT STRING!
+                let siteName = url;  // TODO: SPLIT STRING!
+                let websiteName = webName(siteName);
                 let subSites = [];
                 let counter = 0;
                 if(dic_url_suburl[url]){
@@ -106,15 +104,15 @@ async function onViewIndex(req, res) {
                         };
                         subSites.push(one);
                         counter++;
-                        if(counter >= 10) {
+                        if(counter >= 12) {
                             break;
                         }
                     }
                 }
                 let entry = {
                     "mainSite": mainSite,
-                    "siteName": siteName,
-                    "subSites": subSites,
+                    "siteName": websiteName,
+                    "subSites": subSites
                 };
                 //console.log(entry);
                 webpages.push(entry);
@@ -151,26 +149,31 @@ async function onViewIndex(req, res) {
         cards: webpages,
         lists: sideWebpages,
     };
-    // console.log(webpages);
     res.render('index', placeholders);
 
 }
 router.get('/', onViewIndex);
 
 
-// function searchUpdated(arr,str){
-//     let newArr = [];
-//     for(let element in arr){
-//         if(countSubstr(arr[element],str) > 0){
-//             newArr.push(arr[element]);
-//         }
-//     }
-//     return newArr;
-// }
-//
-// function countSubstr(str, substr) {
-//     let reg = new RegExp(substr, "g");
-//     return str.match(reg) ? str.match(reg).length : 0;
-// }
+function webName(siteName){
+    let result = siteName.substring(0,siteName.length-5);
+    //console.log(result);
+    //http
+    if(result.substring(0,8) === "https://"){
+        result = siteName.substring(8, result.length);
+    }else if(result.substring(0,7) === "http://"){
+        result = siteName.substring(7, result.length);
+    }else{
+        result = siteName;
+    }
+    if(result.substring(0,3) === "www"){
+        result = result.substring(4, result.length);
+    }else if(result.substring(0,4) === "blog"){
+        result = result.substring(5, result.length);
+    }else{
+        result = siteName;
+    }
+    return result;
+}
 
 module.exports = router;
