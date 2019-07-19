@@ -29,12 +29,12 @@ async function onViewIndex(req, res) {
         for(let i = 0; i < urls_array.length; i++){
             let sub_url_array = new Array();
             await client.SMEMBERS('updated_hrefs_' + urls_array[i],async function (err, reply) {
-               if(reply){
+               if(reply && reply.length !== 0){
                    for(let j = 0; j < reply.length; j++){
                        sub_url_array[j] = reply[j];
                        await client.GET('updated_hrefs_title_' + reply[j], async function (err, title) {
 
-                           if(title == null){
+                           if(title === null){
                                dic_suburl_title[sub_url_array[j]] = sub_url_array[j];
                            }else{
                                dic_suburl_title[sub_url_array[j]] = title;
@@ -44,8 +44,25 @@ async function onViewIndex(req, res) {
 
                    }
                    dic_url_suburl[urls_array[i]] = sub_url_array;
-
                }
+                await client.SMEMBERS('last_all_hrefs_' + urls_array[i],async function (err, reply2) {
+                    if(reply2){
+                        for(let j = 0; j < reply2.length; j++){
+                            sub_url_array[j] = reply2[j];
+                            await client.GET('updated_hrefs_title_' + reply2[j], async function (err, title) {
+
+                                if(title == null){
+                                    dic_suburl_title[sub_url_array[j]] = sub_url_array[j];
+                                }else{
+                                    dic_suburl_title[sub_url_array[j]] = title;
+                                }
+
+                            })
+                        }
+                        dic_url_suburl[urls_array[i]] = sub_url_array;
+                    }
+                })
+
             })
         }
 
