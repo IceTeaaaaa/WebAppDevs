@@ -235,7 +235,18 @@ body{
 	margin: 1% 1.6% 1% 0;
 	background: rgb(146, 117, 117);
 	border-radius: 10px;
-} 	
+}
+
+.lsidebar h3 a{
+	color: #000000;
+	font: 22px arial, sans-serif;
+	font-weight: bold;
+}
+.lsidebar ul a{
+	color: #000000;
+	font: 15px arial, sans-serif;
+}
+
 .lsidebar1{
 	display: block;
 	float:left;
