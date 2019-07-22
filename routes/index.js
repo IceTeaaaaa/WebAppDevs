@@ -138,10 +138,11 @@ async function onViewIndex(req, res) {
             for await(righturl of righturls_array) {
                 let mainSite = righturl;
                 let siteName = righturl.split('.')[1];  // TODO: SPLIT STRING!
+                let websiteName_right = webName(righturl);
 
                 let entry = {
                     "mainSite": mainSite,
-                    "siteName": siteName,
+                    "siteName": websiteName_right,
                 };
                 //console.log(entry);
                 if(counter >= numOfRightUrls) break;
@@ -163,24 +164,23 @@ async function onViewIndex(req, res) {
 }
 router.get('/', onViewIndex);
 
-
+//https://rickmanelius.com/   -> com/
 function webName(siteName){
     let result = siteName.substring(0,siteName.length-5);
-    //console.log(result);
     //http
     if(result.substring(0,8) === "https://"){
         result = siteName.substring(8, result.length);
     }else if(result.substring(0,7) === "http://"){
         result = siteName.substring(7, result.length);
     }else{
-        result = siteName;
+        result = result;
     }
     if(result.substring(0,3) === "www"){
         result = result.substring(4, result.length);
     }else if(result.substring(0,4) === "blog"){
         result = result.substring(5, result.length);
     }else{
-        result = siteName;
+        result = result;
     }
     return result;
 }

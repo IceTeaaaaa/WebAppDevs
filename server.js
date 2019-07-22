@@ -21,8 +21,6 @@ fs.readFile('data.txt', (err, data) => {
 let web_card_url_array = web_array.slice(0,6);
 let right_side_bar_array = web_array.slice(6);
 
-
-
 // Server setup
 const app = express();
 const hbs = exphbs.create({
@@ -56,6 +54,7 @@ async function startServer() {
   app.use(setCollection);
   app.use(readDB);
   app.use(index);
+
 
   collection.remove({});
   collection.insert({type: "title", url_array: web_card_url_array, right_side_url: right_side_bar_array});
