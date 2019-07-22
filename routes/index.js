@@ -17,6 +17,7 @@ let righturls_array = new Array();
 
 let dic_url_suburl = new Array();
 let dic_suburl_title = new Array();
+let dic_url_title = new Array();
 let title_array = new Array();
 
 client.on("error", function (err) {
@@ -92,6 +93,14 @@ async function onViewIndex(req, res) {
 
     }
 
+    if(righturls_array){
+        for(let i = 0; i < righturls_array.length; i++){
+            await client.GET('updated_hrefs_title_' + righturls_array[i], async function (err, title) {
+                dic_url_title[righturls_array[i]] = title;
+            })
+        }
+    }
+
     // populate webpages json array, where each element is a JSON containing info to be passed to handlebar template
     var webpages = [];
     if(urls_array !== undefined && urls_array !== null && urls_array.length !== 0) {
@@ -139,10 +148,12 @@ async function onViewIndex(req, res) {
                 let mainSite = righturl;
                 let siteName = righturl.split('.')[1];  // TODO: SPLIT STRING!
                 let websiteName_right = webName(righturl);
+                let side_title = dic_url_title[righturl];
 
                 let entry = {
                     "mainSite": mainSite,
                     "siteName": websiteName_right,
+                    "title": side_title
                 };
                 //console.log(entry);
                 if(counter >= numOfRightUrls) break;
