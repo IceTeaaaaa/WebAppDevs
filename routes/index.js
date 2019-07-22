@@ -7,6 +7,7 @@ var redis = require("redis"),
 
 // Constants (magic number) definition
 const numOfRightUrls = 8;
+const numOfLeftUrls = 12;
 
 // Variables definitions
 let urls = "";
@@ -108,8 +109,7 @@ async function onViewIndex(req, res) {
         try{
             for await(url of urls_array) {
                 let mainSite = url;
-                let siteName = url;  // TODO: SPLIT STRING!
-                let websiteName = webName(siteName);
+                let websiteName = webName(url);
                 let subSites = [];
                 let counter = 0;
                 if(dic_url_suburl[url]){
@@ -121,7 +121,7 @@ async function onViewIndex(req, res) {
                         };
                         subSites.push(one);
                         counter++;
-                        if(counter >= 12) {
+                        if(counter >= numOfLeftUrls) {
                             break;
                         }
                     }
@@ -146,7 +146,6 @@ async function onViewIndex(req, res) {
             let counter = 0;
             for await(righturl of righturls_array) {
                 let mainSite = righturl;
-                let siteName = righturl.split('.')[1];  // TODO: SPLIT STRING!
                 let websiteName_right = webName(righturl);
                 let side_title = dic_url_title[righturl];
 

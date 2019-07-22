@@ -58,14 +58,33 @@ async function addTopNews(event) {
 
     // reattach event listener
     replicate.querySelector('.delete_icon').addEventListener('click', onDelete);
+    replicate.setAttribute("id", urlToAdd);
 
-    // let allContent = replicate.getElementById("main_content");
+    // change actual card contents
     let allContent = replicate.children[0].children[1];
+    let domainDisplay = allContent.children[0].children[0];
+    domainDisplay.textContent = webName(urlToAdd);
+    domainDisplay.setAttribute("href", urlToAdd);
 
-    let mainInfo = allContent.children[0].children[0];
-    mainInfo.textContent = urlToAdd.split(".")[1];
-    console.log(mainInfo);
-    // mainInfo.children[0].children[0].textContent = urlToAdd;
+    // remove old sublinks and added corresponding ones
+    let listOfSub = allContent.children[1];
+    while(listOfSub.firstChild) {
+        listOfSub.removeChild(listOfSub.firstChild);
+    }
+    const message = {url: urlToAdd};
+    const newSubUrls = await fetch('/redis/getSubUrls', generatePostmsg(message));
+    const newSubUrlsJson = await newSubUrls.json();
+
+    for(let url of newSubUrlsJson.urls) {
+        let div = document.createElement("div");
+        let linkInfo = document.createElement("a");
+        div.appendChild(linkInfo);
+        linkInfo.setAttribute("href", url);
+        linkInfo.textContent = url;  // TODO: Change to title.
+        listOfSub.appendChild(div);
+    }
+
+
     leftPanel.appendChild(replicate);
 
     // update the mongodb database
@@ -96,6 +115,26 @@ function generatePostmsg(msg) {
         },
         body: JSON.stringify(msg)
     };
+}
+
+function webName(siteName){
+    let result = siteName.substring(0,siteName.length-5);
+    //http
+    if(result.substring(0,8) === "https://"){
+        result = siteName.substring(8, result.length);
+    }else if(result.substring(0,7) === "http://"){
+        result = siteName.substring(7, result.length);
+    }else{
+        result = result;
+    }
+    if(result.substring(0,3) === "www"){
+        result = result.substring(4, result.length);
+    }else if(result.substring(0,4) === "blog"){
+        result = result.substring(5, result.length);
+    }else{
+        result = result;
+    }
+    return result;
 }
 
 

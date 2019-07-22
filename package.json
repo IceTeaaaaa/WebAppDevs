@@ -11,8 +11,11 @@
     "express-handlebars": "^3.1.0",
     "fs-extra": "^3.0.1",
     "handlebars": "^4.1.2",
+    "ioredis": "^4.11.2",
     "mongodb": "^2.2.27",
-    "redis": "^2.8.0"
+    "node-fetch": "^2.6.0",
+    "redis": "^2.8.0",
+    "uninstall": "0.0.0"
   },
   "devDependencies": {},
   "scripts": {
