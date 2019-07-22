@@ -2,7 +2,7 @@ let web_card_url_array = new Array();
 let right_side_bar_array = new Array();
 
 
-// add event listener to interactive elements (like buttons) on webpages //
+// attach event listener to interactive elements (like buttons) on webpages //
 ///////////////////////////////////////////////////////////////////////////
 const delete_news = document.querySelectorAll('.delete_icon');
 for(let delete_new of delete_news){
@@ -48,16 +48,21 @@ async function addTopNews(event) {
 
     // add it to the dom tree on the left
     const leftPanel = document.getElementById("leftPanel");
+    console.log(leftPanel.childElementCount);
 
+    // if odd number, clone a node on the right side of the two-column display.
     let replicate = leftPanel.children[0].cloneNode(true);
+    if(leftPanel.childElementCount%2 === 1) {
+        let replicate =leftPanel.children[1].cloneNode(true);
+    }
 
-
-    //FIX BUG =========================================
+    // reattach event listener
     replicate.querySelector('.delete_icon').addEventListener('click', onDelete);
-    //  ========================================= =========================================
 
+    // let allContent = replicate.getElementById("main_content");
+    let allContent = replicate.children[0].children[1];
 
-    let mainInfo = replicate.children[0].children[1].children[0].children[0];
+    let mainInfo = allContent.children[0].children[0];
     mainInfo.textContent = urlToAdd.split(".")[1];
     console.log(mainInfo);
     // mainInfo.children[0].children[0].textContent = urlToAdd;

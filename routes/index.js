@@ -165,7 +165,7 @@ async function onViewIndex(req, res) {
         }
     }
 
-    console.log(sideWebpages);
+    // console.log(sideWebpages);
     const placeholders = {
         cards: webpages,
         lists: sideWebpages,
