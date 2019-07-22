@@ -316,6 +316,10 @@ body{
 	}
 }
 
+.hidden{
+	display: none;
+}
+
 /*  GO FULL WIDTH AT LESS THAN 480 PIXELS */
 
 @media only screen and (max-width: 480px) {
@@ -1732,5 +1736,4 @@ x:-o-prefocus, .lb-overlay img {
 	.banner-content-text {
 		padding: 10% 0;
 	}
-
 }

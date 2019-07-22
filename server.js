@@ -8,11 +8,7 @@ const exphbs  = require('express-handlebars');
 var path = require('path');
 const index = require('./routes/index.js');
 const readDB = require('./routes/readDB.js');
-
-var Redis = require("ioredis");
-var redis = new Redis();
-
-const numOfLeftUrls = 12;
+const api = require('./routes/api')
 
 let web_array = new Array();
 let web_array_str = "";
@@ -59,6 +55,7 @@ fs.readFile('data.txt', (err, data) => {
       app.use(setCollection);
       app.use(readDB);
       app.use(index);
+      app.use(api);
 
 
       collection.remove({});
@@ -110,17 +107,6 @@ fs.readFile('data.txt', (err, data) => {
     app.post('/db/array/add', jsonParser, addElemDB);
 
 
-    async function getSubUrls(req, res) {
-        const domainUrl = req.body.url;
-        let subs = await redis.smembers('last_all_hrefs_' + domainUrl);  // list of all subs
-        let urls = subs.slice(0, numOfLeftUrls);
 
-        const response = {
-            urls: urls,
-            // titles: titles,
-        };
-        res.json(response);
-    }
-    app.post('/redis/getSubUrls', jsonParser, getSubUrls);
 
 });

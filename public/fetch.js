@@ -33,7 +33,12 @@ async function onDelete(event) {
         val: removeUrl,
         which: "url_array"
     };
+    const message2 = {
+        val: removeUrl,
+        which: "right_side_url"
+    }
     await fetch('/db/array/remove', generatePostmsg(message));
+    await fetch('/db/array/add', generatePostmsg(message2));  // add it back to right side list
 }
 
 // add website on the list on the right to the left
@@ -59,6 +64,7 @@ async function addTopNews(event) {
     // reattach event listener
     replicate.querySelector('.delete_icon').addEventListener('click', onDelete);
     replicate.setAttribute("id", urlToAdd);
+    replicate.setAttribute("class", "lsidebar");
 
     // change actual card contents
     let allContent = replicate.children[0].children[1];
