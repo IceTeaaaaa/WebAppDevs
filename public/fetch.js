@@ -63,7 +63,7 @@ async function addTopNews(event) {
     // change actual card contents
     let allContent = replicate.children[0].children[1];
     let domainDisplay = allContent.children[0].children[0];
-    domainDisplay.textContent = webName(urlToAdd);
+    domainDisplay.textContent = getMainHost(urlToAdd);
     domainDisplay.setAttribute("href", urlToAdd);
 
     // remove old sublinks and added corresponding ones
@@ -137,7 +137,25 @@ function webName(siteName){
     return result;
 }
 
-
+function getMainHost(siteName) {
+    let key  = `mh_${Math.random()}`;
+    let keyR = new RegExp( `(^|;)\\s*${key}=12345` );
+    let expiredTime = new Date( 0 );
+    let domain = siteName;
+    let domainList = domain.split( '.' );
+    let urlItems   = [];
+    urlItems.unshift( domainList.pop() );
+    while( domainList.length ) {
+        urlItems.unshift( domainList.pop() );
+        let mainHost = urlItems.join( '.' );
+        let cookie   = `${key}=${12345};domain=.${mainHost}`;
+        document.cookie = cookie;
+        if ( keyR.test( document.cookie ) ) {
+            document.cookie = `${cookie};expires=${expiredTime}`;
+            return mainHost;
+        }
+    }
+}
 
 // async function onApi(event) {
 //     event.preventDefault();
