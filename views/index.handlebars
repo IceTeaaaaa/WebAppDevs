@@ -7,6 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script src="fetch.js" defer></script>
 </head>
+<script>
+    function reurl(){
+        url = location.href;
+        var times = url.split("?t=");
+        if(times[1] != 1){
+            url += "?t=1";
+            self.location.replace(url);
+        }
+    }
+    window.onload = function(){
+        setTimeout("reurl()",100);
+    }
+</script>
 <body>
 {{#each numberOfCards}}
     <h1>{{this}}</h1>
