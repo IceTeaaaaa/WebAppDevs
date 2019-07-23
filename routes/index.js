@@ -3,7 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 var Redis = require("ioredis");
-var redis = new Redis();
+var redis = new Redis();  // Change here if to you want to connect to non-default redis server address.
 // var redis = require("redis"),
 //     client = redis.createClient();
 
