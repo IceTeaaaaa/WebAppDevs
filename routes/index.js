@@ -51,7 +51,6 @@ async function onViewIndex(req, res) {
         for(let i = 0; i < urls_array.length; i++){
             let subs = await redis.smembers('updated_hrefs_' + urls_array[i]);
             let sub_url_array = subs.slice(0, numOfLeftUrls);
-            let update_arr_len = sub_url_array.length;
             for(let j = 0; j < sub_url_array.length; j++){
                 let title = await redis.get('updated_hrefs_title_' + sub_url_array[j]);
                 if(title === null){
@@ -63,7 +62,7 @@ async function onViewIndex(req, res) {
             dic_url_suburl[urls_array[i]] = sub_url_array;
 
             subs = await redis.smembers('last_all_hrefs_' + urls_array[i]);
-            sub_url_array = subs.slice(0, numOfLeftUrls - update_arr_len);
+            sub_url_array = subs.slice(0, numOfLeftUrls);
             for(let j = 0; j < sub_url_array.length; j++){
                 let title = await redis.get('updated_hrefs_title_' + sub_url_array[j]);
                 if(title === null){

@@ -52,7 +52,7 @@
         <div class="clear"> </div>
         <div class="menu">
             <ul class="nav">
-                <li  class="test"><a href="index.html">Home</a></li>
+                <li  class="test"><a href="/">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="gallery.html">Gallery</a></li>
                 <li><a href="blog.html">Blog</a></li>
@@ -83,7 +83,6 @@
                     <div class="hidden" id="hidden">
                         <div class="web_card">
                             <div class="delete_icon" style="position:relative" >
-
                                 <img src="images/delete_icon.png"  type="click" width = "20px" height="20px" style="position:absolute; right:0px;top:0px">
                             </div>
                             <div class="desc">
@@ -124,7 +123,7 @@
                     {{#each cards}}
                         <div class="lsidebar" id="{{mainSite}}">
                             <div class="web_card">
-                                <div class="delete_icon" style="position:relative" >
+                                <div class="delete_icon hidden" style="position:relative" >
 
                                     <img src="images/delete_icon.png"  type="click" width = "20px" height="20px" style="position:absolute; right:0px;top:0px">
                                 </div>
@@ -163,8 +162,8 @@
                                 <div class="right-box-grid-title">
                                     <h5><a href="{{mainSite}}">{{siteName}}</a></h5>
                                     <p>{{title}}</p>
-                                </div>
-                                <button class="right-box-grid-button" type="button">+</button>
+                                </div >
+                                    <img class="right-box-grid-button" src="images/add_icon.png" type="button" style="float: left; position:relative; left: 0px; top: -2px;"></img>
                                 <div class="clear"> </div>
                             </div>
                         {{/each}}
