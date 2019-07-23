@@ -2,8 +2,10 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-var redis = require("redis"),
-    client = redis.createClient();
+var Redis = require("ioredis");
+var redis = new Redis();
+// var redis = require("redis"),
+//     client = redis.createClient();
 
 // Constants (magic number) definition
 const numOfRightUrls = 8;
@@ -19,11 +21,8 @@ let righturls_array = new Array();
 let dic_url_suburl = new Array();
 let dic_suburl_title = new Array();
 let dic_url_title = new Array();
-let title_array = new Array();
+//let title_array = new Array();
 
-client.on("error", function (err) {
-    console.log("Error " + err);
-});
 
 
 // Display the main page ('/')
@@ -48,59 +47,44 @@ async function onViewIndex(req, res) {
         urls_array = [];
     }
 
-    // Get suburls (articles, mainly sub-urls, titles, and so on) for urls (card view) to be displayed
-    // from redis database this time. (client is redis db)
-    // put them in corresponding dictionary.
     if(urls_array){
         for(let i = 0; i < urls_array.length; i++){
-            let sub_url_array = new Array();
-            await client.SMEMBERS('updated_hrefs_' + urls_array[i],async function (err, reply) {
-                if(reply && reply.length !== 0){
-                    for(let j = 0; j < reply.length; j++){
-                        sub_url_array[j] = reply[j];
-                        await client.GET('updated_hrefs_title_' + reply[j], async function (err, title) {
-
-                            if(title === null){
-                                dic_suburl_title[sub_url_array[j]] = sub_url_array[j];
-                            }else{
-                                dic_suburl_title[sub_url_array[j]] = title;
-                            }
-
-                        })
-
-                    }
-                    dic_url_suburl[urls_array[i]] = sub_url_array;
+            let subs = await redis.smembers('updated_hrefs_' + urls_array[i]);
+            let sub_url_array = subs.slice(0, numOfLeftUrls);
+            let update_arr_len = sub_url_array.length;
+            for(let j = 0; j < sub_url_array.length; j++){
+                let title = await redis.get('updated_hrefs_title_' + sub_url_array[j]);
+                if(title === null){
+                    dic_suburl_title[sub_url_array[j]] = sub_url_array[j];
+                }else{
+                    dic_suburl_title[sub_url_array[j]] = title;
                 }
-                await client.SMEMBERS('last_all_hrefs_' + urls_array[i],async function (err, reply2) {
-                    if(reply2){
-                        for(let j = 0; j < reply2.length; j++){
-                            sub_url_array[j] = reply2[j];
-                            await client.GET('updated_hrefs_title_' + reply2[j], async function (err, title) {
+            }
+            dic_url_suburl[urls_array[i]] = sub_url_array;
 
-                                if(title == null){
-                                    dic_suburl_title[sub_url_array[j]] = sub_url_array[j];
-                                }else{
-                                    dic_suburl_title[sub_url_array[j]] = title;
-                                }
-
-                            })
-                        }
-                        dic_url_suburl[urls_array[i]] = sub_url_array;
-                    }
-                })
-
-            })
+            subs = await redis.smembers('last_all_hrefs_' + urls_array[i]);
+            sub_url_array = subs.slice(0, numOfLeftUrls - update_arr_len);
+            for(let j = 0; j < sub_url_array.length; j++){
+                let title = await redis.get('updated_hrefs_title_' + sub_url_array[j]);
+                if(title === null){
+                    dic_suburl_title[sub_url_array[j]] = sub_url_array[j];
+                }else{
+                    dic_suburl_title[sub_url_array[j]] = title;
+                }
+            }
+            dic_url_suburl[urls_array[i]] = sub_url_array;
         }
 
     }
 
     if(righturls_array){
         for(let i = 0; i < righturls_array.length; i++){
-            await client.GET('updated_hrefs_title_' + righturls_array[i], async function (err, title) {
-                dic_url_title[righturls_array[i]] = title;
-            })
+            let right_title = await redis.get('updated_hrefs_title_' + righturls_array[i]);
+                dic_url_title[righturls_array[i]] = right_title;
         }
     }
+
+
 
     // populate webpages json array, where each element is a JSON containing info to be passed to handlebar template
     var webpages = [];
