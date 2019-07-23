@@ -17,11 +17,13 @@ const web_cards = document.querySelectorAll('.web_card');
 for(web_card of web_cards){
     web_card.onmouseover = function(){
         this.childNodes[1].classList.remove('hidden');
-    }
+    };
     web_card.onmouseleave = function(){
         this.childNodes[1].classList.add('hidden');
     }
 }
+
+
 
 
 // Functions for interactive elements //
@@ -72,6 +74,15 @@ async function addTopNews(event) {
 
     // reattach event listener
     replicate.querySelector('.delete_icon').addEventListener('click', onDelete);
+    replicate.querySelector('.web_card').onmouseover = function(){
+        this.childNodes[1].classList.remove('hidden');
+    };
+    replicate.querySelector('.web_card').onmouseover = function(){
+        this.childNodes[1].classList.remove('hidden');
+    };
+    replicate.querySelector('.web_card').onmouseleave = function(){
+        this.childNodes[1].classList.add('hidden');
+    };
     replicate.setAttribute("id", urlToAdd);
     replicate.setAttribute("class", "lsidebar");
 
