@@ -8,7 +8,7 @@ const delete_news = document.querySelectorAll('.delete_icon');
 for(let delete_new of delete_news){
     delete_new.addEventListener('click', onDelete);
 }
-const add_news_buttons = document.querySelectorAll(".add-to-top-news")
+const add_news_buttons = document.querySelectorAll(".right-box-grid-button")
 for(let add_news_button of add_news_buttons){
     add_news_button.addEventListener('click', addTopNews);
 }
