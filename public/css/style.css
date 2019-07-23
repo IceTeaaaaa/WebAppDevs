@@ -47,16 +47,16 @@ body{
 .header-top{
 	background:rgba(189, 59, 110, 0.22);
 	padding: 1% 0;
-	border-bottom:1px solid #2D53C2;
+	border-bottom:1px solid #eb8e8b;
 }
 .header-bottom{
-	border-top:1px solid #163AA5;
-	background:#2D53C2;
+	border-top:1px solid #ff8bd1;
+	background: #ff8bd1;
 }
 .top-header{
-	background:#2D53C2;
+	background: #ff8bd1;
 	padding: 0 0 10px 0;
-	border-bottom:1px solid #3769FA;
+	border-bottom:1px solid #ff8bd1;
 }
 .top-header-left {
 	float: left;
@@ -125,7 +125,7 @@ body{
 .nav {
     list-style: none;
      *zoom: 1;
-     background:#1945C7;
+     background: #ff8bd1;
 }
 .nav:before,
 .nav:after {
@@ -540,6 +540,15 @@ body{
    width:20px;
    height:20px;
 }
+.right-box .button {
+	display: none;
+}
+
+.right-box .button:hover {
+	display: inline-block;
+}
+
+
 .content-desc{
 	margin-top:10%;
 }
