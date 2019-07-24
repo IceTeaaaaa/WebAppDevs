@@ -43,25 +43,94 @@ body{
 .logo{
 	 float: left;
 	 margin-top: 10px;
-	 font-family: Sans-serif Helvetica;
 	 padding: 10px 15px;
  }
 .logo a{
-	color: #000000;
+	color: #FFFFFF;
+	font-family: 'Swanky and Moo Moo', cursive;
+	font-size: 1.5cm;
 }
+.login-box{
+	float: right;
+	margin-right: 50px;
+	padding: 10px 15px;
+	width: 30%;
+}
+.login-outer{
+	width: 340px;
+	margin: 16px 0;
+	padding: 20px;
+	background: #f4f5f6;
+}
+.login-outer login-inner{
+	text-align: center;
+	background: #fff;
+	border: 1px solid #e8e8e8;
+	letter-spacing: 0;
+}
+.login-msg{
+	font-size: 12px;
+	line-height: 17px;
+	color: #777;
+}
+.login-box a{
+	color: #222;
+	background: 0 0;
+	text-decoration: none;
+	outline: 0;
+	cursor: pointer;
+	transition: color .2s ease;
+}
+.login-box .login-button{
+	width: 240px;
+	height: 40px;
+	margin: 16px 0 14px;
+	font-size: 14px;
+	line-height: 20px;
+	color: #fff;
+	background: #ed4040;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+.login-box .third-login .sns {
+	display: inline-block;
+	position: relative;
+	width: 36px;
+	height: 58px;
+	cursor: pointer;
+	background-repeat: no-repeat;
+	background-size: 100% 36px;
+}
+.login-box .third-login .qq{
+	background-image: url(//s3.pstatp.com/toutiao/static/img/icon_qq_pc.5baa07b.svg),none;
+}
+.login-box .third-login .weixin {
+	background-image: url(//s3.pstatp.com/toutiao/static/img/icon_weixin_pc.1d58bef.png);
+}
+.login-box .third-login .sns>span {
+	position: absolute;
+	left: 6px;
+	top: 41px;
+	width: 24px;
+	font-size: 12px;
+	line-height: 17px;
+	color: #777;
+}
+
 .header-top{
 	background:rgba(189, 59, 110, 0.22);
 	padding: 1% 0;
-	border-bottom:1px solid #eb8e8b;
+	border-bottom:1px solid #950740;
 }
 .header-bottom{
-	border-top:1px solid #eb8e8b;
-	background: #eb8e8b;
+	border-top:1px solid #950740;
+	background: #950740;
 }
 .top-header{
-	background: #eb8e8b;
+	background: #950740;
 	padding: 0 0 10px 0;
-	border-bottom:1px solid #eb8e8b;
+	border-bottom:1px solid #950740;
 }
 .top-header-left {
 	float: left;
@@ -130,7 +199,7 @@ body{
 .nav {
     list-style: none;
      *zoom: 1;
-     background: #eb8e8b;
+     background: #950740;
 }
 .nav:before,
 .nav:after {
@@ -374,6 +443,7 @@ body{
 .desc h3, .desc1 h3, .middle-desc h3, .last-desc h3, .last-desc1 h3{
 	color:#fff;
 	font-size:1.6em;
+	text-transform: uppercase;
 }
 .desc h4, .desc1 h4, .middle-desc h4, .last-desc h4, .last-desc1 h4{
 	color:black;
@@ -1481,6 +1551,9 @@ x:-o-prefocus, .lb-overlay img {
 	.logo {
 		width: 44%;
 	}
+	.login-box{
+		width: 20%;
+	}
 	.banner-left h1 {
 		font-size: 1.8em;
 	}
@@ -1574,6 +1647,9 @@ x:-o-prefocus, .lb-overlay img {
 	}
 	.logo {
 		width: 44%;
+	}
+	.login-box{
+		width: 20%;
 	}
 	.banner-left h1 {
 		font-size: 1.8em;
@@ -1688,6 +1764,9 @@ x:-o-prefocus, .lb-overlay img {
 	}
 	.logo {
 		width: 44%;
+	}
+	.login-box{
+		width: 20%;
 	}
 	.banner-left h1 {
 		font-size: 1.5em;

@@ -8,7 +8,8 @@ const exphbs  = require('express-handlebars');
 var path = require('path');
 const index = require('./routes/index.js');
 const readDB = require('./routes/readDB.js');
-const api = require('./routes/api')
+const api = require('./routes/api');
+const login = require('./routes/login');
 
 let web_array = new Array();
 let web_array_str = "";
@@ -55,7 +56,7 @@ fs.readFile('data.txt', (err, data) => {
       app.use(readDB);
       app.use(index);
       app.use(api);
-
+      app.use(login);
 
       collection.remove({});
       collection.insert({type: "title", url_array: web_card_url_array, right_side_url: right_side_bar_array});
