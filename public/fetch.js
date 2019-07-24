@@ -22,7 +22,7 @@ for(web_card of web_cards){
         this.childNodes[1].classList.add('hidden');
     };
 }
-const right_box_grids = document.querySelectorAll(".right-box-grid")
+const right_box_grids = document.querySelectorAll(".right-box-grid");
 for(right_box_grid of right_box_grids){
     right_box_grid.onmouseover = function(){
         this.querySelector('.right-box-grid-button').classList.remove('hidden');
@@ -31,6 +31,11 @@ for(right_box_grid of right_box_grids){
         this.querySelector('.right-box-grid-button').classList.add('hidden');
     }
 }
+
+document.querySelector('.login-button').addEventListener('click', function(event){
+    event.preventDefault();
+
+});
 
 // Functions for interactive elements //
 ////////////////////////////////////////
@@ -53,7 +58,7 @@ async function onDelete(event) {
     const message2 = {
         val: removeUrl,
         which: "right_side_url"
-    }
+    };
     await fetch('/db/array/remove', generatePostmsg(message));
     await fetch('/db/array/add', generatePostmsg(message2));  // add it back to right side list
 }

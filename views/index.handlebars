@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
     <link href='http://fonts.googleapis.com/css?family=Swanky+and+Moo+Moo|Meie+Script' rel='stylesheet' type='text/css'>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <script src="fetch.js" defer></script>
+    <script type="text/javascript" src="fetch.js" defer></script>
 </head>
 <body>
 {{#each numberOfCards}}
@@ -42,9 +42,9 @@
         <div class="login-box">
             <div class="login-outer">
                 <div class="login-inner">
-                    <p class="login-msg">小伙子，上车吧</p>
+                    <p class="login-msg">小伙子，上车吧 Come on Dude</p>
                     <a href="/login/">
-                        <button class="login-button">Login</button>
+                        <button class="login-button" onclick = "document.getElementById('light').style.display='block';document.getElementById('fade').style.display='block'">Login</button>
                     </a>
                     <ul class="third-login">
                         <li class="sns qq">
@@ -54,6 +54,21 @@
                             <span>WeChat</span>
                         </li>
                     </ul>
+                    <div id="light" class="white_content">
+                        <form method="post">
+
+                            <p><label class="label_input">Username</label><input type="text" id="username" class="text_field"/></p>
+                            <p><label class="label_input">Password</label><input type="text" id="password" class="text_field"/></p>
+
+                            <div id="login_control">
+                                <input type="button" id="btn_login" value="LOGIN"/>
+                                <input type="button" id="btn_register" href="/register/" value="REGESTER"/>
+                                <a id="forget_pwd" href="forget_pwd.html">忘记密码？</a>
+                            </div>
+                        </form>
+                        <img src="images/delete_icon.png" type="click" width = "20px" height="20px" style="position:absolute; right:0px;top:0px" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'">
+                    </div>
+                    <div id="fade" class="black_overlay"></div>
                 </div>
             </div>
         </div>
