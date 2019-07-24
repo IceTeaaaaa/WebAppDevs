@@ -3,9 +3,25 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 var Redis = require("ioredis");
-var redis = new Redis();  // Change here if to you want to connect to non-default redis server address.
-// var redis = require("redis"),
-//     client = redis.createClient();
+// var cluster = new Redis();
+var cluster = new Redis.Cluster([
+    {
+        port: 6379,
+        host: "172.31.43.44"
+    }
+]);  // Change here if to you want to connect to non-default redis server address.
+cluster.on('ready', function() {
+    console.log('Redis Cluster is Ready.');
+});
+
+cluster.cluster('info', function (err, clusterInfo) {
+    if (err) {
+        console.log('Redis Cluster is not yet ready. err=%j', err);
+        console.log(err.lastNodeError)
+    } else {
+        console.log('Redis Cluster Info=%j', clusterInfo);
+    }
+});
 
 // Constants (magic number) definition
 const numOfRightUrls = 8;
@@ -49,10 +65,10 @@ async function onViewIndex(req, res) {
 
     if(urls_array){
         for(let i = 0; i < urls_array.length; i++){
-            let subs = await redis.smembers('updated_hrefs_' + urls_array[i]);
+            let subs = await cluster.smembers('updated_hrefs_' + urls_array[i]);
             let sub_url_array = subs.slice(0, numOfLeftUrls);
             for(let j = 0; j < sub_url_array.length; j++){
-                let title = await redis.get('updated_hrefs_title_' + sub_url_array[j]);
+                let title = await cluster.get('updated_hrefs_title_' + sub_url_array[j]);
                 if(title === null){
                     dic_suburl_title[sub_url_array[j]] = sub_url_array[j];
                 }else{
@@ -61,10 +77,10 @@ async function onViewIndex(req, res) {
             }
             dic_url_suburl[urls_array[i]] = sub_url_array;
 
-            subs = await redis.smembers('last_all_hrefs_' + urls_array[i]);
+            subs = await cluster.smembers('last_all_hrefs_' + urls_array[i]);
             sub_url_array = subs.slice(0, numOfLeftUrls);
             for(let j = 0; j < sub_url_array.length; j++){
-                let title = await redis.get('updated_hrefs_title_' + sub_url_array[j]);
+                let title = await cluster.get('updated_hrefs_title_' + sub_url_array[j]);
                 if(title === null){
                     dic_suburl_title[sub_url_array[j]] = sub_url_array[j];
                 }else{
@@ -78,7 +94,7 @@ async function onViewIndex(req, res) {
 
     if(righturls_array){
         for(let i = 0; i < righturls_array.length; i++){
-            let right_title = await redis.get('updated_hrefs_title_' + righturls_array[i]);
+            let right_title = await cluster.get('updated_hrefs_title_' + righturls_array[i]);
                 dic_url_title[righturls_array[i]] = right_title;
         }
     }
