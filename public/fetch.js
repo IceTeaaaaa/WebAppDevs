@@ -20,11 +20,17 @@ for(web_card of web_cards){
     };
     web_card.onmouseleave = function(){
         this.childNodes[1].classList.add('hidden');
+    };
+}
+const right_box_grids = document.querySelectorAll(".right-box-grid")
+for(right_box_grid of right_box_grids){
+    right_box_grid.onmouseover = function(){
+        this.querySelector('.right-box-grid-button').classList.remove('hidden');
+    };
+    right_box_grid.onmouseleave = function(){
+        this.querySelector('.right-box-grid-button').classList.add('hidden');
     }
 }
-
-
-
 
 // Functions for interactive elements //
 ////////////////////////////////////////
@@ -74,9 +80,6 @@ async function addTopNews(event) {
 
     // reattach event listener
     replicate.querySelector('.delete_icon').addEventListener('click', onDelete);
-    replicate.querySelector('.web_card').onmouseover = function(){
-        this.childNodes[1].classList.remove('hidden');
-    };
     replicate.querySelector('.web_card').onmouseover = function(){
         this.childNodes[1].classList.remove('hidden');
     };

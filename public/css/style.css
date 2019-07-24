@@ -250,6 +250,13 @@ body{
 .lsidebar ul a{
 	color: #000000;
 	font-size: 15px;
+	-o-transition: background-color .3s ease-in .0s; /* Opera */
+	-webkit-transition:background-color .3s ease-in .0s;
+	-moz-transition:background-color .3s ease-in .0s;
+	transition:background-color .3s ease-in .0s;
+}
+.lsidebar ul a:hover{
+	color: #FFFFFF;
 }
 .span_2_of_3 {
 	width:48.8%;
@@ -341,7 +348,7 @@ body{
 }
 .desc{
 	background: #eb8e8b;
-	text-transform:uppercase;
+	/*text-transform:uppercase;*/
 	padding: 10px;
 	width:94.2%;
 	border-radius: 10px;
@@ -395,6 +402,7 @@ body{
 	padding: 10px;
 	width:93.2%;
 }
+
 /*  GRID OF Content and    ============================================================================= */
 
 .rsidebar{
