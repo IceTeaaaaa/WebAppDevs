@@ -2,27 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-var Redis = require("ioredis");
-// var cluster = new Redis();
-var cluster = new Redis.Cluster([
-    {
-        port: 6379,
-        host: "172.31.43.44"
-    }
-]);  // Used for deployed redis cluster access, example
 
-cluster.on('ready', function() {
-    console.log('Redis Cluster is Ready.');
-});
-
-cluster.cluster('info', function (err, clusterInfo) {
-    if (err) {
-        console.log('Redis Cluster is not yet ready. err=%j', err);
-        console.log(err.lastNodeError)
-    } else {
-        console.log('Redis Cluster Info=%j', clusterInfo);
-    }
-});
 
 // Constants (magic number) definition
 const numOfRightUrls = 8;
@@ -44,6 +24,7 @@ let dic_url_title = new Array();
 
 // Display the main page ('/')
 async function onViewIndex(req, res) {
+    let cluster = req.cluster;
     req.session.user = "niubi";
     let cookie = await cluster.get('sess:' + req.cookies.guestid);
     // await cluster.set('foo', 'bar')

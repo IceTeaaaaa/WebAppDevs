@@ -17,6 +17,29 @@ var RedisStore = require('connect-redis')(session);
 let web_array = new Array();
 let web_array_str = "";
 
+var Redis = require("ioredis");
+// var cluster = new Redis();
+
+var cluster = new Redis.Cluster([
+    {
+        port: 6379,
+        host: "172.31.43.44"
+    }
+]);  // Used for deployed redis cluster access, example
+
+cluster.on('ready', function() {
+    console.log('Redis Cluster is Ready.');
+});
+
+cluster.cluster('info', function (err, clusterInfo) {
+    if (err) {
+        console.log('Redis Cluster is not yet ready. err=%j', err);
+        console.log(err.lastNodeError)
+    } else {
+        console.log('Redis Cluster Info=%j', clusterInfo);
+    }
+});
+
 fs.readFile('data.txt', (err, data) => {
     if (err) throw err;
     web_array_str = data.toString();
@@ -51,8 +74,9 @@ fs.readFile('data.txt', (err, data) => {
 
       collection = db.collection('webapp');
 
-      function setCollection(req, res, next) {
+      function setDatabases(req, res, next) {
         req.collection = collection;
+        req.cluster = cluster;
         next();
       }
 
@@ -70,7 +94,7 @@ fs.readFile('data.txt', (err, data) => {
           })
       }));
       // session must be declared before any routers! otherwise, it won't get registered to routers, would be undefined
-      app.use(setCollection);
+      app.use(setDatabases);
       app.use(cookieParser());
       app.use(readDB);
       app.use(index);

@@ -3,12 +3,13 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 
-var Redis = require("ioredis");
-var redis = new Redis();  //// Change here if to you want to connect to non-default redis server address.
+// var Redis = require("ioredis");
+// var redis = new Redis();  //// Change here if to you want to connect to non-default redis server address.
 
 const numOfLeftUrls = 12;
 
 async function getSubUrls(req, res) {
+    let redis = req.cluster;
     const domainUrl = req.body.url;
     let subs = await redis.smembers('last_all_hrefs_' + domainUrl);  // list of all subs
     let urls = subs.slice(0, numOfLeftUrls);
