@@ -96,7 +96,6 @@ fs.readFile('data.txt', (err, data) => {
         addToArray.push(value);
         let id = db._id;
 
-
         await collection.update({_id: id}, {$set: {[addTo]: addToArray}});
         res.json({ success: true });  // must have this line, otherwise, this function won't return anything to caller
                                                                             // await waits forever.
@@ -104,6 +103,31 @@ fs.readFile('data.txt', (err, data) => {
     app.post('/db/array/add', jsonParser, addElemDB);
 
 
+    app.post('/register/',(req, res) => {
+        console.log('user in session')
+        console.log(req.session);
+        //先查询有没有这个user
+        console.log("req.body"+req.body);
+        var UserName = req.body.username;
+        var UserPsw = req.body.password;
+        //通过账号验证
+        var updatestr = {username: UserName};
+        res.setHeader('Content-type','application/json;charset=utf-8')
+        console.log(updatestr);
+        userSchema.find(updatestr, function(err, obj){
+            if (err) {
+                console.log("Error:" + err);
+            }
+            else {
+                if(obj.length == 0){
+                    insert(UserName,UserPsw);
+                    res.send({status:'success',message:'true'})
+                }else{
+                    res.send({status:'success',message:'false'})
+                }
+            }
+        })
+    });
 
 
 });

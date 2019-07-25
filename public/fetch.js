@@ -32,10 +32,24 @@ for(right_box_grid of right_box_grids){
     }
 }
 
-document.querySelector('.login-button').addEventListener('click', function(event){
-    event.preventDefault();
+const register = document.querySelector('#btn_register');
+register.addEventListener('click', onRegister);
 
-});
+async function onRegister(event){
+    event.preventDefault();
+    const usernameDisplay = document.querySelector('#username');
+    const passwordDisplay = document.querySelector('#password');
+    const username = usernameDisplay.value;
+    const password = passwordDisplay.value;
+
+    const message = {
+        username: username,
+        password: password
+    };
+    await fetch('/register/', generatePostmsg(message));  // add it back to right side list
+
+
+}
 
 // Functions for interactive elements //
 ////////////////////////////////////////
