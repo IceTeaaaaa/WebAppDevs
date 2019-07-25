@@ -15,7 +15,7 @@ let web_array = new Array();
 let web_array_str = "";
 let User_doc = null;
 
-fs.readFile('data_test.txt', (err, data) => {
+fs.readFile('data.txt', (err, data) => {
     if (err) throw err;
     web_array_str = data.toString();
     web_array = web_array_str.split(",");
@@ -48,7 +48,6 @@ fs.readFile('data_test.txt', (err, data) => {
 
       collection = db.collection('webapp');
 
-
       function setCollection(req, res, next) {
         req.collection = collection;
         next();
@@ -58,9 +57,16 @@ fs.readFile('data_test.txt', (err, data) => {
       app.use(index);
       app.use(api);
 
+      User_doc = null;
       //默认游客
         // ["http://baidu.com"]
-      // add("default","default", web_card_url_array, right_side_bar_array);
+      await add("default","default", web_card_url_array, right_side_bar_array);
+
+      collection.findOne({'username':"default"},function(err, doc) {
+            User_doc = doc;
+            console.log(User_doc["url_array"]);
+      });
+
       //登录
 
         await app.listen(3000);
@@ -75,17 +81,25 @@ fs.readFile('data_test.txt', (err, data) => {
     async function removeElemDB(req, res) {
         const removeFrom = req.body.which;
         const value = req.body.val;
+        console.log("11111"+value);
+        console.log("User_doc" + User_doc["url_array"]);
 
         // let db = await collection.find().toArray();
         // db = db[0];
-        let removeArray = User_doc[removeFrom];
+        // let removeArray = User_doc[removeFrom];
+        // console.log("2222"+removeArray);
+        // console.log("User_doc" + User_doc["url_array"]);
         let id = User_doc._id;
 
-        let filtered = removeArray.filter((elem) => {
+        let filtered = User_doc[removeFrom].filter((elem) => {
             return elem !== value;
         });
+        User_doc[removeFrom] = filtered;
+        collection.update({_id: id}, {$set: {[removeFrom]: filtered}});
 
-        await collection.update({_id: id}, {$set: {[removeFrom]: filtered}});
+        console.log("33333"+filtered);
+        console.log("User_doc" + User_doc["url_array"]);
+
         res.json({ success: true });  // must have this line, otherwise, this function won't return anything to caller
                                                                                 // await waits forever.
     }
@@ -97,22 +111,19 @@ fs.readFile('data_test.txt', (err, data) => {
 
         // let db = await collection.find().toArray();
         // db = db[0];
-        let addToArray = User_doc[addTo];
-        addToArray.push(value);
-        let id = User_doc._id;
 
-        await collection.update({_id: id}, {$set: {[addTo]: addToArray}});
+        User_doc[addTo].push(value);
+        let id = User_doc._id;
+        await collection.update({_id: id}, {$set: {[addTo]: User_doc[addTo]}});
         res.json({ success: true });  // must have this line, otherwise, this function won't return anything to caller
                                                                             // await waits forever.
     }
     app.post('/db/array/add', jsonParser, addElemDB);
 
-    function add(usr,pass,url1, url2){
-        collection.findOne({'username':usr},function(err, doc) {
+    async function add(usr,pass,url1, url2){
+        await collection.findOne({'username':usr},function(err, doc) {
             if(doc) {
-                if(usr === "default"){
-                    User_doc = doc;
-                }
+                collection.update({'username':usr}, {$set:{'password': pass, url_array: url1, right_side_url: url2}});
             } else {
                 collection.insert({'username':usr, 'password': pass, url_array: url1, right_side_url: url2},function () {
                 });
@@ -121,15 +132,15 @@ fs.readFile('data_test.txt', (err, data) => {
     }
 
 
-    // app.post('/login/ID',jsonParser, (req, res) => {
-    //
-    //     var UserName = req.body.username;
-    //     var UserPsw = req.body.password;
-    //     collection.findOne({'username':UserName, 'password': UserPsw},function(err, doc){
-    //         User_doc = doc;
-    //     });
-    //
-    // });
+    app.post('/login_server/',jsonParser, onGetUserInfo);
+
+    async function onGetUserInfo(req, res) {
+        var UserName = req.body.username;
+        var UserPsw = req.body.password;
+        await collection.findOne({'username':UserName, 'password': UserPsw},function(err, doc){
+            User_doc = doc;
+        });
+    }
 
 
 });

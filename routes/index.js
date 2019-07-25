@@ -42,18 +42,18 @@ async function onViewIndex(req, res) {
 
     // let a = await req.collection.find().toArray();
     let a = null;
-     await req.collection.findOne({'username':usrname, 'password': paswrd}, async function(err, doc){
-        if(!doc){
-            await req.collection.findOne({'username':"default", 'password': "default"}, async function (err, doc) {
-                if(doc){
-                    a = doc;
+     await req.collection.findOne({'username':usrname, 'password': paswrd}, async function(err, doc1){
+        if(!doc1){
+            await req.collection.findOne({'username':"default", 'password': "default"}, async function (err, doc2) {
+                if(doc2){
+                    a = doc2;
                     urls = `${a.url_array}`;
                     righturls =`${a.right_side_url}`;
                     console.log("1usrname" + usrname);
                 }
             })
         }else{
-            a = doc;
+            a = doc1;
             urls = `${a.url_array}`;
             righturls =`${a.right_side_url}`;
             console.log("2usrname" + usrname);

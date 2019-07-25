@@ -1,1 +1,1 @@
-https://www.usnews.com/,https://www.inc.com/,http://www.seattletimes.com/,https://www.buzzfeed.com/
+https://www.usnews.com/,https://www.inc.com/,http://www.seattletimes.com/,https://www.buzzfeed.com/,https://blog.hubspot.com/,https://www.technologyreview.com/,https://blog.ycombinator.com/,http://highscalability.com/,https://rickmanelius.com/,https://vivaldi.com/

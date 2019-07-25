@@ -5,7 +5,7 @@
 
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="css/style.css" type="text/css" media="all" />
-    <link href='http://fonts.googleapis.com/css?family=Swanky+and+Moo+Moo|Meie+Script' rel='stylesheet' type='text/css'>
+<!--    <link href='http://fonts.googleapis.com/css?family=Swanky+and+Moo+Moo|Meie+Script' rel='stylesheet' type='text/css'>-->
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script type="text/javascript" src="fetch.js" defer></script>
 </head>
@@ -61,7 +61,7 @@
                                 <p><label class="label_input">Password</label><input type="text" id="password" class="text_field"/></p>
 
                                 <div id="login_control">
-                                    <input type="button" id="btn_login" value="LOGIN"/>
+                                    <input type="button" id="btn_login" value="LOGIN" onclick = "document.getElementById('light').style.display='none';document.getElementById('fade').style.display='none'"/>
                                     <input type="button" id="btn_register" value="REGESTER"/>
                                     <a id="forget_pwd" href="forget_pwd.html">忘记密码？</a>
                                 </div>

@@ -103,10 +103,8 @@ body{
 	background-size: 100% 36px;
 }
 .login-box .third-login .fb{
-	background-image: url(//s3.pstatp.com/toutiao/static/img/icon_qq_pc.5baa07b.svg),none;
 }
 .login-box .third-login .twitter {
-	background-image: url(//s3.pstatp.com/toutiao/static/img/icon_weixin_pc.1d58bef.png);
 }
 .login-box .third-login .sns>span {
 	position: absolute;

@@ -32,8 +32,8 @@ for(right_box_grid of right_box_grids){
     }
 }
 
-const register = document.querySelector('#btn_login');
-register.addEventListener('click', onLogin);
+const login = document.querySelector('#btn_login');
+login.addEventListener('click', onLogin);
 
 async function onLogin(event){
     event.preventDefault();
@@ -48,6 +48,7 @@ async function onLogin(event){
     console.log("username and password: " + username + " " +
         "" + password);
     await fetch('/login/ID/', generatePostmsg(message));
+    await fetch('/login_server/', generatePostmsg(message));
 }
 
 
