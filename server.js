@@ -3,12 +3,16 @@ const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+var cookieParser = require('cookie-parser');
 const MongoClient = require('mongodb').MongoClient;
 const exphbs  = require('express-handlebars');
 var path = require('path');
 const index = require('./routes/index.js');
 const readDB = require('./routes/readDB.js');
-const api = require('./routes/api')
+const api = require('./routes/api');
+
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 
 let web_array = new Array();
 let web_array_str = "";
@@ -51,7 +55,23 @@ fs.readFile('data.txt', (err, data) => {
         req.collection = collection;
         next();
       }
+
+      let hour = 3600000;
+      app.use(session({
+          name: "hailong",
+          secret: "news aggregator by people in HaiLong Mansion",
+          cookies: {expires: new Date(Date.now() + hour*336)},
+          resave: false,
+          saveUninitialized: true,
+          store: new RedisStore({
+              host: '127.0.0.1',
+              port: 6379,
+              db: 0,
+          })
+      }));
+      // session must be declared before any routers! otherwise, it won't get registered to routers, would be undefined
       app.use(setCollection);
+      app.use(cookieParser());
       app.use(readDB);
       app.use(index);
       app.use(api);
@@ -100,12 +120,23 @@ fs.readFile('data.txt', (err, data) => {
 
 
         await collection.update({_id: id}, {$set: {[addTo]: addToArray}});
+        // console.log(req.headers.cookie);
+        res.cookie('test',1)
         res.json({ success: true });  // must have this line, otherwise, this function won't return anything to caller
                                                                             // await waits forever.
     }
     app.post('/db/array/add', jsonParser, addElemDB);
 
 
+    async function removeElemCookies(req, res) {
+
+    }
+    app.post('/cookies/array/remove', jsonParser, removeElemCookies);
+
+    async function addElemCookies(req, res) {
+
+    }
+    app.post('/cookies/array/add', jsonParser, addElemCookies);
 
 
 });

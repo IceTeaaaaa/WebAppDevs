@@ -3,25 +3,26 @@ const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 var Redis = require("ioredis");
-// var cluster = new Redis();
-var cluster = new Redis.Cluster([
-    {
-        port: 6379,
-        host: "172.31.43.44"
-    }
-]);  // Change here if to you want to connect to non-default redis server address.
-cluster.on('ready', function() {
-    console.log('Redis Cluster is Ready.');
-});
+var cluster = new Redis();
+// var cluster = new Redis.Cluster([
+//     {
+//         port: 6379,
+//         host: "172.31.43.44"
+//     }
+// ]);  // Used for deployed redis cluster access, example
 
-cluster.cluster('info', function (err, clusterInfo) {
-    if (err) {
-        console.log('Redis Cluster is not yet ready. err=%j', err);
-        console.log(err.lastNodeError)
-    } else {
-        console.log('Redis Cluster Info=%j', clusterInfo);
-    }
-});
+// cluster.on('ready', function() {
+//     console.log('Redis Cluster is Ready.');
+// });
+//
+// cluster.cluster('info', function (err, clusterInfo) {
+//     if (err) {
+//         console.log('Redis Cluster is not yet ready. err=%j', err);
+//         console.log(err.lastNodeError)
+//     } else {
+//         console.log('Redis Cluster Info=%j', clusterInfo);
+//     }
+// });
 
 // Constants (magic number) definition
 const numOfRightUrls = 8;
@@ -43,6 +44,12 @@ let dic_url_title = new Array();
 
 // Display the main page ('/')
 async function onViewIndex(req, res) {
+    req.session.user = "niubi";
+    let cookie = await cluster.get('sess:' + req.cookies.guestid);
+    await cluster.set('foo', 'bar')
+    console.log(cookie)
+    // console.log(req.session);
+    // console.log(req.session.user);
     // in server, we call setCollection, which defines req.collection = collection (which is our mongodb database)
     const a = await req.collection.find().toArray();
 
@@ -168,8 +175,9 @@ async function onViewIndex(req, res) {
         cards: webpages,
         lists: sideWebpages,
     };
+    res.cookie('guestid', req.session.id, { maxAge: 1000 * 100000000, singed: true});
+    // console.log(req.session.cookie)
     res.render('index', placeholders);
-
 }
 router.get('/', onViewIndex);
 
