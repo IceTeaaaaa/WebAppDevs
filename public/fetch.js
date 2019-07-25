@@ -42,11 +42,8 @@ async function onRegister(event){
     const username = usernameDisplay.value;
     const password = passwordDisplay.value;
 
-    const message = {
-        username: username,
-        password: password
-    };
-    await fetch('/register/', generatePostmsg(message));  // add it back to right side list
+
+    await fetch('/register/');  // add it back to right side list
 
 
 }
