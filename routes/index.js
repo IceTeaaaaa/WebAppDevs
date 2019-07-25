@@ -28,29 +28,35 @@ let paswrd = "";
 async function getID(req, res) {
     usrname = req.body.username;
     paswrd = req.body.password;
+    var query = { username: usrname };
+    req.collection.find(query).toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result);
+    });
 }
-router.post('/login/ID', jsonParser, getID);
+router.post('/login/ID/', jsonParser, getID);
 
 // Display the main page ('/')
 async function onViewIndex(req, res) {
     // in server, we call setCollection, which defines req.collection = collection (which is our mongodb database)
 
     // let a = await req.collection.find().toArray();
-
     let a = null;
-     req.collection.findOne({'username':usrname, 'password': paswrd},  function(err, doc){
+     await req.collection.findOne({'username':usrname, 'password': paswrd}, async function(err, doc){
         if(!doc){
-            a =  req.collection.findOne({'username':"default", 'password': "default"},  function (err, doc) {
-                a = doc;
-                urls = `${a.url_array}`;
-                righturls =`${a.right_side_url}`;
-                console.log("usrname" + usrname);
+            await req.collection.findOne({'username':"default", 'password': "default"}, async function (err, doc) {
+                if(doc){
+                    a = doc;
+                    urls = `${a.url_array}`;
+                    righturls =`${a.right_side_url}`;
+                    console.log("1usrname" + usrname);
+                }
             })
         }else{
             a = doc;
             urls = `${a.url_array}`;
             righturls =`${a.right_side_url}`;
-            console.log("usrname" + usrname);
+            console.log("2usrname" + usrname);
         }
     });
 

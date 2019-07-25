@@ -4,6 +4,7 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const MongoClient = require('mongodb').MongoClient;
+const mongoose = require('mongoose');
 const exphbs  = require('express-handlebars');
 var path = require('path');
 const index = require('./routes/index.js');
@@ -14,7 +15,7 @@ let web_array = new Array();
 let web_array_str = "";
 let User_doc = null;
 
-fs.readFile('data.txt', (err, data) => {
+fs.readFile('data_test.txt', (err, data) => {
     if (err) throw err;
     web_array_str = data.toString();
     web_array = web_array_str.split(",");
@@ -58,6 +59,7 @@ fs.readFile('data.txt', (err, data) => {
       app.use(api);
 
       //默认游客
+        // ["http://baidu.com"]
       // add("default","default", web_card_url_array, right_side_bar_array);
       //登录
 
@@ -119,15 +121,15 @@ fs.readFile('data.txt', (err, data) => {
     }
 
 
-    app.post('/login/ID',jsonParser, (req, res) => {
-
-        var UserName = req.body.username;
-        var UserPsw = req.body.password;
-        collection.findOne({'username':UserName, 'password': UserPsw},function(err, doc){
-            User_doc = doc;
-        });
-
-    });
+    // app.post('/login/ID',jsonParser, (req, res) => {
+    //
+    //     var UserName = req.body.username;
+    //     var UserPsw = req.body.password;
+    //     collection.findOne({'username':UserName, 'password': UserPsw},function(err, doc){
+    //         User_doc = doc;
+    //     });
+    //
+    // });
 
 
 });

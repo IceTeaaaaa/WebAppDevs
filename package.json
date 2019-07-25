@@ -15,6 +15,7 @@
     "handlebars": "^4.1.2",
     "ioredis": "^4.11.2",
     "mongodb": "^2.2.27",
+    "mongoose": "^5.6.6",
     "node-fetch": "^2.6.0",
     "redis": "^2.8.0",
     "uninstall": "0.0.0"

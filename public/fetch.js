@@ -45,7 +45,9 @@ async function onLogin(event){
         username: username,
         password: password
     };
-    await fetch('/login/ID', generatePostmsg(message));
+    console.log("username and password: " + username + " " +
+        "" + password);
+    await fetch('/login/ID/', generatePostmsg(message));
 }
 
 
