@@ -22,20 +22,49 @@ let dic_url_suburl = new Array();
 let dic_suburl_title = new Array();
 let dic_url_title = new Array();
 //let title_array = new Array();
+let usrname = "";
+let paswrd = "";
 
-
+async function getID(req, res) {
+    usrname = req.body.username;
+    paswrd = req.body.password;
+}
+router.post('/login/ID', jsonParser, getID);
 
 // Display the main page ('/')
 async function onViewIndex(req, res) {
     // in server, we call setCollection, which defines req.collection = collection (which is our mongodb database)
-    const a = await req.collection.find().toArray();
 
-    // populate urls(cards view), and righturls(websites on the right to be added to the left)
+    // let a = await req.collection.find().toArray();
+
+    let a = null;
+     req.collection.findOne({'username':usrname, 'password': paswrd},  function(err, doc){
+        if(!doc){
+            a =  req.collection.findOne({'username':"default", 'password': "default"},  function (err, doc) {
+                a = doc;
+                urls = `${a.url_array}`;
+                righturls =`${a.right_side_url}`;
+                console.log("usrname" + usrname);
+            })
+        }else{
+            a = doc;
+            urls = `${a.url_array}`;
+            righturls =`${a.right_side_url}`;
+            console.log("usrname" + usrname);
+        }
+    });
+
+
+
+        // populate urls(cards view), and righturls(websites on the right to be added to the left)
     // from mongodb, (specific for each user in the future).
-    for await(let b of a){
-        urls = `${b.url_array}`;
-        righturls =`${b.right_side_url}`
-    }
+
+    // for await(let b of a){
+    //     urls = `${b.url_array}`;
+    //     righturls =`${b.right_side_url}`
+    // }
+
+
     if(urls !== ""){
         urls_array = urls.split(",");
     }else{
