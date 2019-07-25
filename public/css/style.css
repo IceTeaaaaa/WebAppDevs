@@ -52,15 +52,16 @@ body{
 }
 .login-box{
 	float: right;
-	margin-right: 50px;
+	margin-right: 0px;
+	margin-top: 50px;
 	padding: 10px 15px;
-	width: 30%;
+	width: 20%;
 }
 .login-outer{
-	width: 340px;
+	width: 250px;
 	margin: 16px 0;
 	padding: 20px;
-	background: #f4f5f6;
+	background: #eb8e8b;
 }
 .login-outer login-inner{
 	text-align: center;
@@ -81,7 +82,7 @@ body{
 	cursor: pointer;
 	transition: color .2s ease;
 }
-.login-box .login-button{
+.login-box #login-button{
 	width: 240px;
 	height: 40px;
 	margin: 16px 0 14px;

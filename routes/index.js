@@ -25,7 +25,7 @@ let dic_url_title = new Array();
 let usrname = "";
 let paswrd = "";
 
-async function getID(req, res) {
+async function getID_Login(req, res) {
     usrname = req.body.username;
     paswrd = req.body.password;
     var query = { username: usrname };
@@ -34,7 +34,27 @@ async function getID(req, res) {
         console.log(result);
     });
 }
-router.post('/login/ID/', jsonParser, getID);
+router.post('/login/ID/', jsonParser, getID_Login);
+
+async function getID_Register(req, res) {
+    usrname = req.body.username;
+    paswrd = req.body.password;
+    var query = { username: usrname };
+    req.collection.find(query).toArray(function(err, result) {
+        if (err) throw err;
+        console.log(result);
+    });
+
+    await req.collection.findOne({'username':usrname}, async function(err, doc){
+        if(doc){
+            console.error("The Username has been used!")
+        }else if(!doc){
+            req.collection.insert({'username':usrname, 'password': paswrd, 'url_array': urls_array, 'right_side_url': right_side_bar_array});
+        }
+    });
+}
+router.post('/register/ID/', jsonParser, getID_Register);
+
 
 // Display the main page ('/')
 async function onViewIndex(req, res) {
@@ -44,19 +64,19 @@ async function onViewIndex(req, res) {
     let a = null;
      await req.collection.findOne({'username':usrname, 'password': paswrd}, async function(err, doc1){
         if(!doc1){
-            await req.collection.findOne({'username':"default", 'password': "default"}, async function (err, doc2) {
+            await req.collection.findOne({'username':"default", 'password': "default"},  function (err, doc2) {
                 if(doc2){
                     a = doc2;
                     urls = `${a.url_array}`;
                     righturls =`${a.right_side_url}`;
-                    console.log("1usrname" + usrname);
                 }
             })
-        }else{
+        }else if(doc1){
             a = doc1;
             urls = `${a.url_array}`;
             righturls =`${a.right_side_url}`;
-            console.log("2usrname" + usrname);
+        }else if(err){
+            console.error("Username or password doesn't exist!");
         }
     });
 
@@ -184,6 +204,7 @@ async function onViewIndex(req, res) {
 
     // console.log(sideWebpages);
     const placeholders = {
+        username: usrname,
         cards: webpages,
         lists: sideWebpages,
     };

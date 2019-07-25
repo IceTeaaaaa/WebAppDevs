@@ -34,8 +34,24 @@ for(right_box_grid of right_box_grids){
 
 const login = document.querySelector('#btn_login');
 login.addEventListener('click', onLogin);
-
 async function onLogin(event){
+    event.preventDefault();
+    const usernameDisplay = document.querySelector('#username');
+    const passwordDisplay = document.querySelector('#password');
+    const username = usernameDisplay.value;
+    const password = passwordDisplay.value;
+    const message = {
+        username: username,
+        password: password
+    };
+    document.querySelector('#login-button').classList.add('hidden');
+    await fetch('/login/ID/', generatePostmsg(message));
+    await fetch('/login_server/', generatePostmsg(message));
+}
+
+const register = document.querySelector('#btn_register');
+register.addEventListener('click', onRegister);
+async function onRegister(event){
     event.preventDefault();
     const usernameDisplay = document.querySelector('#username');
     const passwordDisplay = document.querySelector('#password');
@@ -47,10 +63,9 @@ async function onLogin(event){
     };
     console.log("username and password: " + username + " " +
         "" + password);
-    await fetch('/login/ID/', generatePostmsg(message));
-    await fetch('/login_server/', generatePostmsg(message));
-}
+    await fetch('/register/ID/', generatePostmsg(message));
 
+}
 
 
 
@@ -187,6 +202,14 @@ function webName(siteName){
     return result;
 }
 
+function checkbox() {
+    var x = document.getElementById("password");
+    if (x.type === "password") {
+        x.type = "text";
+    } else {
+        x.type = "password";
+    }
+}
 
 
 // async function onApi(event) {
