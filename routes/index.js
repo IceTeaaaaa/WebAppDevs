@@ -46,7 +46,7 @@ let dic_url_title = new Array();
 async function onViewIndex(req, res) {
     req.session.user = "niubi";
     let cookie = await cluster.get('sess:' + req.cookies.guestid);
-    await cluster.set('foo', 'bar')
+    // await cluster.set('foo', 'bar')
     console.log(cookie)
     // console.log(req.session);
     // console.log(req.session.user);
