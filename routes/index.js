@@ -13,14 +13,14 @@ const numOfLeftUrls = 12;
 
 // Variables definitions
 let urls = "";
-let urls_array = new Array();
+let urls_array = [];
 
 let righturls = "";
-let righturls_array = new Array();
+let righturls_array = [];
 
-let dic_url_suburl = new Array();
-let dic_suburl_title = new Array();
-let dic_url_title = new Array();
+let dic_url_suburl = [];
+let dic_suburl_title = [];
+let dic_url_title = [];
 //let title_array = new Array();
 let usrname = "";
 let paswrd = "";
@@ -59,38 +59,34 @@ router.post('/register/ID/', jsonParser, getID_Register);
 // Display the main page ('/')
 async function onViewIndex(req, res) {
     // in server, we call setCollection, which defines req.collection = collection (which is our mongodb database)
-
-    // let a = await req.collection.find().toArray();
     let a = null;
-     await req.collection.findOne({'username':usrname, 'password': paswrd}, async function(err, doc1){
-        if(!doc1){
-            await req.collection.findOne({'username':"default", 'password': "default"},  function (err, doc2) {
-                if(doc2){
-                    a = doc2;
-                    urls = `${a.url_array}`;
-                    righturls =`${a.right_side_url}`;
-                }
-            })
-        }else if(doc1){
-            a = doc1;
-            urls = `${a.url_array}`;
-            righturls =`${a.right_side_url}`;
-        }else if(err){
-            console.error("Username or password doesn't exist!");
+    if(usrname === ""){
+        a = await req.collection.find().toArray();
+        for await(let b of a){
+            urls = `${b.url_array}`;
+            righturls =`${b.right_side_url}`
         }
-    });
-
-
-
+    }else {
+        await req.collection.findOne({'username':usrname, 'password': paswrd}, async function(err, doc1){
+            if(!doc1){
+                await req.collection.findOne({'username':"default", 'password': "default"},  function (err, doc2) {
+                    if(doc2){
+                        a = doc2;
+                        urls = `${a.url_array}`;
+                        righturls =`${a.right_side_url}`;
+                    }
+                })
+            }else if(doc1){
+                a = doc1;
+                urls = `${a.url_array}`;
+                righturls =`${a.right_side_url}`;
+            }else if(err){
+                console.error("Username or password doesn't exist!");
+            }
+        });
+    }
         // populate urls(cards view), and righturls(websites on the right to be added to the left)
     // from mongodb, (specific for each user in the future).
-
-    // for await(let b of a){
-    //     urls = `${b.url_array}`;
-    //     righturls =`${b.right_side_url}`
-    // }
-
-
     if(urls !== ""){
         urls_array = urls.split(",");
     }else{
