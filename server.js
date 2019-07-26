@@ -95,7 +95,7 @@ fs.readFile('data.txt', (err, data) => {
             return elem !== value;
         });
         User_doc[removeFrom] = filtered;
-        collection.update({_id: id}, {$set: {[removeFrom]: filtered}});
+        await collection.update({_id: id}, {$set: {[removeFrom]: filtered}});
 
         console.log("filtered     "+filtered);
         console.log("User_doc new " + User_doc["url_array"]);
@@ -132,15 +132,19 @@ fs.readFile('data.txt', (err, data) => {
     }
 
 
-    app.post('/login_server/',jsonParser, onGetUserInfo);
     async function onGetUserInfo(req, res) {
         var UserName = req.body.username;
         var UserPsw = req.body.password;
+        //User_doc = await collection.findOne({'username':UserName, 'password': UserPsw});
         await collection.findOne({'username':UserName, 'password': UserPsw},function(err, doc){
-            User_doc = doc;
+            if(doc){
+                User_doc = doc;
+            }else{
+                // nothing happens here
+            }
         });
     }
-
+    app.post('/login_server/',jsonParser, onGetUserInfo);
 
 
 });

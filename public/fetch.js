@@ -47,6 +47,20 @@ if(login_button.textContent === 'Log In'){
 
 const login = document.querySelector('#btn_login');
 login.addEventListener('click', onLogin);
+login.addEventListener('click', onLogin1);
+
+async function onLogin1(event){
+    event.preventDefault();
+    const usernameDisplay = document.querySelector('#username');
+    const passwordDisplay = document.querySelector('#password');
+    const username = usernameDisplay.value;
+    const password = passwordDisplay.value;
+    const message = {
+        username: username,
+        password: password
+    };
+    await fetch('/login_server/', generatePostmsg(message));
+}
 async function onLogin(event){
     event.preventDefault();
     const usernameDisplay = document.querySelector('#username');
@@ -58,7 +72,6 @@ async function onLogin(event){
         password: password
     };
     await fetch('/login/ID/', generatePostmsg(message));
-    await fetch('/login_server/', generatePostmsg(message));
 }
 
 const register = document.querySelector('#btn_register');
