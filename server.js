@@ -3,6 +3,7 @@ const express = require('express');
 const fs = require('fs');
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
+var cookieParser = require('cookie-parser');
 const MongoClient = require('mongodb').MongoClient;
 const mongoose = require('mongoose');
 const exphbs  = require('express-handlebars');
@@ -10,10 +11,37 @@ var path = require('path');
 const index = require('./routes/index.js');
 const readDB = require('./routes/readDB.js');
 const api = require('./routes/api');
+// const fetch = require('./public/fetch')
+
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 
 let web_array = new Array();
 let web_array_str = "";
 let User_doc = null;
+
+var Redis = require("ioredis"); //
+// var cluster = new Redis(); // only use when not in cluster mode
+
+var cluster = new Redis.Cluster([
+    {
+        port: 6379,
+        host: "172.31.43.44"
+    }
+]);  // Used for deployed redis cluster access, example
+
+cluster.on('ready', function() {
+    console.log('Redis Cluster is Ready.');
+});
+
+// cluster.cluster('info', function (err, clusterInfo) {
+//     if (err) {
+//         console.log('Redis Cluster is not yet ready. err=%j', err);
+//         console.log(err.lastNodeError)
+//     } else {
+//         console.log('Redis Cluster Info=%j', clusterInfo);
+//     }
+// });
 
 fs.readFile('data.txt', (err, data) => {
     if (err) throw err;
@@ -48,14 +76,34 @@ fs.readFile('data.txt', (err, data) => {
 
       collection = db.collection('webapp');
 
-      function setCollection(req, res, next) {
+      function setDatabases(req, res, next) {
         req.collection = collection;
+        req.cluster = cluster;
         next();
       }
-      app.use(setCollection);
+
+      let hour = 3600000;
+      app.use(cookieParser());
+      app.use(session({
+          name: "hailong",
+          secret: "news aggregator by people in HaiLong Mansion",
+          cookies: {expires: new Date(Date.now() + hour*336)},
+          resave: false,
+          saveUninitialized: true,
+          // store: new RedisStore({
+          //     host: '127.0.0.1',
+          //     port: 6379,
+          //     db: 0,
+          // }),
+          store: new RedisStore({client: cluster}),
+      }));
+      // session must be declared BEFORE any routers! otherwise, it won't get registered to routers, would be undefined
+      app.use(setDatabases);
+      // routers below
       app.use(readDB);
       app.use(index);
       app.use(api);
+      // app.use(fetch);
 
       User_doc = null;
       //默认游客
@@ -108,6 +156,7 @@ fs.readFile('data.txt', (err, data) => {
     async function addElemDB(req, res) {
         const addTo = req.body.which;
         const value = req.body.val;
+        res.setHeader('Access-Control-Allow-Credentials', 'true');
 
         // let db = await collection.find().toArray();
         // db = db[0];
@@ -115,6 +164,19 @@ fs.readFile('data.txt', (err, data) => {
         User_doc[addTo].push(value);
         let id = User_doc._id;
         await collection.update({_id: id}, {$set: {[addTo]: User_doc[addTo]}});
+
+        // cookies related
+        // console.log(req.headers.cookie);
+        // if(addTo === "url_array") {
+        //     console.log(123)
+        //     console.log(addTo)
+        //     JSON.parse(req.cookies.show_panel).push(value);
+        //     res.cookie('show_panel', JSON.stringify(addToArray));
+        // }
+
+        console.log(req.session);
+        res.cookie('random', 1)  // this works
+
         res.json({ success: true });  // must have this line, otherwise, this function won't return anything to caller
                                                                             // await waits forever.
     }
@@ -148,5 +210,3 @@ fs.readFile('data.txt', (err, data) => {
 
 
 });
-
-
