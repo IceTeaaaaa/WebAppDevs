@@ -24,31 +24,91 @@ let dic_url_title = new Array();
 
 // Display the main page ('/')
 async function onViewIndex(req, res) {
-    let cluster = req.cluster;
-    req.session.user = "niubi";
-    let cookie = await cluster.get('sess:' + req.cookies.guestid);
+    let cluster = req.cluster;  // redis cluster definition
+
+    // TODO: handle login and add user name to session.
+    // TODO: log out session status handling
+    req.session.userID = "TODO";
+    let isLoggedIn = 0;
+    req.session.isLoggedIn = isLoggedIn;  // represent not logged in
+
+    // check client side brwoswer cookie
+    let session = undefined;
+    let renderDefault = 1;
+    if(req.cookies.sid) {  // sid exists
+        session = await cluster.get('sess:' + req.cookies.sid);
+        if(session) {  // previous session exists, can restore previous cards
+            console.log("Returning user, successfully located session data in redis");
+            console.log(session);
+            renderDefault = 0;  // dont render default
+            // Restore session:
+            // 1. determine login state
+            // 2. populate display arrays (outside this if checks)
+            if(session.isLoggedIn === 0){
+                // not logged in
+            }
+            else if(session.isLoggedIn === 1) {
+                // is logged in
+            }
+            else {
+                // should not happen
+                // TODO: handle errors!!
+            }
+        }
+        else {
+            console.log("sid not present in redis, should NOT happen!! (probably redis is flushed)");
+            // TODO: handle this error case.
+        }
+    }
+    else {  // sid does not exist, render default
+        console.log("Welcome new user, cookies sid not present");
+    }
+
     // await cluster.set('foo', 'bar')
-    console.log(cookie)
-    // console.log(req.session);
-    // console.log(req.session.user);
+
+
     // in server, we call setCollection, which defines req.collection = collection (which is our mongodb database)
     const a = await req.collection.find().toArray();
-
     // populate urls(cards view), and righturls(websites on the right to be added to the left)
     // from mongodb, (specific for each user in the future).
-    for await(let b of a){
+    // render default! // always.
+    for (let b of a) {
         urls = `${b.url_array}`;
-        righturls =`${b.right_side_url}`
+        righturls = `${b.right_side_url}`
     }
-    if(urls !== ""){
+    if (urls !== "") {
         urls_array = urls.split(",");
-    }else{
+    } else {
         urls_array = [];
     }
-    if(urls !== ""){
+    if (righturls !== "") {
         righturls_array = righturls.split(",");
-    }else{
-        urls_array = [];
+    } else {
+        righturls_array = [];
+    }
+
+    if( !renderDefault ) {  // renderDefault !==0
+        // don't render default, decide whether logged in
+        if(isLoggedIn && !req.cookies.show_panel) {  // no show panel, get from database, for good efficiency
+            // TODO:   get Mongo DB stuff
+        }
+        else if( req.cookies.show_panel ) {
+            // get cookie's show_panel
+            // and produce corresponding right array
+            righturls_array = righturls_array.concat(urls_array);
+            urls_array = JSON.parse(req.cookies.show_panel);
+
+            // filter the rigth array, getting rid of left card source domains
+            for(url of urls_array) {
+                righturls_array = righturls_array.filter((elem) => {
+                    return elem !== url;
+                });
+            }
+        }
+        else {
+            // should not happen
+            // TODO: handle errros!!
+        }
     }
 
     if(urls_array){
@@ -156,8 +216,13 @@ async function onViewIndex(req, res) {
         cards: webpages,
         lists: sideWebpages,
     };
-    res.cookie('guestid', req.session.id, { maxAge: 1000 * 100000000, singed: true});
-    // console.log(req.session.cookie)
+    if(!req.cookies.sid) {
+        res.cookie('sid', req.session.id, { maxAge: 3600000 * 672, singed: true});  // session id (a month time)
+    }
+    if(!req.cookies.show_panel) {
+        res.cookie('show_panel', JSON.stringify(urls_array));  // a method to put array in cookie (requires corresponding get)
+    }
+
     res.render('index', placeholders);
 }
 router.get('/', onViewIndex);

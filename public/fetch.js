@@ -123,6 +123,7 @@ async function addTopNews(event) {
 function generatePostmsg(msg) {
     return {
         method: 'POST',
+        credentials: 'include',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
