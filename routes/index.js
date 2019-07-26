@@ -36,12 +36,18 @@ async function getDefault(req, res){
 }
 
 async function getID_Login(req, res) {
-    usrname = req.body.username;
-    paswrd = req.body.password;
-    var query = { username: usrname };
-    req.collection.find(query).toArray(function(err, result) {
+    let usrname_input = req.body.username;
+    let paswrd_input = req.body.password;
+    var query = { username: usrname_input, password: paswrd_input };
+    await req.collection.findOne({'username':usrname_input, password: paswrd_input}, async function(err, result){
         if (err) throw err;
-        // console.log(result);
+        if(result){
+            usrname = usrname_input;
+            paswrd = paswrd_input;
+            console.log("User name found");
+        }else{
+            console.error("Incorrect password or username not found!");
+        }
     });
 }
 router.post('/login/ID/', jsonParser, getID_Login);
@@ -79,6 +85,7 @@ async function onViewIndex(req, res) {
     // in server, we call setCollection, which defines req.collection = collection (which is our mongodb database)
     //let a = null;
     let a = await req.collection.findOne({'username':usrname, 'password': paswrd});
+    console.log("usrname:" + usrname);
     let urls = `${a.url_array}`;
     let righturls =`${a.right_side_url}`;
 
