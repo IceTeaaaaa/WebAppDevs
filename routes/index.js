@@ -25,31 +25,49 @@ let dic_url_title = [];
 let usrname = "";
 let paswrd = "";
 
+let default_url = [];
+let default_url_right = [];
+
+async function getDefault(req, res){
+    await req.collection.findOne({'username': 'default'}, function(err, doc){
+        default_url = doc.url_array;
+        default_url_right = doc.right_side_url;
+    });
+}
+
 async function getID_Login(req, res) {
     usrname = req.body.username;
     paswrd = req.body.password;
     var query = { username: usrname };
     req.collection.find(query).toArray(function(err, result) {
         if (err) throw err;
-        console.log(result);
+        // console.log(result);
     });
 }
 router.post('/login/ID/', jsonParser, getID_Login);
 
+async function logout(req, res) {
+    getDefault(req, res);
+    console.log("logout pressed");
+    usrname = 'default';
+    paswrd = 'default';
+}
+router.get('/logout/ID/', jsonParser, logout);
+
 async function getID_Register(req, res) {
+    getDefault(req, res);
     usrname = req.body.username;
     paswrd = req.body.password;
     var query = { username: usrname };
     req.collection.find(query).toArray(function(err, result) {
         if (err) throw err;
-        console.log(result);
+        // console.log(result);
     });
-
     await req.collection.findOne({'username':usrname}, async function(err, doc){
         if(doc){
             console.error("The Username has been used!")
         }else if(!doc){
-            req.collection.insert({'username':usrname, 'password': paswrd, 'url_array': urls_array, 'right_side_url': right_side_bar_array});
+            req.collection.insert({'username':usrname, 'password': paswrd, 'url_array': default_url, 'right_side_url': default_url_right});
         }
     });
 }
@@ -200,7 +218,8 @@ async function onViewIndex(req, res) {
 
     // console.log(sideWebpages);
     const placeholders = {
-        username: usrname,
+        username: usrname === 'default' ? '' : usrname,
+        user_button: (usrname ==="" || usrname === "default") ? 'Log In' : 'Log Out',
         cards: webpages,
         lists: sideWebpages,
     };

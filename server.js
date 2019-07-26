@@ -81,8 +81,8 @@ fs.readFile('data.txt', (err, data) => {
     async function removeElemDB(req, res) {
         const removeFrom = req.body.which;
         const value = req.body.val;
-        console.log("11111"+value);
-        console.log("User_doc" + User_doc["url_array"]);
+        console.log("being deleted  "+value);
+        console.log("User_doc old   " + User_doc["url_array"]);
 
         // let db = await collection.find().toArray();
         // db = db[0];
@@ -97,8 +97,8 @@ fs.readFile('data.txt', (err, data) => {
         User_doc[removeFrom] = filtered;
         collection.update({_id: id}, {$set: {[removeFrom]: filtered}});
 
-        console.log("33333"+filtered);
-        console.log("User_doc" + User_doc["url_array"]);
+        console.log("filtered     "+filtered);
+        console.log("User_doc new " + User_doc["url_array"]);
 
         res.json({ success: true });  // must have this line, otherwise, this function won't return anything to caller
                                                                                 // await waits forever.
@@ -133,7 +133,6 @@ fs.readFile('data.txt', (err, data) => {
 
 
     app.post('/login_server/',jsonParser, onGetUserInfo);
-
     async function onGetUserInfo(req, res) {
         var UserName = req.body.username;
         var UserPsw = req.body.password;
@@ -141,8 +140,6 @@ fs.readFile('data.txt', (err, data) => {
             User_doc = doc;
         });
     }
-
-
 
 
 

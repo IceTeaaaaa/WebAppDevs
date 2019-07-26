@@ -32,6 +32,19 @@ for(right_box_grid of right_box_grids){
     }
 }
 
+const login_button = document.querySelector('#login-button');
+if(login_button.textContent === 'Log In'){
+    login_button.addEventListener('click', function(event){
+        document.getElementById('light').style.display='block';
+        document.getElementById('fade').style.display='block';
+    });
+}else if (login_button.textContent === 'Log Out') {
+    login_button.addEventListener('click', async function (event) {
+        console.log("Log Out Clicked");
+        await fetch('/logout/ID/');
+    });
+}
+
 const login = document.querySelector('#btn_login');
 login.addEventListener('click', onLogin);
 async function onLogin(event){
@@ -44,13 +57,13 @@ async function onLogin(event){
         username: username,
         password: password
     };
-    document.querySelector('#login-button').classList.add('hidden');
     await fetch('/login/ID/', generatePostmsg(message));
     await fetch('/login_server/', generatePostmsg(message));
 }
 
 const register = document.querySelector('#btn_register');
 register.addEventListener('click', onRegister);
+
 async function onRegister(event){
     event.preventDefault();
     const usernameDisplay = document.querySelector('#username');
