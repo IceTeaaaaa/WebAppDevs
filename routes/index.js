@@ -140,7 +140,7 @@ async function onViewIndex(req, res) {
         righturls_array = [];
     }
 
-    if( !renderDefault ) {  // renderDefault !==0
+    if( !renderDefault ) {  // renderDefault !==0, change url array. not default.
         // don't render default, decide whether logged in
         if(isLoggedIn && !req.cookies.show_panel) {  // no show panel, get from database, for good efficiency
             // TODO:   get Mongo DB stuff
@@ -150,6 +150,10 @@ async function onViewIndex(req, res) {
             // and produce corresponding right array
             righturls_array = righturls_array.concat(urls_array);
             urls_array = JSON.parse(req.cookies.show_panel);
+
+            console.log(111)
+            console.log(urls_array);
+            console.log(111)
 
             // filter the rigth array, getting rid of left card source domains
             for(url of urls_array) {
@@ -275,7 +279,7 @@ async function onViewIndex(req, res) {
         res.cookie('sid', req.session.id, { maxAge: 3600000 * 672, singed: true});  // session id (a month time)
     }
     if(!req.cookies.show_panel) {
-        res.cookie('show_panel', JSON.stringify(urls_array));  // a method to put array in cookie (requires corresponding get)
+        res.cookie('show_panel', JSON.stringify(urls_array), { maxAge: 3600000 * 672, singed: true});  // a method to put array in cookie (requires corresponding get)
     }
 
     res.render('index', placeholders);

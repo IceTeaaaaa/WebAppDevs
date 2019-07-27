@@ -124,63 +124,63 @@ fs.readFile('data.txt', (err, data) => {
 
 
 
-    // Mongo Database related CRUD operations. (create, read, update, delete)//
-    /////////////////////////////////////////////////////////////////////
-    async function removeElemDB(req, res) {
-        const removeFrom = req.body.which;
-        const value = req.body.val;
-        console.log("being deleted  "+value);
-        console.log("User_doc old   " + User_doc["url_array"]);
-
-        // let db = await collection.find().toArray();
-        // db = db[0];
-        // let removeArray = User_doc[removeFrom];
-        // console.log("2222"+removeArray);
-        // console.log("User_doc" + User_doc["url_array"]);
-        let id = User_doc._id;
-
-        let filtered = User_doc[removeFrom].filter((elem) => {
-            return elem !== value;
-        });
-        User_doc[removeFrom] = filtered;
-        await collection.update({_id: id}, {$set: {[removeFrom]: filtered}});
-
-        console.log("filtered     "+filtered);
-        console.log("User_doc new " + User_doc["url_array"]);
-
-        res.json({ success: true });  // must have this line, otherwise, this function won't return anything to caller
-                                                                                // await waits forever.
-    }
-    app.post('/db/array/remove', jsonParser, removeElemDB);
-
-    async function addElemDB(req, res) {
-        const addTo = req.body.which;
-        const value = req.body.val;
-        res.setHeader('Access-Control-Allow-Credentials', 'true');
-
-        // let db = await collection.find().toArray();
-        // db = db[0];
-
-        User_doc[addTo].push(value);
-        let id = User_doc._id;
-        await collection.update({_id: id}, {$set: {[addTo]: User_doc[addTo]}});
-
-        // cookies related
-        // console.log(req.headers.cookie);
-        // if(addTo === "url_array") {
-        //     console.log(123)
-        //     console.log(addTo)
-        //     JSON.parse(req.cookies.show_panel).push(value);
-        //     res.cookie('show_panel', JSON.stringify(addToArray));
-        // }
-
-        console.log(req.session);
-        res.cookie('random', 1)  // this works
-
-        res.json({ success: true });  // must have this line, otherwise, this function won't return anything to caller
-                                                                            // await waits forever.
-    }
-    app.post('/db/array/add', jsonParser, addElemDB);
+    // // Mongo Database related CRUD operations. (create, read, update, delete)//
+    // /////////////////////////////////////////////////////////////////////
+    // async function removeElemDB(req, res) {
+    //     const removeFrom = req.body.which;
+    //     const value = req.body.val;
+    //     console.log("being deleted  "+value);
+    //     console.log("User_doc old   " + User_doc["url_array"]);
+    //
+    //     // let db = await collection.find().toArray();
+    //     // db = db[0];
+    //     // let removeArray = User_doc[removeFrom];
+    //     // console.log("2222"+removeArray);
+    //     // console.log("User_doc" + User_doc["url_array"]);
+    //     let id = User_doc._id;
+    //
+    //     let filtered = User_doc[removeFrom].filter((elem) => {
+    //         return elem !== value;
+    //     });
+    //     User_doc[removeFrom] = filtered;
+    //     await collection.update({_id: id}, {$set: {[removeFrom]: filtered}});
+    //
+    //     console.log("filtered     "+filtered);
+    //     console.log("User_doc new " + User_doc["url_array"]);
+    //
+    //     res.json({ success: true });  // must have this line, otherwise, this function won't return anything to caller
+    //                                                                             // await waits forever.
+    // }
+    // app.post('/db/array/remove', jsonParser, removeElemDB);
+    //
+    // async function addElemDB(req, res) {
+    //     const addTo = req.body.which;
+    //     const value = req.body.val;
+    //     res.setHeader('Access-Control-Allow-Credentials', 'true');
+    //
+    //     // let db = await collection.find().toArray();
+    //     // db = db[0];
+    //
+    //     User_doc[addTo].push(value);
+    //     let id = User_doc._id;
+    //     await collection.update({_id: id}, {$set: {[addTo]: User_doc[addTo]}});
+    //
+    //     // cookies related
+    //     // console.log(req.headers.cookie);
+    //     // if(addTo === "url_array") {
+    //     //     console.log(123)
+    //     //     console.log(addTo)
+    //     //     JSON.parse(req.cookies.show_panel).push(value);
+    //     //     res.cookie('show_panel', JSON.stringify(addToArray));
+    //     // }
+    //
+    //     console.log(req.session);
+    //     res.cookie('random', 1)  // this works
+    //
+    //     res.json({ success: true });  // must have this line, otherwise, this function won't return anything to caller
+    //                                                                         // await waits forever.
+    // }
+    // app.post('/db/array/add', jsonParser, addElemDB);
 
     async function add(usr,pass,url1, url2){
         await collection.findOne({'username':usr},function(err, doc) {
