@@ -40,14 +40,16 @@ client.multi().keys('*', function (err, replies) {
 //     return url_title;
 // }
 
-
+// add comment
 function searchUpdated(arr,str){
+    let len = 0;
     let newArr = [];
     for(let element in arr){
         if(countSubstr(arr[element],str) > 0){
             newArr.push(arr[element]);
         }
     }
+    
     return newArr;
 }
 
